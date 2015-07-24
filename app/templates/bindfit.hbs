@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-xs-4">
+        <h2>Bindfit parameters:</h2>
+        <form class="form-horizontal" {{action "runFitter" on="enter"}}>
+            <div class="form-group">
+                <label class="sr-only" for='kGuess'>K: Binding constant guess</label>
+                <div class="input-group col-xs-12">
+                    <span class="input-group-addon">K<sub>a</sub> guess</span>
+                    {{input value=kGuess id='kGuess' type="number" class="form-control"}}
+                    <span class="input-group-addon">M<sup>-1</sup></span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
+        </form>
+    </div> <!-- sidebar -->
+    <div class="col-xs-8">
+        {{high-charts content=chartData chartOptions=chartOptions}}
+    </div>
+</div> <!-- row -->
