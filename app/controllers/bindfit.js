@@ -102,6 +102,7 @@ export default Ember.Controller.extend({
                 }
 
                 console.log(dataToPlot);
+                controller.set("kFitted", data.k);
                 controller.set("chartData", dataToPlot);
             })
             .fail(function(data) {
