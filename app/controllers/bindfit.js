@@ -1,6 +1,13 @@
 import Ember from 'ember';
 
+// Constants?
+var root = "http://supramolecular.echus.co/bindfit/api/";
+
 export default Ember.Controller.extend({
+    // Uploader setup
+    uploadURL: root+"upload",
+    uploadName: "input",
+
     // Highcharts setup
     chartOptions: {
         chart: {                                                               
@@ -72,7 +79,7 @@ export default Ember.Controller.extend({
             };
 
             Ember.$.ajax({
-                url: "http://supramolecular.echus.co/bindfit/api/fit",
+                url: root+"fit",
                 type: "POST",
                 data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",

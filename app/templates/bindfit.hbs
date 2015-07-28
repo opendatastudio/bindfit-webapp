@@ -4,6 +4,7 @@
         <h2>Fitter parameters:</h2>
         <form class="form-horizontal" {{action "runFitter" on="enter"}}>
             <div class="form-group">
+                {{file-upload url=uploadURL name=uploadName}}
                 <label class="sr-only" for='kGuess'>K: Binding constant guess</label>
                 <div class="input-group col-xs-12">
                     <span class="input-group-addon">K<sub>a</sub> guess</span>
