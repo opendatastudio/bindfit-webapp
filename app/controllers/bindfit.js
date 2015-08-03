@@ -11,7 +11,6 @@ export default Ember.Controller.extend({
     // Highcharts setup
     chartOptions: {
         chart: {                                                               
-            backgroundColor:null,                                              
             style: {'font-family': 'Lato, Helvetica, Arial, Verdana', 'text-transform': 'none'}
         },                                                                     
         title: {                                                               
@@ -31,11 +30,11 @@ export default Ember.Controller.extend({
         yAxis: { // Primary y axis                                            
             title: {                                                        
                 text: "\u03B4", 
-                style: {'text-transform': 'none'}                           
             },                                                              
             labels: {                                                       
                 format: "{value} ppm"                                           
             },                                                              
+            opposite: true,
             //minPadding: 0,                                                  
             //maxPadding: 0,                                                  
             //startOnTick: false,                                             
@@ -44,21 +43,73 @@ export default Ember.Controller.extend({
         tooltip: {                                                          
             shared: true                                                    
         },                                                                  
-        legend: {                                                           
-            layout: 'vertical',                                             
-            floating: true,                                                 
-            align: 'left',                                                  
-            verticalAlign: 'top',                                           
-            x: 70,                                                          
-            borderWidth: 0                                                  
-        },                                                                  
+	legend: {
+            layout: 'horizontal',
+            floating: true,
+            align: 'left',
+            verticalAlign: 'top',
+            borderWidth: 0,
+	},
     },
 
-    chartData: [
-    ],
+    chartTheme: {
+        colors: ["#79BCB8", "#EE6C4D", "#0B4F6C", "#FA8334", "#197BBD", "#033860", "#47A8BD", "#1E3888"],
+	chart: {
+            marginTop: 50,
+            backgroundColor: null,
+            style: {'font-family': 'Lato, Helvetica, Arial, Verdana', 'text-transform': 'none'}
+	},
+	title: {
+            style: {
+                fontSize: '16px',
+                fontWeight: 'bold',
+            }
+	},
+	tooltip: {
+            crosshairs: [true, false],
+            borderWidth: 0,
+            backgroundColor: 'rgba(219,219,216,0.8)',
+            shadow: false
+	},
+	legend: {
+            itemStyle: {
+                fontWeight: 'bold',
+                fontSize: '14px'
+            }
+	},
+	xAxis: {
+            gridLineWidth: 1,
+            minorTickInterval: null,
+            labels: {
+                style: {
+                    fontSize: '12px'
+                }
+            }
+	},
+	yAxis: {
+            gridLineWidth: 1,
+            minorTickInterval: null,
+            title: {
+                style: {
+                }
+            },
+            labels: {
+                style: {
+                    fontSize: '12px'
+                }
+            }
+	},
+	plotOptions: {
+            candlestick: {
+                lineColor: '#404048'
+            }
+	}
+    },
 
+    chartData: null,
 
     
+
     // Initial option values
     kGuess: "1000",
 
@@ -96,6 +147,8 @@ export default Ember.Controller.extend({
                     dataToPlot.push({
                         name: "Fit "+String(i+1),
                         type: "spline",
+                        marker: {enabled: false},
+                        lineWidth: 2,
                         data: data.fit[i]
                     });
                 }
@@ -103,7 +156,9 @@ export default Ember.Controller.extend({
                 for (i = 0; i < data.data.length; i++) {
                     dataToPlot.push({
                         name: "Data "+String(i+1),
-                        type: "scatter",
+                        type: "line",
+                        marker: {enabled: true},
+                        lineWidth: 0,
                         data: data.data[i]
                     });
                 }

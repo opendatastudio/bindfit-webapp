@@ -1,33 +1,81 @@
 <div class="row">
 
-    <div class="col-xs-4">
-        <h2>Fitter parameters:</h2>
-        <form class="form-horizontal" {{action "runFitter" on="enter"}}>
-            <div class="form-group">
-                {{file-upload url=uploadURL name=uploadName}}
-                <label class="sr-only" for='kGuess'>K: Binding constant guess</label>
-                <div class="input-group col-xs-12">
-                    <span class="input-group-addon">K<sub>a</sub> guess</span>
-                    {{input value=kGuess id='kGuess' type="number" class="form-control"}}
-                    <span class="input-group-addon">M<sup>-1</sup></span>
-                </div>
-            </div>
+    <div id="sidebar" class="col-xs-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Fitter parameters</h3>
+        </div>
 
-            <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
-        </form>
+        <div class="panel-body">
+            <p>Instructions go here</p>
+
+            <form id="bindfit-form" class="form-horizontal" {{action "runFitter" on="enter"}}>
+                <div class="form-group">
+                    <label class="sr-only" for="inputFile">Upload input file</label>
+                    <div class="input-group col-xs-12">
+                        <div class="input-group-addon">Input file</div>
+                        {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
+                    </div>
+
+                    <label class="sr-only" for='kGuess'>K: Binding constant guess</label>
+                    <div class="input-group col-xs-12">
+                        <div class="input-group-addon">K<sub>a</sub> guess</div>
+                        {{input value=kGuess id='kGuess' type="number" class="form-control"}}
+                        <div class="input-group-addon">M<sup>-1</sup></div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
+            </form>
+
+        </div>
+    </div> <!-- Panel -->
     </div> <!-- Sidebar -->
 
-    <div class="col-xs-8">
-        <div class="row text-center">
-            <div class="col-xs-12">
-                <p><strong>K</strong>: {{kFitted}}</p>
-            </div> <!-- Numbers -->
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                {{high-charts content=chartData chartOptions=chartOptions}}
-            </div> <!-- Chart -->
-        </div>
-    </div> <!-- Results -->
 
-</div> <!-- row -->
+
+    <div class="col-xs-9">
+
+        <div class="row">
+        <div class="col-xs-12">
+        <div class="panel panel-default">
+
+            <div id="bindfit-chart" class="panel-body">
+                {{high-charts content=chartData chartOptions=chartOptions theme=chartTheme}}
+            </div> <!-- Chart -->
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Parameters</h3>
+            </div>
+
+            <table id="bindfit-params" class="table">
+                <!-- <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Result</th>
+                    </tr>
+                </thead> -->
+
+                <tbody>
+                    <tr>
+                        <th scope="row">K<sub>a</sub> (binding constant)</th>
+                        <td>{{kFitted}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Param 2</th>
+                        <td>Placeholder</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Param 3</th>
+                        <td>Placeholder</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div> <!-- Panel for results -->
+        </div> <!-- col -->
+        </div> <!-- row -->
+
+    </div> <!-- Main -->
+
+</div> <!-- global row -->
