@@ -9,24 +9,60 @@
         <div class="panel-body">
             <p>Instructions go here</p>
 
-            <form id="bindfit-form" class="form-horizontal" {{action "runFitter" on="enter"}}>
+            <form id="bindfit-form-general" class="form-horizontal" {{action "runFitter" on="enter"}}>
                 <div class="form-group">
+
+                    <div class="input-group col-xs-12">
+                        {{view "select" content=fitterList
+                                        optionLabelPath="content.name"
+                                        optionValuePath="content.parser"
+                                        prompt="Choose fitter"
+                                        selection=selectedFitter
+                                        id="fitterSelector"
+                                        class="form-control"}}
+                    </div>
+
                     <label class="sr-only" for="inputFile">Upload input file</label>
                     <div class="input-group col-xs-12">
                         <div class="input-group-addon">Input file</div>
                         {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
                     </div>
 
+                    <label class="sr-only" for="fitterSelector">Choose fitter</label>
+                </div>
+            </form>
+
+            <form id="bindfit-form-nmr-1to1" class="form-horizontal" {{action "runFitter" on="enter"}}>
+                <div class="form-group">
                     <label class="sr-only" for='kGuess'>K: Binding constant guess</label>
                     <div class="input-group col-xs-12">
                         <div class="input-group-addon">K<sub>a</sub> guess</div>
-                        {{input value=kGuess id='kGuess' type="number" class="form-control"}}
+                        {{input value=params.kGuess id='kGuess' type="number" class="form-control"}}
                         <div class="input-group-addon">M<sup>-1</sup></div>
                     </div>
                 </div>
 
-                <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
             </form>
+
+            <form id="bindfit-form-uv-1to2" class="form-horizontal" {{action "runFitter" on="enter"}}>
+                <div class="form-group">
+                    <label class="sr-only" for='k1Guess'>K: Binding constant guess</label>
+                    <div class="input-group col-xs-12">
+                        <div class="input-group-addon">K<sub>11</sub> guess</div>
+                        {{input value=params.k1Guess id='k1Guess' type="number" class="form-control"}}
+                        <div class="input-group-addon">M<sup>-1</sup></div>
+                    </div>
+
+                    <label class="sr-only" for='k2Guess'>K1: Binding constant guess</label>
+                    <div class="input-group col-xs-12">
+                        <div class="input-group-addon">K<sub>12</sub> guess</div>
+                        {{input value=params.k2Guess id='k2Guess' type="number" class="form-control"}}
+                        <div class="input-group-addon">M<sup>-1</sup></div>
+                    </div>
+                </div>
+            </form>
+
+            <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
 
         </div>
     </div> <!-- Panel -->

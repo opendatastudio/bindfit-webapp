@@ -1,7 +1,9 @@
 $bindfit-params-height: 100px;
 $bindfit-chart-height: calc(85vh - #{$bindfit-params-height});
 
-#bindfit-form {
+#bindfit-form-general, 
+#bindfit-form-nmr-1to1, 
+#bindfit-form-uv-1to2 {
     padding: 15px;
 }
 

@@ -110,24 +110,33 @@ export default Ember.Controller.extend({
 
     
 
-    // Initial option values
-    kGuess: "1000",
+    //
+    // Initialise options 
+    // 
+
+    // Fitter selector
+    fitterList: [
+        {name: "NMR 1:1", parser: "nmr1to1"},
+        {name: "UV 1:2",  parser: "uv1to2"}
+    ],
+
+    // Parameters
+    params: {
+        kGuess: 1000,
+        k1Guess: 10000,
+        k2Guess: 1000,
+    },
+
+
 
     actions: {
         runFitter: function() {
             var controller = this;
-
-            var kGuess = controller.get("kGuess");
-            console.log(kGuess);
             
-            // Translate form to request
-            var request = {
-                "input": {
-                    "type": "csv",
-                    "value": "input.csv"
-                },
-                "k_guess": kGuess
-            };
+            var parser = controller.parsers[controller.selectedFitter.parser];
+            var request = parser(controller.params);
+
+            console.log(request);
 
             Ember.$.ajax({
                 url: root+"fit",
@@ -171,6 +180,41 @@ export default Ember.Controller.extend({
                 console.log("$.ajax: bindfit call failed");
                 console.log(data);
             });
+        } // runFitter
+    }, // actions
+
+
+
+    //
+    // Custom functions
+    //
+
+    parsers: {
+        nmr1to1: function(params) {
+            // Translate form to request
+            var request = {
+                "fitter": "nmr1to1",
+                "input": {
+                    "type": "csv",
+                    "value": "input.csv"
+                },
+                "k_guess": params.kGuess
+            };
+
+            return request;
+        },
+
+        uv1to2: function(params) {
+            var request = {
+                "fitter": "uv1to2",
+                "input": {
+                    "type": "csv",
+                    "value": "input.csv"
+                },
+                "k_guess": [params.k1Guess, params.k2Guess]
+            };
+
+            return request;
         }
     }
 });
