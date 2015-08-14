@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Fit from "../models/fit";
 
 // Constants?
 var root = "http://supramolecular.echus.co/bindfit/api/";
@@ -106,21 +107,17 @@ export default Ember.Controller.extend({
 	}
     },
 
-    chartData: null,
 
-    
+    // Initialise model defining fitter result
+    fit: Fit.create({}),
 
-    //
-    // Initialise options 
-    // 
-
-    // Fitter selector
+    // Initialise fitter selector
     fitterList: [
         {name: "NMR 1:1", parser: "nmr1to1"},
         {name: "UV 1:2",  parser: "uv1to2"}
     ],
 
-    // Parameters
+    // Initialise form parameters
     params: {
         kGuess: 1000,
         k1Guess: 10000,
@@ -133,9 +130,11 @@ export default Ember.Controller.extend({
         runFitter: function() {
             var controller = this;
             
+            // Parse form data into appropriate format for backend
             var parser = controller.parsers[controller.selectedFitter.parser];
             var request = parser(controller.params);
 
+            console.log("actions.runFitter: form parsed");
             console.log(request);
 
             Ember.$.ajax({
@@ -146,38 +145,17 @@ export default Ember.Controller.extend({
                 dataType: "json"
             })
             .done(function(data) {
-                console.log("$.ajax: bindfit call success");
+                console.log("actions.runFitter: $.ajax: bindfit call success");
                 console.log(data);
 
-                var dataToPlot = [];
+                // Set fit model properties with returned JSON
+                controller.fit.setProperties(data);
 
-                var i;
-                for (i = 0; i < data.fit.length; i++) {
-                    dataToPlot.push({
-                        name: "Fit "+String(i+1),
-                        type: "spline",
-                        marker: {enabled: false},
-                        lineWidth: 2,
-                        data: data.fit[i]
-                    });
-                }
-
-                for (i = 0; i < data.data.length; i++) {
-                    dataToPlot.push({
-                        name: "Data "+String(i+1),
-                        type: "line",
-                        marker: {enabled: true},
-                        lineWidth: 0,
-                        data: data.data[i]
-                    });
-                }
-
-                console.log(dataToPlot);
-                controller.set("kFitted", data.k);
-                controller.set("chartData", dataToPlot);
+                console.log("actions.runFitter: $.ajax: fit model properties set");
+                console.log(controller.fit);
             })
             .fail(function(data) {
-                console.log("$.ajax: bindfit call failed");
+                console.log("actions.runFitter: $.ajax: bindfit call failed");
                 console.log(data);
             });
         } // runFitter
