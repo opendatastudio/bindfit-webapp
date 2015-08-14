@@ -93,18 +93,13 @@
                 </thead> -->
 
                 <tbody>
-                    <tr>
-                        <th scope="row">K<sub>a</sub> (binding constant)</th>
-                        <td>{{kFitted}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Param 2</th>
-                        <td>Placeholder</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Param 3</th>
-                        <td>Placeholder</td>
-                    </tr>
+                    {{#each p in fit.displayParams}}
+                        <tr>
+                            <th scope="row">{{p.label}}</th>
+                            <td>{{p.value}}</td>
+                            <td>{{p.units}}</td>
+                        </tr>
+                    {{/each}}
                 </tbody>
             </table>
 

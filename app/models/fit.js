@@ -48,5 +48,26 @@ export default Ember.Object.extend({
         console.log(series);
 
         return series;
+    }),
+
+    displayParams: Ember.computed("data", "options", function() {
+        // Merge calculated parameters and their labels/units for display
+        var params = [];
+
+        var data = this.get("data");
+        var options = this.get("options");
+        
+        // If model has been populated
+        if (data.params) {
+            for (var i = 0; i < data.params.length; i++) {
+                params.push({
+                    label: options.params[i].label,
+                    value: data.params[i],
+                    units: options.params[i].units
+                });
+            }
+        }
+
+        return params;
     })
 });
