@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Fit from "../models/fit";
 
 // Constants?
 var root = "http://supramolecular.echus.co/bindfit/api/";
@@ -108,51 +107,73 @@ export default Ember.Controller.extend({
     },
 
 
-    // Initialise model defining fitter result
-    fit: Fit.create({}),
-
-    // Initialise fitter selector
-    fitterList: [
-        {name: "NMR 1:1", parser: "nmr1to1"},
-        {name: "UV 1:2",  parser: "uv1to2"}
-    ],
-
-    // Initialise form parameters
-    params: {
-        kGuess: 1000,
-        k1Guess: 10000,
-        k2Guess: 1000,
-    },
-
-
 
     actions: {
-        runFitter: function() {
-            var controller = this;
+        onFitterSelect: function(selection) {
+            // On fitter select, populate fitOptions and fitLabels models
+            // based on selection
+            console.log("actions.onFitterSelect: called");
+            console.log(selection);
             
-            // Parse form data into appropriate format for backend
-            var parser = controller.parsers[controller.selectedFitter.parser];
-            var request = parser(controller.params);
+            var controller = this;
+            var request = {"fitter": selection};
 
-            console.log("actions.runFitter: form parsed");
-            console.log(request);
-
+            // Populate labels
             Ember.$.ajax({
-                url: root+"fit",
+                url:  root+"labels",
                 type: "POST",
                 data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",
-                dataType: "json"
+                dataType:    "json"
+            })
+            .done(function(labels) {
+                controller.fitLabels.setProperties(labels);
+                console.log("actions.onFitterSelect: $.ajax: fitLabels updated");
+                console.log(controller.fitLabels);
+            })
+            .fail(function(error) {
+                console.log("actions.onFitterSelect: $.ajax: bindfit/labels call failed");
+                console.log(error);
+            });
+
+            // Populate options
+            Ember.$.ajax({
+                url:  root+"options",
+                type: "POST",
+                data: JSON.stringify(request),
+                contentType: "application/json; charset=utf-8",
+                dataType:    "json"
+            })
+            .done(function(options) {
+                controller.fitOptions.setProperties(options);
+                console.log("actions.onFitterSelect: $.ajax: fitOptions updated");
+                console.log(controller.fitOptions);
+            })
+            .fail(function(error) {
+                console.log("actions.onFitterSelect: $.ajax: bindfit/options call failed");
+                console.log(error);
+            });
+        },
+
+        runFitter: function() {
+            var controller = this;
+            
+            Ember.$.ajax({
+                url:  root+"fit",
+                type: "POST",
+                data: JSON.stringify(controller.fitOptions),
+                contentType: "application/json; charset=utf-8",
+                dataType:    "json"
             })
             .done(function(data) {
                 console.log("actions.runFitter: $.ajax: bindfit call success");
                 console.log(data);
 
                 // Set fit model properties with returned JSON
-                controller.fit.setProperties(data);
+                controller.fitResult.setProperties(data);
 
                 console.log("actions.runFitter: $.ajax: fit model properties set");
-                console.log(controller.fit);
+                console.log(controller.fitResult);
             })
             .fail(function(data) {
                 console.log("actions.runFitter: $.ajax: bindfit call failed");
