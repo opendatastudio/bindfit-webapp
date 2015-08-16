@@ -31,11 +31,11 @@
                             {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
                         </div>
 
-                        {{#each fitOptions.params}}
+                        {{#each fitOptionsParams}}
                             <div class="input-group col-xs-12">
-                                <div class="input-group-addon">K guess</div>
-                                {{input value=this type="number" class="form-control"}}
-                                <div class="input-group-addon">M<sup>-1</sup></div>
+                                <div class="input-group-addon">{{this.label}} guess</div>
+                                {{input value=this.value type="number" class="form-control"}}
+                                <div class="input-group-addon">{{this.units}}</div>
                             </div>
                         {{/each}}
                     </div>

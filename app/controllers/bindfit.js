@@ -112,7 +112,7 @@ export default Ember.Controller.extend({
 
     // Computed property for displaying input and result parameters annotated 
     // with fitLabels
-    fitResultParams: function(key, value, previousValue) {
+    fitResultParams: function() {
         // Getter
         var controller = this;
 
@@ -120,12 +120,12 @@ export default Ember.Controller.extend({
         var fitLabels = controller.get("fitLabels");
 
         // Create new list of combined results and labels
-        var paramList = [];
+        var paramsLabelled = [];
 
         // If result exists
         if (fitResult.params) {
             for (var i = 0; i < fitResult.params.length; i++) {
-                paramList.push({
+                paramsLabelled.push({
                     "label": fitLabels.params[i].label,
                     "value": fitResult.params[i],
                     "units": fitLabels.params[i].units
@@ -133,11 +133,60 @@ export default Ember.Controller.extend({
             }
         }
 
-        return paramList;
+        return paramsLabelled;
     }.property("fitResult.params", "fitLabels.params"),
 
     fitOptionsParams: function(key, value, previousValue) {
-    },
+        var controller = this;
+
+        var fitOptions = controller.get("fitOptions");
+        var fitLabels  = controller.get("fitLabels");
+
+        console.log("fitOptionsParams: fitOptions before setter");
+        console.log(fitOptions);
+        console.log("fitOptionsParams: fitOptions.params before setter");
+        console.log(fitOptions.params);
+        console.log("fitOptionsParams: get('fitOptions.params') before setter");
+        console.log(controller.get("fitOptions.params"));
+        console.log("fitOptionsParams: fitLabels.params before setter");
+        console.log(fitLabels.params);
+        console.log("fitOptionsParams: get('fitLabels.params') before setter");
+        console.log(controller.get("fitLabels.params"));
+
+        var i;
+
+        // Setter
+        // On fitOptionsParams change, update fitOptions.params list
+        if (arguments.length > 1) {
+            // Create parameter value only list for fitOptions
+            var params = [];
+
+            if (fitOptions.params) {
+                for (i = 0; i < fitOptions.params.length; i++) {
+                    params.push(value.value);
+                }
+            }
+
+            controller.set("fitOptions.params", params);
+        }
+
+        // Getter
+        // Create new list of combined results and labels
+        var paramsLabelled = [];
+
+        // If result exists
+        if (fitOptions.params && fitLabels.params) {
+            for (i = 0; i < fitOptions.params.length; i++) {
+                paramsLabelled.push({
+                    "label": fitLabels.params[i].label,
+                    "value": fitOptions.params[i],
+                    "units": fitLabels.params[i].units
+                });
+            }
+        }
+
+        return paramsLabelled;
+    }.property("fitLabels.params.@each", "fitOptions.params.@each"),
 
     actions: {
         onFitterSelect: function(selection) {
@@ -149,11 +198,16 @@ export default Ember.Controller.extend({
             console.log("actions.onFitterSelect: called");
             console.log("actions.onFitterSelect: selection");
             console.log(selection);
-            
+
             var controller = this;
+
+            console.log("actions.onFitterSelect: fitOptionsParams");
+            console.log(controller.get("fitOptionsParams"));
 
             // If a fitter is selected (not undefined)
             if (selection !== undefined) {
+                console.log("actions.onFitterSelect: selection !== undefined");
+
                 controller.set("fitterSelected", true);
 
                 var request = {"fitter": selection};
@@ -169,7 +223,11 @@ export default Ember.Controller.extend({
                 .done(function(labels) {
                     controller.fitLabels.setProperties(labels);
                     console.log("actions.onFitterSelect: $.ajax: fitLabels updated");
+
                     console.log(controller.fitLabels);
+
+                    console.log("actions.onFitterSelect: get('fitOptionsParams') after fitLabels update");
+                    console.log(controller.get("fitOptionsParams"));
                 })
                 .fail(function(error) {
                     console.log("actions.onFitterSelect: $.ajax: bindfit/labels call failed");
@@ -188,6 +246,9 @@ export default Ember.Controller.extend({
                     controller.fitOptions.setProperties(options);
                     console.log("actions.onFitterSelect: $.ajax: fitOptions updated");
                     console.log(controller.fitOptions);
+
+                    console.log("actions.onFitterSelect: get('fitOptionsParams') after fitOptions update");
+                    console.log(controller.get("fitOptionsParams"));
                 })
                 .fail(function(error) {
                     console.log("actions.onFitterSelect: $.ajax: bindfit/options call failed");
@@ -195,6 +256,7 @@ export default Ember.Controller.extend({
                 });
             } else {
                 // No fitter is selected
+                console.log("actions.onFitterSelect: selection == undefined");
                 controller.set("fitterSelected", false);
             }
         }, // onFitterSelect
