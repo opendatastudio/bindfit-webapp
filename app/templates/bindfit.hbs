@@ -73,11 +73,11 @@
                 </thead> -->
 
                 <tbody>
-                    {{#each fitResult.params as |p|}}
+                    {{#each fitResultParams as |p|}}
                         <tr>
-                            <th scope="row">K</th>
-                            <td>{{p}}</td>
-                            <td>M<sup>-1</sup></td>
+                            <th scope="row">{{p.label}}</th>
+                            <td>{{p.value}}</td>
+                            <td>{{p.units}}</td>
                         </tr>
                     {{/each}}
                 </tbody>

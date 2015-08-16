@@ -110,7 +110,34 @@ export default Ember.Controller.extend({
 	}
     },
 
+    // Computed property for displaying input and result parameters annotated 
+    // with fitLabels
+    fitResultParams: function(key, value, previousValue) {
+        // Getter
+        var controller = this;
 
+        var fitResult = controller.get("fitResult");
+        var fitLabels = controller.get("fitLabels");
+
+        // Create new list of combined results and labels
+        var paramList = [];
+
+        // If result exists
+        if (fitResult.params) {
+            for (var i = 0; i < fitResult.params.length; i++) {
+                paramList.push({
+                    "label": fitLabels.params[i].label,
+                    "value": fitResult.params[i],
+                    "units": fitLabels.params[i].units
+                });
+            }
+        }
+
+        return paramList;
+    }.property("fitResult.params", "fitLabels.params"),
+
+    fitOptionsParams: function(key, value, previousValue) {
+    },
 
     actions: {
         onFitterSelect: function(selection) {
@@ -170,7 +197,7 @@ export default Ember.Controller.extend({
                 // No fitter is selected
                 controller.set("fitterSelected", false);
             }
-        },
+        }, // onFitterSelect
 
         runFitter: function() {
             var controller = this;
