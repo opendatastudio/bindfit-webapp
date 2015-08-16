@@ -1,14 +1,12 @@
 $bindfit-params-height: 100px;
 $bindfit-chart-height: calc(85vh - #{$bindfit-params-height});
 
-#bindfit-form-general, 
-#bindfit-form-params,
-#bindfit-form-nmr-1to1, 
-#bindfit-form-uv-1to2 {
-    padding: 15px;
+#bindfit-form-selector, 
+#bindfit-form-params {
+    padding: 0px 15px;
 }
 
-#bindfit-chart {
+#bindfit-result-chart {
     height: $bindfit-chart-height;
 
     .highcharts-wrapper {
@@ -16,6 +14,6 @@ $bindfit-chart-height: calc(85vh - #{$bindfit-params-height});
     }
 }
 
-#bindfit-params {
+#bindfit-result-params {
     height: $bindfit-params-height;
 }

@@ -9,9 +9,8 @@
         <div class="panel-body">
             <p>Instructions go here</p>
 
-            <form id="bindfit-form-general" class="form-horizontal" {{action "runFitter" on="enter"}}>
+            <form id="bindfit-form-selector" class="form-horizontal" {{action "runFitter" on="enter"}}>
                 <div class="form-group">
-
                     <div class="input-group col-xs-12">
                         {{#x-select action="onFitterSelect" class="form-control"}}
                             <option>Choose fitter</option>
@@ -20,29 +19,30 @@
                             {{/each}}
                         {{/x-select}}
                     </div>
-
-                    <label class="sr-only" for="inputFile">Upload input file</label>
-                    <div class="input-group col-xs-12">
-                        <div class="input-group-addon">Input file</div>
-                        {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
-                    </div>
-
                 </div>
             </form>
 
-            <form id="bindfit-form-params" class="form-horizontal" {{action "runFitter" on="enter"}}>
-                <div class="form-group">
-                    {{#each fitOptions.params}}
+            {{#if fitterSelected}}
+                <form id="bindfit-form-params" class="form-horizontal" {{action "runFitter" on="enter"}}>
+                    <div class="form-group">
+                        <label class="sr-only" for="inputFile">Upload input file</label>
                         <div class="input-group col-xs-12">
-                            <div class="input-group-addon">K guess</div>
-                            {{input value=this type="number" class="form-control"}}
-                            <div class="input-group-addon">M<sup>-1</sup></div>
+                            <div class="input-group-addon">Input file</div>
+                            {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
                         </div>
-                    {{/each}}
-                </div>
-            </form>
 
-            <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
+                        {{#each fitOptions.params}}
+                            <div class="input-group col-xs-12">
+                                <div class="input-group-addon">K guess</div>
+                                {{input value=this type="number" class="form-control"}}
+                                <div class="input-group-addon">M<sup>-1</sup></div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </form>
+
+                <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
+            {{/if}}
 
         </div>
     </div> <!-- Panel -->
@@ -56,7 +56,7 @@
         <div class="col-xs-12">
         <div class="panel panel-default">
 
-            <div id="bindfit-chart" class="panel-body">
+            <div id="bindfit-result-chart" class="panel-body">
                 {{bindfit-high-charts content=fitResult.chartData chartOptions=chartOptions theme=chartTheme}}
             </div> <!-- Chart -->
 
@@ -64,7 +64,7 @@
                 <h3 class="panel-title">Parameters</h3>
             </div>
 
-            <table id="bindfit-params" class="table">
+            <table id="bindfit-result-params" class="table">
                 <!-- <thead>
                     <tr>
                         <th>Parameter</th>
