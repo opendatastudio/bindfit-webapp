@@ -136,28 +136,19 @@ export default Ember.Controller.extend({
         return paramsLabelled;
     }.property("fitResult.params", "fitLabels.params"),
 
-    fitOptionsParams: function(key, value, previousValue) {
+    fitOptionsParams: function(key, value) {
         var controller = this;
 
         var fitOptions = controller.get("fitOptions");
         var fitLabels  = controller.get("fitLabels");
-
-        console.log("fitOptionsParams: fitOptions before setter");
-        console.log(fitOptions);
-        console.log("fitOptionsParams: fitOptions.params before setter");
-        console.log(fitOptions.params);
-        console.log("fitOptionsParams: get('fitOptions.params') before setter");
-        console.log(controller.get("fitOptions.params"));
-        console.log("fitOptionsParams: fitLabels.params before setter");
-        console.log(fitLabels.params);
-        console.log("fitOptionsParams: get('fitLabels.params') before setter");
-        console.log(controller.get("fitLabels.params"));
 
         var i;
 
         // Setter
         // On fitOptionsParams change, update fitOptions.params list
         if (arguments.length > 1) {
+            console.log("fitOptionsParams: setter called");
+
             // Create parameter value only list for fitOptions
             var params = [];
 
@@ -168,6 +159,8 @@ export default Ember.Controller.extend({
             }
 
             controller.set("fitOptions.params", params);
+            console.log("fitOptionsParams: params set by user input");
+            console.log(controller.get("fitOptions.params"));
         }
 
         // Getter
@@ -212,47 +205,28 @@ export default Ember.Controller.extend({
 
                 var request = {"fitter": selection};
 
-                // Populate labels
-                Ember.$.ajax({
-                    url:  root+"labels",
-                    type: "POST",
-                    data: JSON.stringify(request),
-                    contentType: "application/json; charset=utf-8",
-                    dataType:    "json"
-                })
-                .done(function(labels) {
-                    controller.fitLabels.setProperties(labels);
-                    console.log("actions.onFitterSelect: $.ajax: fitLabels updated");
+                var promises = {
+                    labels: Ember.$.ajax({
+                        url:  root+"labels",
+                        type: "POST",
+                        data: JSON.stringify(request),
+                        contentType: "application/json; charset=utf-8",
+                        dataType:    "json"}),
+                    options: Ember.$.ajax({
+                        url:  root+"options",
+                        type: "POST",
+                        data: JSON.stringify(request),
+                        contentType: "application/json; charset=utf-8",
+                        dataType:    "json"})
+                };
 
-                    console.log(controller.fitLabels);
-
-                    console.log("actions.onFitterSelect: get('fitOptionsParams') after fitLabels update");
-                    console.log(controller.get("fitOptionsParams"));
-                })
-                .fail(function(error) {
-                    console.log("actions.onFitterSelect: $.ajax: bindfit/labels call failed");
-                    console.log(error);
-                });
-
-                // Populate options
-                Ember.$.ajax({
-                    url:  root+"options",
-                    type: "POST",
-                    data: JSON.stringify(request),
-                    contentType: "application/json; charset=utf-8",
-                    dataType:    "json"
-                })
-                .done(function(options) {
-                    controller.fitOptions.setProperties(options);
-                    console.log("actions.onFitterSelect: $.ajax: fitOptions updated");
-                    console.log(controller.fitOptions);
-
-                    console.log("actions.onFitterSelect: get('fitOptionsParams') after fitOptions update");
-                    console.log(controller.get("fitOptionsParams"));
-                })
-                .fail(function(error) {
-                    console.log("actions.onFitterSelect: $.ajax: bindfit/options call failed");
-                    console.log(error);
+                Ember.RSVP.hash(promises).then(function(hash) {
+                    controller.fitLabels.setProperties(hash.labels);
+                    controller.fitOptions.setProperties(hash.options);
+                    console.log("actions.onFitterSelect: RSVP succeeded");
+                    console.log("actions.onFitterSelect: fitLables and fitOptions set");
+                    console.log(controller.get("fitLabels"));
+                    console.log(controller.get("fitOptions"));
                 });
             } else {
                 // No fitter is selected
@@ -267,13 +241,15 @@ export default Ember.Controller.extend({
             Ember.$.ajax({
                 url:  root+"fit",
                 type: "POST",
-                data: JSON.stringify(controller.fitOptions),
+                data: JSON.stringify(controller.get("fitOptions")),
                 contentType: "application/json; charset=utf-8",
                 dataType:    "json"
             })
             .done(function(data) {
                 console.log("actions.runFitter: $.ajax: bindfit call success");
                 console.log(data);
+                console.log("actions.runFitter: $.ajax: current fitOptions");
+                console.log(controller.get("fitOptions"));
 
                 // Set fit model properties with returned JSON
                 controller.fitResult.setProperties(data);
