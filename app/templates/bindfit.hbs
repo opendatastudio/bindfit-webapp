@@ -9,7 +9,7 @@
         <div class="panel-body">
             <p>Instructions go here</p>
 
-            <form id="bindfit-form-selector" class="form-horizontal" {{action "runFitter" on="enter"}}>
+            <form id="bindfit-form-selector" class="form-horizontal">
                 <div class="form-group">
                     <div class="input-group col-xs-12">
                         {{#x-select action="onFitterSelect" class="form-control"}}
@@ -31,11 +31,37 @@
                             {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
                         </div>
 
-                        {{#each fitOptionsParams}}
+                        {{#each fitOptions.params key="@index" as |param pi|}}
+                        {{#each fitLabels.params as |label li|}}
+                        {{#if (eq pi li)}}
                             <div class="input-group col-xs-12">
-                                <div class="input-group-addon">{{this.label}} guess</div>
+                                <div class="input-group-addon">{{pi}} {{li}} {{label.label}} guess</div>
                                 {{input value=this.value type="number" class="form-control"}}
-                                <div class="input-group-addon">{{this.units}}</div>
+                                <div class="input-group-addon">{{label.units}}</div>
+                            </div>
+                        {{/if}}
+                        {{/each}}
+                        {{/each}}
+                    </div>
+                </form>
+
+                <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
+            {{/if}}
+
+            {{#if fitterSelected}}
+                <form id="bindfit-form-params" class="form-horizontal" {{action "runFitter" on="enter"}}>
+                    <div class="form-group">
+                        <label class="sr-only" for="inputFile">Upload input file</label>
+                        <div class="input-group col-xs-12">
+                            <div class="input-group-addon">Input file</div>
+                            {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
+                        </div>
+
+                        {{#each fitOptions.params}}
+                            <div class="input-group col-xs-12">
+                                <div class="input-group-addon">K guess</div>
+                                {{input value=this.value type="number" class="form-control"}}
+                                <div class="input-group-addon">M<sup>-1</sup></div>
                             </div>
                         {{/each}}
                     </div>
