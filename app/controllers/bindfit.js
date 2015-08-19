@@ -88,6 +88,9 @@ export default Ember.Controller.extend({
 
             var controller = this;
 
+            // Clear previous fitResult
+            controller.get('fitResult').reset();
+
             // If a fitter is selected (not undefined)
             if (selection !== undefined) {
                 console.log("actions.onFitterSelect: selection !== undefined");

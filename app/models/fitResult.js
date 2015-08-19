@@ -42,5 +42,12 @@ export default Ember.Object.extend({
         console.log(series);
 
         return series;
-    })
+    }),
+
+    reset: function() {
+        this.set('data', null);
+        this.set('fit', null);
+        this.set('residuals', null);
+        this.set('params', null);
+    }
 });
