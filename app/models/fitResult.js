@@ -49,5 +49,9 @@ export default Ember.Object.extend({
         this.set('fit', null);
         this.set('residuals', null);
         this.set('params', null);
-    }
+    },
+
+    isPopulated: Ember.computed('data', 'fit', 'residuals', 'params', function() {
+        return (this.get('data') && this.get('fit') && this.get('residuals') && this.get('params'));
+    })
 });

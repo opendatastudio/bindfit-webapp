@@ -8,10 +8,6 @@ export default Ember.Controller.extend({
     // Used to display/hide "fit" button
     fitterSelected: false,
 
-    // Boolean to track whether a fit is available to export
-    // Used to display "export" button when appropriate
-    fitAvailable: false,
-
 
 
     // Uploader setup
@@ -99,7 +95,6 @@ export default Ember.Controller.extend({
             // Clear any previous fitResult/Export and reset tracker variable
             controller.get('fitResult').reset();
             controller.get('fitExport').reset();
-            controller.set('fitAvailable', false);
 
             // If a fitter is selected (not undefined)
             if (selection !== undefined) {
@@ -159,7 +154,6 @@ export default Ember.Controller.extend({
 
                 // Set fit model properties with returned JSON
                 controller.fitResult.setProperties(data);
-                controller.set('fitAvailable', true);
 
                 console.log("actions.runFitter: $.ajax: fit model properties set");
                 console.log(controller.fitResult);

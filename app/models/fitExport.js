@@ -5,5 +5,9 @@ export default Ember.Object.extend({
 
     reset: function() {
         this.set('url', null);
-    }
+    },
+
+    isPopulated: Ember.computed('url', function() {
+        return this.get('url');
+    })
 });

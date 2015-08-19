@@ -42,8 +42,8 @@
                 </form>
 
                 <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
-                {{#if fitAvailable}}
-                    {{#if fitExport.url}}
+                {{#if fitResult.isPopulated}}
+                    {{#if fitExport.isPopulated}}
                         <a href={{fitExport.url}} class="btn btn-info btn-block">Download</a>
                     {{else}}
                         <button class="btn btn-default btn-block" {{action "exportFit"}}>Export result</button>
