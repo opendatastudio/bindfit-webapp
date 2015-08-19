@@ -6,7 +6,7 @@ export default Ember.Object.extend({
     residuals: null, 
     params: null,
 
-    chartData: Ember.computed("data", "options", function() {
+    chartData: Ember.computed("data", "fit", "residuals", function() {
         // Generate Highcharts series formatted fit data
 
         var series = [];
@@ -38,7 +38,7 @@ export default Ember.Object.extend({
             }
         }
 
-        console.log("Fit.chartData: chartData computed");
+        console.log("FitOptions.chartData: chartData computed");
         console.log(series);
 
         return series;

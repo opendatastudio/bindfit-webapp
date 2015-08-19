@@ -12,50 +12,6 @@ export default Ember.Controller.extend({
     uploadURL: root+"upload",
     uploadName: "input",
 
-    // Highcharts setup
-    chartOptions: {
-        chart: {                                                               
-            style: {'font-family': 'Lato, Helvetica, Arial, Verdana', 'text-transform': 'none'}
-        },                                                                     
-        title: {                                                               
-            text: "",                                                          
-        },                                                                     
-        subtitle: {                                                            
-            text: "",                                                          
-        },                                                                     
-        xAxis: {                                                               
-            title: {                                                           
-                text: "Equivalent total [G]\u2080/[H]\u2080"                   
-            },                                                                 
-            labels: {                                                          
-                format: "{value}"                                              
-            }                                                                  
-        },                                                                     
-        yAxis: { // Primary y axis                                            
-            title: {                                                        
-                text: "\u03B4", 
-            },                                                              
-            labels: {                                                       
-                format: "{value} ppm"                                           
-            },                                                              
-            opposite: true,
-            //minPadding: 0,                                                  
-            //maxPadding: 0,                                                  
-            //startOnTick: false,                                             
-            //endOnTick: false                                                
-        },                                                                 
-        tooltip: {                                                          
-            shared: true                                                    
-        },                                                                  
-	legend: {
-            layout: 'horizontal',
-            floating: true,
-            align: 'left',
-            verticalAlign: 'top',
-            borderWidth: 0,
-	},
-    },
-
     chartTheme: {
         colors: ["#79BCB8", "#EE6C4D", "#0B4F6C", "#FA8334", "#197BBD", "#033860", "#47A8BD", "#1E3888"],
 	chart: {
@@ -70,12 +26,18 @@ export default Ember.Controller.extend({
             }
 	},
 	tooltip: {
+            shared: true,
             crosshairs: [true, false],
             borderWidth: 0,
             backgroundColor: 'rgba(219,219,216,0.8)',
             shadow: false
 	},
 	legend: {
+            layout: 'horizontal',
+            floating: true,
+            align: 'left',
+            verticalAlign: 'top',
+            borderWidth: 0,
             itemStyle: {
                 fontWeight: 'bold',
                 fontSize: '14px'
@@ -101,7 +63,8 @@ export default Ember.Controller.extend({
                 style: {
                     fontSize: '12px'
                 }
-            }
+            },
+            opposite: true,
 	},
 	plotOptions: {
             candlestick: {
@@ -124,9 +87,6 @@ export default Ember.Controller.extend({
             console.log(selection);
 
             var controller = this;
-
-            console.log("actions.onFitterSelect: fitOptionsParams");
-            console.log(controller.get("fitOptionsParams"));
 
             // If a fitter is selected (not undefined)
             if (selection !== undefined) {
