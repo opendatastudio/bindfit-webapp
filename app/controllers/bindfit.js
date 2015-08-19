@@ -4,13 +4,21 @@ import Ember from 'ember';
 var root = "http://supramolecular.echus.co/bindfit/api/";
 
 export default Ember.Controller.extend({
-    // Variable to track whether a fitter is selected (used in displaying fit button)
-    // No fitter selected initially
+    // Variable to track whether a fitter is selected 
+    // Used to display/hide "fit" button
     fitterSelected: false,
+
+    // Boolean to track whether a fit is available to export
+    // Used to display "export" button when appropriate
+    fitAvailable: false,
+
+
 
     // Uploader setup
     uploadURL: root+"upload",
     uploadName: "input",
+
+
 
     chartTheme: {
         colors: ["#79BCB8", "#EE6C4D", "#0B4F6C", "#FA8334", "#197BBD", "#033860", "#47A8BD", "#1E3888"],
@@ -88,8 +96,10 @@ export default Ember.Controller.extend({
 
             var controller = this;
 
-            // Clear previous fitResult
+            // Clear any previous fitResult/Export and reset tracker variable
             controller.get('fitResult').reset();
+            controller.get('fitExport').reset();
+            controller.set('fitAvailable', false);
 
             // If a fitter is selected (not undefined)
             if (selection !== undefined) {
@@ -146,11 +156,10 @@ export default Ember.Controller.extend({
             .done(function(data) {
                 console.log("actions.runFitter: $.ajax: bindfit call success");
                 console.log(data);
-                console.log("actions.runFitter: $.ajax: current fitOptions");
-                console.log(controller.get("fitOptions"));
 
                 // Set fit model properties with returned JSON
                 controller.fitResult.setProperties(data);
+                controller.set('fitAvailable', true);
 
                 console.log("actions.runFitter: $.ajax: fit model properties set");
                 console.log(controller.fitResult);
@@ -159,6 +168,29 @@ export default Ember.Controller.extend({
                 console.log("actions.runFitter: $.ajax: bindfit call failed");
                 console.log(data);
             });
-        } // runFitter
+        }, // runFitter
+
+        exportFit: function() {
+            var controller = this;
+
+            var request = {data: controller.get('fitResult')};
+
+            // Send fitResult to backend for exporting
+            Ember.$.ajax({
+                url:  root+"export",
+                type: "POST",
+                data: JSON.stringify(request),
+                contentType: "application/json; charset=utf-8",
+                dataType:    "json"
+            })
+            .done(function(data) {
+                // Set exported URL
+                controller.fitExport.setProperties(data);
+            })
+            .fail(function(error) {
+                console.log("actions.exportFit: $.ajax: bindfit call failed");
+                console.log(error);
+            });
+        } // exportFit
     }, // actions
 });

@@ -2,6 +2,7 @@ import Ember from 'ember';
 import FitResult  from "../models/fitResult";
 import FitLabels  from "../models/fitLabels";
 import FitOptions from "../models/fitOptions";
+import FitExport  from "../models/fitExport";
 
 export default Ember.Route.extend({
     urls: {
@@ -16,6 +17,7 @@ export default Ember.Route.extend({
             fitLabels:  FitLabels.create({}),
             fitOptions: FitOptions.create({}),
             fitResult:  FitResult.create({}),
+            fitExport:  FitExport.create({})
         });
 
         return model;
