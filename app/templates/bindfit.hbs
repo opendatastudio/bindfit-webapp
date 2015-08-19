@@ -22,7 +22,7 @@
                 </div>
             </form>
 
-            {{#if fitterSelected}}
+            {{#if fitOptions.isPopulated}}
                 <form id="bindfit-form-params" class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
                         <label class="sr-only" for="inputFile">Upload input file</label>

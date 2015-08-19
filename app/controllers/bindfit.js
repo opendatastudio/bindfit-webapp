@@ -4,12 +4,6 @@ import Ember from 'ember';
 var root = "http://supramolecular.echus.co/bindfit/api/";
 
 export default Ember.Controller.extend({
-    // Variable to track whether a fitter is selected 
-    // Used to display/hide "fit" button
-    fitterSelected: false,
-
-
-
     // Uploader setup
     uploadURL: root+"upload",
     uploadName: "input",
@@ -92,15 +86,14 @@ export default Ember.Controller.extend({
 
             var controller = this;
 
-            // Clear any previous fitResult/Export and reset tracker variable
+            // Clear any previous fit options, results and exports
+            controller.get('fitOptions').reset();
             controller.get('fitResult').reset();
             controller.get('fitExport').reset();
 
             // If a fitter is selected (not undefined)
             if (selection !== undefined) {
                 console.log("actions.onFitterSelect: selection !== undefined");
-
-                controller.set("fitterSelected", true);
 
                 var request = {"fitter": selection};
 
@@ -127,10 +120,6 @@ export default Ember.Controller.extend({
                     console.log(controller.get("fitLabels"));
                     console.log(controller.get("fitOptions"));
                 });
-            } else {
-                // No fitter is selected
-                console.log("actions.onFitterSelect: selection == undefined");
-                controller.set("fitterSelected", false);
             }
         }, // onFitterSelect
 
