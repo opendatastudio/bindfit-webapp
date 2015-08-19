@@ -18,7 +18,6 @@ export default Ember.Object.extend({
 
         var x      = this.get("x");
         var y      = this.get("y");
-        var params = this.get("params");
 
         var chartOptions = {
             title: {
@@ -29,28 +28,21 @@ export default Ember.Object.extend({
             },
             xAxis: {
                 title: {
-                    text: "Equivalent total [G]\u2080/[H]\u2080",
                     text: x.label
                 },
                 labels: {
-                    format: "{value}",
                     format: "{value} "+x.units
                 }
             },
             yAxis: { // Primary y axis
                 title: {
-                    text: "\u03B4",
                     text: y.label
                 },
                 labels: {
-                    format: "{value} ppm",
                     format: "{value} "+y.units
                 }
             }
         };
-
-        console.log("FitLabels.chartOptions: chartOptions computed");
-        console.log(chartOptions);
 
         return chartOptions;
     })
