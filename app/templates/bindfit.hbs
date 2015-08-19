@@ -30,38 +30,12 @@
                             <div class="input-group-addon">Input file</div>
                             {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
                         </div>
-
+                        
                         {{#each fitOptions.params key="@index" as |param pi|}}
-                        {{#each fitLabels.params as |label li|}}
-                        {{#if (eq pi li)}}
                             <div class="input-group col-xs-12">
-                                <div class="input-group-addon">{{pi}} {{li}} {{label.label}} guess</div>
-                                {{input value=this.value type="number" class="form-control"}}
-                                <div class="input-group-addon">{{label.units}}</div>
-                            </div>
-                        {{/if}}
-                        {{/each}}
-                        {{/each}}
-                    </div>
-                </form>
-
-                <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
-            {{/if}}
-
-            {{#if fitterSelected}}
-                <form id="bindfit-form-params" class="form-horizontal" {{action "runFitter" on="enter"}}>
-                    <div class="form-group">
-                        <label class="sr-only" for="inputFile">Upload input file</label>
-                        <div class="input-group col-xs-12">
-                            <div class="input-group-addon">Input file</div>
-                            {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
-                        </div>
-
-                        {{#each fitOptions.params}}
-                            <div class="input-group col-xs-12">
-                                <div class="input-group-addon">K guess</div>
-                                {{input value=this.value type="number" class="form-control"}}
-                                <div class="input-group-addon">M<sup>-1</sup></div>
+                                <div class="input-group-addon">{{get-at-index fitLabels.params pi "label"}} guess</div>
+                                {{input value=param.value type="number" class="form-control"}}
+                                <div class="input-group-addon">{{get-at-index fitLabels.params pi "units"}}</div>
                             </div>
                         {{/each}}
                     </div>
@@ -99,11 +73,11 @@
                 </thead> -->
 
                 <tbody>
-                    {{#each fitResultParams as |p|}}
+                    {{#each fitResult.params key="@index" as |param pi|}}
                         <tr>
-                            <th scope="row">{{p.label}}</th>
-                            <td>{{p.value}}</td>
-                            <td>{{p.units}}</td>
+                            <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
+                            <td>{{param.value}}</td>
+                            <td>{{get-at-index fitLabels.params pi "units"}}</td>
                         </tr>
                     {{/each}}
                 </tbody>

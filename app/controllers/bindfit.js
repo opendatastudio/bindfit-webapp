@@ -237,7 +237,11 @@ export default Ember.Controller.extend({
 
         runFitter: function() {
             var controller = this;
-            
+
+            console.log("actions.runFitter: called");
+            console.log("actions.runFitter: current fitOptions.params TO SEND");
+            console.log(controller.get("fitOptions.params"));
+
             Ember.$.ajax({
                 url:  root+"fit",
                 type: "POST",
