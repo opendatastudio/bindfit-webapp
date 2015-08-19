@@ -110,76 +110,7 @@ export default Ember.Controller.extend({
 	}
     },
 
-    // Computed property for displaying input and result parameters annotated 
-    // with fitLabels
-    fitResultParams: function() {
-        // Getter
-        var controller = this;
 
-        var fitResult = controller.get("fitResult");
-        var fitLabels = controller.get("fitLabels");
-
-        // Create new list of combined results and labels
-        var paramsLabelled = [];
-
-        // If result exists
-        if (fitResult.params) {
-            for (var i = 0; i < fitResult.params.length; i++) {
-                paramsLabelled.push({
-                    "label": fitLabels.params[i].label,
-                    "value": fitResult.params[i],
-                    "units": fitLabels.params[i].units
-                });
-            }
-        }
-
-        return paramsLabelled;
-    }.property("fitResult.params", "fitLabels.params"),
-
-    fitOptionsParams: function(key, value) {
-        var controller = this;
-
-        var fitOptions = controller.get("fitOptions");
-        var fitLabels  = controller.get("fitLabels");
-
-        var i;
-
-        // Setter
-        // On fitOptionsParams change, update fitOptions.params list
-        if (arguments.length > 1) {
-            console.log("fitOptionsParams: setter called");
-
-            // Create parameter value only list for fitOptions
-            var params = [];
-
-            if (fitOptions.params) {
-                for (i = 0; i < fitOptions.params.length; i++) {
-                    params.push(value.value);
-                }
-            }
-
-            controller.set("fitOptions.params", params);
-            console.log("fitOptionsParams: params set by user input");
-            console.log(controller.get("fitOptions.params"));
-        }
-
-        // Getter
-        // Create new list of combined results and labels
-        var paramsLabelled = [];
-
-        // If result exists
-        if (fitOptions.params && fitLabels.params) {
-            for (i = 0; i < fitOptions.params.length; i++) {
-                paramsLabelled.push({
-                    "label": fitLabels.params[i].label,
-                    "value": fitOptions.params[i],
-                    "units": fitLabels.params[i].units
-                });
-            }
-        }
-
-        return paramsLabelled;
-    }.property("fitLabels.params.@each", "fitOptions.params.@each"),
 
     actions: {
         onFitterSelect: function(selection) {
@@ -267,39 +198,4 @@ export default Ember.Controller.extend({
             });
         } // runFitter
     }, // actions
-
-
-
-    //
-    // Custom functions
-    //
-
-    parsers: {
-        nmr1to1: function(params) {
-            // Translate form to request
-            var request = {
-                "fitter": "nmr1to1",
-                "input": {
-                    "type": "csv",
-                    "value": "input.csv"
-                },
-                "k_guess": params.kGuess
-            };
-
-            return request;
-        },
-
-        uv1to2: function(params) {
-            var request = {
-                "fitter": "uv1to2",
-                "input": {
-                    "type": "csv",
-                    "value": "input.csv"
-                },
-                "k_guess": [params.k1Guess, params.k2Guess]
-            };
-
-            return request;
-        }
-    }
 });
