@@ -4,6 +4,9 @@ import Ember from 'ember';
 var root = "http://supramolecular.echus.co/bindfit/api/";
 
 export default Ember.Controller.extend({
+    uploadPercentage: null,
+    uploadComplete:   false,
+
     actions: {
         onFitterSelect: function(selection) {
             /*** 
@@ -18,9 +21,11 @@ export default Ember.Controller.extend({
             var controller = this;
 
             // Clear any previous fit options, results and exports
+            // Reset upload trackers
             controller.get('fitOptions').reset();
             controller.get('fitResult').reset();
             controller.get('fitExport').reset();
+            controller.set('uploadPercentage', null);
 
             // If a fitter is selected (not undefined)
             if (selection !== undefined) {
@@ -54,12 +59,28 @@ export default Ember.Controller.extend({
             }
         }, // onFitterSelect
 
+        onUploadComplete: function(details) {
+            // Set unique file id in fitOptions
+            this.set('fitOptions.input.value', details.filename);
+            this.set('uploadComplete', true);
+        }, // onUploadComplete
+
+        onUploadProgress: function(event) {
+            /***
+             * Set upload percentage tracker in controller on upload progress
+             */
+
+            Ember.run.once(this, function() {
+                this.set("uploadPercentage", Math.round(event.percent))
+            });
+        }, // onUploadProgress
+
         runFitter: function() {
             var controller = this;
 
             console.log("actions.runFitter: called");
-            console.log("actions.runFitter: current fitOptions.params TO SEND");
-            console.log(controller.get("fitOptions.params"));
+            console.log("actions.runFitter: current fitOptions TO SEND");
+            console.log(controller.get("fitOptions"));
 
             Ember.$.ajax({
                 url:  root+"fit",
@@ -105,6 +126,11 @@ export default Ember.Controller.extend({
                 console.log("actions.exportFit: $.ajax: bindfit call failed");
                 console.log(error);
             });
-        } // exportFit
+        }, // exportFit
+
+        downloadFit: function() {
+            // Clear fitExport on download 
+            this.get('fitExport').reset();
+        } // downloadFit
     }, // actions
 });

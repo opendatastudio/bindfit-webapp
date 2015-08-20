@@ -32,12 +32,13 @@
             {{#if fitOptions.isPopulated}}
                 <form id="bindfit-form-params" class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
-                        <label class="sr-only" for="inputFile">Upload input file</label>
+                        <label class="sr-only" for="fileUpload">Choose input file to upload</label>
                         <div class="input-group col-xs-12">
-                            <div class="input-group-addon">Input file</div>
-                            {{file-upload url=uploadURL name=uploadName id="inputFile" class="form-control"}}
+                            <span class="btn btn-default btn-file btn-block">
+                                Upload input file {{#if uploadPercentage}}({{uploadPercentage}}%){{/if}} {{file-upload url=uploadURL name=uploadName onComplete="onUploadComplete" onProgress="onUploadProgress" id="fileUpload"}}
+                            </span>
                         </div>
-                        
+
                         {{#each fitOptions.params key="@index" as |param pi|}}
                             <div class="input-group col-xs-12">
                                 <div class="input-group-addon">{{get-at-index fitLabels.params pi "label"}} guess</div>
