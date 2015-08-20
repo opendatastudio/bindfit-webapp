@@ -1,9 +1,16 @@
 import Ember from 'ember';
+import ChartTheme from '../themes/bindfit-high-charts';
 
 // Constants?
 var root = "http://supramolecular.echus.co/bindfit/api/";
 
 export default Ember.Controller.extend({
+    // Highcharts theme
+    chartTheme: ChartTheme,
+
+    // Uploader settings
+    uploadURL: "http://supramolecular.echus.co/bindfit/api/upload",
+    uploadName: "input",
     uploadPercentage: null,
     uploadComplete:   false,
 
@@ -71,7 +78,7 @@ export default Ember.Controller.extend({
              */
 
             Ember.run.once(this, function() {
-                this.set("uploadPercentage", Math.round(event.percent))
+                this.set("uploadPercentage", Math.round(event.percent));
             });
         }, // onUploadProgress
 
