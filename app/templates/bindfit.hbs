@@ -32,11 +32,8 @@
             {{#if fitOptions.isPopulated}}
                 <form id="bindfit-form-params" class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
-                        <label class="sr-only" for="fileUpload">Choose input file to upload</label>
                         <div class="input-group col-xs-12">
-                            <span class="btn btn-default btn-file btn-block">
-                                Upload input file {{#if uploadPercentage}}({{uploadPercentage}}%){{/if}} {{file-upload url=uploadURL name=uploadName onComplete="onUploadComplete" onProgress="onUploadProgress" id="fileUpload"}}
-                            </span>
+                            {{data-file-upload onComplete="onUploadComplete" onRestart="onUploadRestart"}}
                         </div>
 
                         {{#each fitOptions.params key="@index" as |param pi|}}

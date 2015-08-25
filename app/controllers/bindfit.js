@@ -70,17 +70,11 @@ export default Ember.Controller.extend({
             // Set unique file id in fitOptions
             this.set('fitOptions.input.value', details.filename);
             this.set('uploadComplete', true);
-        }, // onUploadComplete
+        },
 
-        onUploadProgress: function(event) {
-            /***
-             * Set upload percentage tracker in controller on upload progress
-             */
-
-            Ember.run.once(this, function() {
-                this.set("uploadPercentage", Math.round(event.percent));
-            });
-        }, // onUploadProgress
+        onUploadRestart: function() {
+            console.log("actions.onUploadRestart: called");
+        },
 
         runFitter: function() {
             var controller = this;
