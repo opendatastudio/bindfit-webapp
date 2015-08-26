@@ -8,12 +8,6 @@ export default Ember.Controller.extend({
     // Highcharts theme
     chartTheme: ChartTheme,
 
-    // Uploader settings
-    uploadURL: "http://supramolecular.echus.co/bindfit/api/upload",
-    uploadName: "input",
-    uploadPercentage: null,
-    uploadComplete:   false,
-
     actions: {
         onFitterSelect: function(selection) {
             /*** 
@@ -28,13 +22,12 @@ export default Ember.Controller.extend({
             var controller = this;
 
             // Clear any previous fit options, results and exports
-            // Reset upload trackers
-            controller.get('fitOptions').reset();
             controller.get('fitResult').reset();
+            controller.get('fitOptions').reset();
             controller.get('fitExport').reset();
-            controller.set('uploadPercentage', null);
 
             // If a fitter is selected (not undefined)
+            // Populate fitOptions and fitLabels
             if (selection !== undefined) {
                 console.log("actions.onFitterSelect: selection !== undefined");
 
@@ -69,11 +62,15 @@ export default Ember.Controller.extend({
         onUploadComplete: function(details) {
             // Set unique file id in fitOptions
             this.set('fitOptions.input.value', details.filename);
-            this.set('uploadComplete', true);
         },
 
         onUploadRestart: function() {
             console.log("actions.onUploadRestart: called");
+
+            // Clear any previous fit results and exports
+            // Retain options
+            this.get('fitResult').reset();
+            this.get('fitExport').reset();
         },
 
         runFitter: function() {
