@@ -62,6 +62,10 @@ export default Ember.Controller.extend({
         onUploadComplete: function(details) {
             // Set unique file id in fitOptions
             this.set('fitOptions.input.value', details.filename);
+
+            console.log("actions.onUploadComplete: called");
+            console.log("actions.onUploadComplete: Updated fitOptions.input");
+            console.log(this.get("fitOptions.input"));
         },
 
         onUploadRestart: function() {
@@ -129,6 +133,33 @@ export default Ember.Controller.extend({
         downloadFit: function() {
             // Clear fitExport on download 
             this.get('fitExport').reset();
-        } // downloadFit
+        }, // downloadFit
+
+        saveFit: function() {
+            var controller = this;
+
+            var request = {
+                result:  controller.get("fitResult"),
+                options: controller.get("fitOptions"),
+                metadata: {}
+            };
+
+            // Send fitResult to backend for exporting
+            Ember.$.ajax({
+                url:  root+"fit/save",
+                type: "POST",
+                data: JSON.stringify(request),
+                contentType: "application/json; charset=utf-8",
+                dataType:    "json"
+            })
+            .done(function(data) {
+                console.log("actions.saveFit: $.ajax: save success");
+                console.log(data);
+            })
+            .fail(function(error) {
+                console.log("actions.saveFit: $.ajax: save fail");
+                console.log(error);
+            });
+        } // saveFit
     }, // actions
 });
