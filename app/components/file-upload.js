@@ -8,7 +8,7 @@ export default EmberUploader.FileField.extend({
     onProgress: 'onProgress',
 
     filesDidChange: function(files) {
-        var _this = this
+        var _this = this;
         var uploadUrl = this.get('url');
         var uploadName = this.get('name');
 
