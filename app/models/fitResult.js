@@ -10,13 +10,38 @@ export default Ember.Object.extend({
         // Generate Highcharts series formatted fit data
 
         var series = [];
+        var i = 0;
 
-        var data      = this.get("data");
-        var fit       = this.get("fit");
-
+        var d = this.get("data");
+        var f  = this.get("fit");
+            
         // If model has been populated
-        if (data) {
-            var i;
+        if (d) {
+            // Assume all data matches data.geq length
+            // TODO if not throw error
+            var data = [];
+            var fit  = [];
+            var data_series = [];
+            var fit_series  = [];
+
+            // For each observation
+            for (var obs = 0; obs < d.y.length; obs++) {
+                data_series = [];
+                fit_series = [];
+
+                // Create [[geq, y], [geq, y]...] array for each obs 
+                // For each point in current observation
+                for (i = 0; i < d.geq.length; i++) {
+                    data_series.push([d.geq[i], d.y[obs][i]]);
+                    fit_series.push([d.geq[i], f.y[obs][i]]);
+                }
+
+                data.push(data_series);
+                fit.push(fit_series);
+            }
+
+
+
             for (i = 0; i < fit.length; i++) {
                 series.push({
                     name: "Fit "+String(i+1),
