@@ -19,8 +19,6 @@ export default Ember.Object.extend({
         if (d) {
             // Assume all data matches data.geq length
             // TODO if not throw error
-            var data = [];
-            var fit  = [];
             var data_series = [];
             var fit_series  = [];
 
@@ -36,29 +34,20 @@ export default Ember.Object.extend({
                     fit_series.push([d.geq[i], f.y[obs][i]]);
                 }
 
-                data.push(data_series);
-                fit.push(fit_series);
-            }
-
-
-
-            for (i = 0; i < fit.length; i++) {
                 series.push({
-                    name: "Fit "+String(i+1),
-                    type: "spline",
-                    marker: {enabled: false},
-                    lineWidth: 2,
-                    data: fit[i]
-                });
-            }
-
-            for (i = 0; i < data.length; i++) {
-                series.push({
-                    name: "Data "+String(i+1),
+                    name: "Data "+String(obs+1),
                     type: "line",
                     marker: {enabled: true},
                     lineWidth: 0,
-                    data: data[i]
+                    data: data_series
+                });
+
+                series.push({
+                    name: "Fit "+String(obs+1),
+                    type: "spline",
+                    marker: {enabled: false},
+                    lineWidth: 2,
+                    data: fit_series 
                 });
             }
         }
