@@ -61,11 +61,11 @@ export default Ember.Controller.extend({
 
         onUploadComplete: function(details) {
             // Set unique file id in fitOptions
-            this.set('fitOptions.input.value', details.filename);
+            this.set('fitOptions.data_id', details.id);
 
             console.log("actions.onUploadComplete: called");
-            console.log("actions.onUploadComplete: Updated fitOptions.input");
-            console.log(this.get("fitOptions.input"));
+            console.log("actions.onUploadComplete: Updated fitOptions.data_id");
+            console.log(this.get("fitOptions.data_id"));
         },
 
         onUploadRestart: function() {
