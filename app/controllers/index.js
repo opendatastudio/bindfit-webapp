@@ -147,9 +147,9 @@ export default Ember.Controller.extend({
             var controller = this;
 
             var request = {
-                result:  controller.get("fitResult"),
-                options: controller.get("fitOptions"),
-                metadata: {}
+                result:   controller.get("fitResult"),
+                options:  controller.get("fitOptions"),
+                metadata: controller.get("fitMeta")
             };
 
             // Send fitResult to backend for exporting

@@ -2,6 +2,7 @@ import Ember from 'ember';
 import FitResult  from "../models/fitResult";
 import FitLabels  from "../models/fitLabels";
 import FitOptions from "../models/fitOptions";
+import FitMeta    from "../models/fitOptions";
 
 export default Ember.Route.extend({
     urls: {
@@ -32,7 +33,7 @@ export default Ember.Route.extend({
                     }),
                 // TODO set human readable name here after retrieving
                 // urls.list
-                fitName:    fit.name
+                fitMeta:    FitMeta.create(fit.metadata)
             };
 
             return Ember.RSVP.hash(model);
