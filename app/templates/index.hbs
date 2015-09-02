@@ -1,21 +1,28 @@
+<div class="container-fluid">
 <div class="row">
-
-    <div id="sidebar" class="col-xs-12 col-md-4 col-lg-3">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Fitter input</h3>
-        </div>
-
-        <div class="panel-body">
-            <div class="alert alert-info">
+    <div class="col-xs-12">
+        <div class="alert alert-info alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4>Get started</h4>
             <ol>
                 <li>Select a model to fit your data to</li>
                 <li>Upload csv formatted data file</li>
                 <li>Enter initial parameter guesses</li>
                 <li>Click "Fit"</li>
             </ol>
-            </div>
+        </div> <! -- Alert -->
+    </div> <!-- Col -->
+</div> <!-- Row -->
 
+<div class="row">
+
+    <div id="sidebar" class="col-xs-12 col-md-4 col-lg-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Control</h3>
+        </div>
+
+        <div class="panel-body">
             <form id="bindfit-form-selector" class="form-horizontal">
                 <div class="form-group">
                     <div class="input-group col-xs-12">
@@ -47,39 +54,15 @@
                 </form>
 
                 <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
-                {{#if fitResult.isPopulated}}
-                    <!-- Save button -->
-                    <button class="btn btn-default btn-block" {{action "saveFit"}}>Save</button>
-
-                    <!-- Export button -->
-                    {{#if fitExport.isPopulated}}
-                        <a href={{fitExport.url}} class="btn btn-info btn-block">Download</a>
-                    {{else}}
-                        <button class="btn btn-default btn-block" {{action "exportFit"}}>Export</button>
-                    {{/if}}
-
-                {{/if}}
             {{/if}}
 
         </div>
     </div> <!-- Panel -->
-    </div> <!-- Sidebar -->
 
-
-
-    <div class="col-xs-12 col-md-8 col-lg-9">
-
-        <div class="row">
-        <div class="col-xs-12">
+    {{#if fitResult.isPopulated}}
         <div class="panel panel-default">
-
-            <div id="bindfit-result-chart" class="panel-body">
-                {{bindfit-high-charts content=fitResult.chartData chartOptions=fitLabels.chartOptions theme=chartTheme}}
-            </div> <!-- Chart -->
-
-            {{#if fitResult.isPopulated}}
             <div class="panel-heading">
-                <h3 class="panel-title">Calculated parameters</h3>
+                <h3 class="panel-title">Result</h3>
             </div>
 
             <table id="bindfit-result-params" class="table">
@@ -100,7 +83,33 @@
                     {{/each}}
                 </tbody>
             </table>
-            {{/if}}
+
+            <div class="panel-body">
+               <!-- Save button -->
+                <button class="btn btn-default btn-block" {{action "saveFit"}}>Save</button>
+
+                <!-- Export button -->
+                {{#if fitExport.isPopulated}}
+                    <a href={{fitExport.url}} class="btn btn-info btn-block">Download</a>
+                {{else}}
+                    <button class="btn btn-default btn-block" {{action "exportFit"}}>Export</button>
+                {{/if}}
+            </div>
+        </div> <!-- Panel -->
+    {{/if}}
+
+    </div> <!-- Sidebar -->
+
+
+
+    <div class="col-xs-12 col-md-8 col-lg-9">
+        <div class="row">
+        <div class="col-xs-12">
+        <div class="panel panel-default">
+
+            <div id="bindfit-result-chart" class="panel-body">
+                {{bindfit-high-charts content=fitResult.chartData chartOptions=fitLabels.chartOptions theme=chartTheme}}
+            </div> <!-- Chart -->
 
         </div> <!-- Panel for results -->
         </div> <!-- col -->
@@ -109,3 +118,4 @@
     </div> <!-- Main -->
 
 </div> <!-- global row -->
+</div> <!-- container -->
