@@ -155,6 +155,9 @@ export default Ember.Controller.extend({
             .done(function(data) {
                 console.log("actions.saveFit: $.ajax: save success");
                 console.log(data);
+
+                // Set saved Fit ID
+                controller.fitSave.setProperties(data);
             })
             .fail(function(error) {
                 console.log("actions.saveFit: $.ajax: save fail");

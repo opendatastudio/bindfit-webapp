@@ -3,6 +3,7 @@ import FitResult  from "../models/fitResult";
 import FitLabels  from "../models/fitLabels";
 import FitOptions from "../models/fitOptions";
 import FitExport  from "../models/fitExport";
+import FitSave    from "../models/fitSave";
 
 export default Ember.Route.extend({
     urls: {
@@ -15,10 +16,13 @@ export default Ember.Route.extend({
         var model = Ember.RSVP.hash({
             // Fitter models
             fitList:    Ember.$.getJSON(urls.list),
+
             fitLabels:  FitLabels.create({}),
             fitOptions: FitOptions.create({}),
             fitResult:  FitResult.create({}),
+
             fitExport:  FitExport.create({}),
+            fitSave:    FitSave.create({})
         });
 
         return model;
