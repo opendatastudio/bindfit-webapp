@@ -17,11 +17,18 @@
 <div class="row">
 
     <div id="sidebar" class="col-xs-12 col-md-4 col-lg-3">
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Control</h3>
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h3 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Control
+                </a>
+            </h3>
         </div>
 
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
         <div class="panel-body">
             <form id="bindfit-form-selector" class="form-horizontal">
                 <div class="form-group">
@@ -56,15 +63,21 @@
                 <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
             {{/if}}
 
-        </div>
+        </div> <!-- Panel body -->
+        </div> <!-- Panel body collapse wrapper -->
     </div> <!-- Panel -->
 
     {{#if fitResult.isPopulated}}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Result</h3>
+        <div class="panel panel-info">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h3 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Results
+                </a>
+                </h3>
             </div>
 
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <table id="bindfit-result-params" class="table">
                 <!-- <thead>
                     <tr>
@@ -83,13 +96,19 @@
                     {{/each}}
                 </tbody>
             </table>
+            </div> <!-- Panel body collapse wrapper -->
         </div> <!-- Panel -->
 
-        <div class="panel panel-primary">
+        <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Share</h3>
+                <h3 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Share
+                </a>
+                </h3>
             </div>
 
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
             <div class="panel-body">
                 <form id="bindfit-form-save" class="form-horizontal" {{action "saveFit" on="enter"}}>
                     <div class="form-group">
@@ -115,9 +134,11 @@
                 {{else}}
                     <button class="btn btn-default btn-block" {{action "exportFit"}}>Export</button>
                 {{/if}}
-            </div>
+            </div> <!-- Panel body -->
+            </div> <!-- Panel body collapse wrapper -->
         </div> <!-- Panel -->
     {{/if}}
+    </div> <!-- Panel group (accordion) -->
 
     </div> <!-- Sidebar -->
 

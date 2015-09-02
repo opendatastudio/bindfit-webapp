@@ -20,6 +20,15 @@ $bindfit-chart-height: calc(85vh - #{$bindfit-params-height});
     height: $bindfit-params-height;
 }
 
+#accordion {
+    .panel-title {
+        a {
+            width: 100%;
+            display: block;
+        }
+    }
+}
+
 .btn-file {
     position: relative;
     overflow: hidden;
