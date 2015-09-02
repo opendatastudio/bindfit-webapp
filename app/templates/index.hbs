@@ -87,7 +87,7 @@
             <div class="panel-body">
                <!-- Save button -->
                 {{#if fitSave.isPopulated}}
-                    <a href={{fitSave.url}} class="btn btn-info btn-block">Link to saved fit</a>
+                    <a href={{fitSave.url}} target="_blank" class="btn btn-info btn-block">Link to saved fit</a>
                 {{else}}
                     <button class="btn btn-default btn-block" {{action "saveFit"}}>Save</button>
                 {{/if}}

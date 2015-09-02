@@ -25,6 +25,7 @@ export default Ember.Controller.extend({
             controller.get('fitResult').reset();
             controller.get('fitOptions').reset();
             controller.get('fitExport').reset();
+            controller.get('fitSave').reset();
 
             // If a fitter is selected (not undefined)
             // Populate fitOptions and fitLabels
@@ -75,9 +76,16 @@ export default Ember.Controller.extend({
             // Retain options
             this.get('fitResult').reset();
             this.get('fitExport').reset();
+            this.get('fitSave').reset();
         },
 
         runFitter: function() {
+            // Clear any previous fit results and exports
+            // Retain options
+            this.get('fitResult').reset();
+            this.get('fitExport').reset();
+            this.get('fitSave').reset();
+
             var controller = this;
 
             console.log("actions.runFitter: called");
