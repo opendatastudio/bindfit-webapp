@@ -4,7 +4,7 @@ export default Ember.Object.extend({
     id: null,
 
     url: Ember.computed('id', function() {
-        return "http://supramolecular.echus.co:4200/bindfit/view/"+this.get('id');
+        return "http://app.supramolecular.echus.co/bindfit/view/"+this.get('id');
     }),
 
     reset: function() {
