@@ -4,7 +4,7 @@ module.exports = {
     production: {
         store: {
             type: 'ssh',
-            remoteDir: '/var/www/supramolecular/static/',
+            remoteDir: '/var/www/supramolecular/',
             host: 'supramolecular.echus.co',
             username: 'webadmin',
             privateKeyFile: process.env.SSH_KEY_FILE,
