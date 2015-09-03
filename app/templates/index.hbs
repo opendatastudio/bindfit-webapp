@@ -129,11 +129,7 @@
                 {{/if}}
 
                 <!-- Export button -->
-                {{#if fitExport.isPopulated}}
-                    <a href={{fitExport.url}} class="btn btn-info btn-block">Download</a>
-                {{else}}
-                    <button class="btn btn-default btn-block" {{action "exportFit"}}>Export</button>
-                {{/if}}
+                {{fit-export data=fitResult output=fitExport}}
             </div> <!-- Panel body -->
             </div> <!-- Panel body collapse wrapper -->
         </div> <!-- Panel -->
