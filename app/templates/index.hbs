@@ -110,23 +110,10 @@
 
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
             <div class="panel-body">
-                <form class="form-horizontal" {{action "saveFit" on="enter"}}>
-                    <div class="form-group">
-                        <label for="bindfit-form-save-name">Name</label>
-                        {{input id="bindfit-form-save-name" value=fitMeta.name type="text" class="form-control"}}
-                    </div>
-                    <div class="form-group">
-                        <label for="bindfit-form-save-notes">Notes</label>
-                        {{textarea id="bindfit-form-save-notes" value=fitMeta.notes class="form-control" rows="5"}}
-                    </div>
-                </form>
+                <!-- Save form -->
+                {{fit-save data=fitResult metadata=fitMeta options=fitOptions output=fitSave}}
 
-               <!-- Save button -->
-                {{#if fitSave.isPopulated}}
-                    <a href={{fitSave.url}} target="_blank" class="btn btn-info btn-block">Link to saved fit</a>
-                {{else}}
-                    <button class="btn btn-default btn-block" {{action "saveFit"}}>Save</button>
-                {{/if}}
+                <hr/>
 
                 <!-- Export button -->
                 {{fit-export data=fitResult output=fitExport}}

@@ -113,67 +113,6 @@ export default Ember.Controller.extend({
                 console.log("actions.runFitter: $.ajax: bindfit call failed");
                 console.log(data);
             });
-        }, // runFitter
-
-        exportFit: function() {
-            var controller = this;
-
-            var request = {data: controller.get('fitResult')};
-
-            console.log("actions.exportFit: request to send");
-            console.log(request);
-
-            // Send fitResult to backend for exporting
-            Ember.$.ajax({
-                url:  root+"export",
-                type: "POST",
-                data: JSON.stringify(request),
-                contentType: "application/json; charset=utf-8",
-                dataType:    "json"
-            })
-            .done(function(data) {
-                // Set exported URL
-                controller.fitExport.setProperties(data);
-            })
-            .fail(function(error) {
-                console.log("actions.exportFit: $.ajax: bindfit call failed");
-                console.log(error);
-            });
-        }, // exportFit
-
-        downloadFit: function() {
-            // Clear fitExport on download 
-            this.get('fitExport').reset();
-        }, // downloadFit
-
-        saveFit: function() {
-            var controller = this;
-
-            var request = {
-                result:   controller.get("fitResult"),
-                options:  controller.get("fitOptions"),
-                metadata: controller.get("fitMeta")
-            };
-
-            // Send fitResult to backend for exporting
-            Ember.$.ajax({
-                url:  root+"fit/save",
-                type: "POST",
-                data: JSON.stringify(request),
-                contentType: "application/json; charset=utf-8",
-                dataType:    "json"
-            })
-            .done(function(data) {
-                console.log("actions.saveFit: $.ajax: save success");
-                console.log(data);
-
-                // Set saved Fit ID
-                controller.fitSave.setProperties(data);
-            })
-            .fail(function(error) {
-                console.log("actions.saveFit: $.ajax: save fail");
-                console.log(error);
-            });
-        } // saveFit
+        } // runFitter
     }, // actions
 });

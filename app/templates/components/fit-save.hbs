@@ -1,0 +1,17 @@
+ <form class="form-horizontal" {{action "saveFit" on="enter"}}>
+     <div class="form-group">
+         <label for="bindfit-form-save-name">Name</label>
+         {{input id="bindfit-form-save-name" value=metadata.name type="text" class="form-control"}}
+     </div>
+     <div class="form-group">
+         <label for="bindfit-form-save-notes">Notes</label>
+         {{textarea id="bindfit-form-save-notes" value=metadata.notes class="form-control" rows="5"}}
+     </div>
+ </form>
+
+<!-- Button or link displayed depending on whether save is available -->
+{{#if output.isPopulated}}
+    <a href={{output.url}} target="_blank" class="btn btn-info btn-block">Link to saved fit</a>
+{{else}}
+    <button class="btn btn-default btn-block" {{action "saveFit"}}>Save</button>
+{{/if}}
