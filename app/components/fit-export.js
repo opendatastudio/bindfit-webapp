@@ -12,7 +12,7 @@ export default Ember.Component.extend({
 
             // Send input data to backend for exporting
             Ember.$.ajax({
-                url: "http://supramolecular.echus.co/bindfit/api/export",
+                url: "http://api.supramolecular.echus.co/bindfit/export",
                 type: "POST",
                 data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",

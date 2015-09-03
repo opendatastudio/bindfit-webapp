@@ -2,7 +2,7 @@ import Ember from 'ember';
 import ChartTheme from '../themes/bindfit-high-charts';
 
 // Constants?
-var root = "http://supramolecular.echus.co/bindfit/api/";
+var root = "http://api.supramolecular.echus.co/bindfit/";
 
 export default Ember.Controller.extend({
     // Highcharts theme

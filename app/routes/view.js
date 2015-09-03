@@ -6,9 +6,9 @@ import FitMeta    from "../models/fit-meta";
 
 export default Ember.Route.extend({
     urls: {
-        view:   "http://supramolecular.echus.co/bindfit/api/fit/",
-        list:   "http://supramolecular.echus.co/bindfit/api/list",
-        labels: "http://supramolecular.echus.co/bindfit/api/labels",
+        view:   "http://api.supramolecular.echus.co/bindfit/fit/",
+        list:   "http://api.supramolecular.echus.co/bindfit/list",
+        labels: "http://api.supramolecular.echus.co/bindfit/labels",
     },
 
     model: function(params) {

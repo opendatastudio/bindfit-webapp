@@ -6,7 +6,7 @@ export default Ember.Component.extend({
     onRestart:  "onRestart",  // Called when user re-uploads a new file
 
     // file-upload component settings 
-    uploadURL:  "http://supramolecular.echus.co/bindfit/api/upload",
+    uploadURL:  "http://api.supramolecular.echus.co/bindfit/upload",
     uploadName: "input",
 
     // Upload state trackers

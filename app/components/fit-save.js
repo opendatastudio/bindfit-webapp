@@ -13,7 +13,7 @@ export default Ember.Component.extend({
 
             // Send fitResult to backend for exporting
             Ember.$.ajax({
-                url: "http://supramolecular.echus.co/bindfit/api/fit/save",
+                url: "http://api.supramolecular.echus.co/bindfit/fit/save",
                 type: "POST",
                 data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",

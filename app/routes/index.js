@@ -8,7 +8,7 @@ import FitSave    from "../models/fit-save";
 
 export default Ember.Route.extend({
     urls: {
-        list:   "http://supramolecular.echus.co/bindfit/api/list",
+        list:   "http://api.supramolecular.echus.co/bindfit/list",
     },
 
     model: function() {
