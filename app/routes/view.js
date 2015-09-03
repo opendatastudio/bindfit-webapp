@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import FitResult  from "../models/fitResult";
-import FitLabels  from "../models/fitLabels";
-import FitOptions from "../models/fitOptions";
-import FitMeta    from "../models/fitOptions";
+import FitResult  from "../models/fit-result";
+import FitLabels  from "../models/fit-labels";
+import FitOptions from "../models/fit-options";
+import FitMeta    from "../models/fit-meta";
 
 export default Ember.Route.extend({
     urls: {

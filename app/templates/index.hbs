@@ -90,7 +90,7 @@
                     {{#each fitResult.params key="@index" as |param pi|}}
                         <tr>
                             <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
-                            <td>{{param.value}}</td>
+                            <td>{{round param.value 2}}</td>
                             <td>{{get-at-index fitLabels.params pi "units"}}</td>
                         </tr>
                     {{/each}}

@@ -120,6 +120,9 @@ export default Ember.Controller.extend({
 
             var request = {data: controller.get('fitResult')};
 
+            console.log("actions.exportFit: request to send");
+            console.log(request);
+
             // Send fitResult to backend for exporting
             Ember.$.ajax({
                 url:  root+"export",
