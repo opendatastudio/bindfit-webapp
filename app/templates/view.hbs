@@ -41,7 +41,7 @@
             <h3 class="panel-title">Calculated parameters</h3>
         </div>
 
-        <table id="bindfit-result-params" class="table">
+        <table class="table">
             <tbody>
                 {{#each fitResult.params key="@index" as |param pi|}}
                     <tr>
@@ -63,7 +63,7 @@
         <div class="col-xs-12">
         <div class="panel panel-default">
 
-            <div id="bindfit-result-chart" class="panel-body">
+            <div class="panel-body">
                 {{bindfit-high-charts content=fitResult.chartData chartOptions=fitLabels.chartOptions theme=chartTheme}}
             </div> <!-- Chart -->
 

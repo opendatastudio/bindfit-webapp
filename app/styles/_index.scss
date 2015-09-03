@@ -1,0 +1,25 @@
+#bindfit-index {
+    #sidebar {
+        form {
+            padding: 0px 15px;
+        } // form
+
+        #accordion {
+            .panel-title {
+                a {
+                    width: 100%;
+                    display: block;
+                }
+            }
+        } // accordion
+    } // sidebar
+    
+    #main {
+        #chart {
+            height: 500px;
+            .highcharts-wrapper {
+                height: 100%;
+            }
+        } // chart
+    } // main
+}

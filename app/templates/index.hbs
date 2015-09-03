@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div id="bindfit-index" class="container-fluid">
 <div class="row">
     <div class="col-xs-4 col-xs-offset-4">
         <div class="alert alert-default alert-dismissable" role="alert">
@@ -30,7 +30,7 @@
 
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
         <div class="panel-body">
-            <form id="bindfit-form-selector" class="form-horizontal">
+            <form class="form-horizontal">
                 <div class="form-group">
                     <div class="input-group col-xs-12">
                         {{#x-select action="onFitterSelect" class="form-control"}}
@@ -44,7 +44,7 @@
             </form>
 
             {{#if fitOptions.isPopulated}}
-                <form id="bindfit-form-params" class="form-horizontal" {{action "runFitter" on="enter"}}>
+                <form class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
                         <div class="input-group col-xs-12">
                             {{data-file-upload onComplete="onUploadComplete" onRestart="onUploadRestart"}}
@@ -78,7 +78,7 @@
             </div>
 
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <table id="bindfit-result-params" class="table">
+            <table class="table">
                 <!-- <thead>
                     <tr>
                         <th>Parameter</th>
@@ -110,7 +110,7 @@
 
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
             <div class="panel-body">
-                <form id="bindfit-form-save" class="form-horizontal" {{action "saveFit" on="enter"}}>
+                <form class="form-horizontal" {{action "saveFit" on="enter"}}>
                     <div class="form-group">
                         <label for="bindfit-form-save-name">Name</label>
                         {{input id="bindfit-form-save-name" value=fitMeta.name type="text" class="form-control"}}
@@ -144,12 +144,12 @@
 
 
 
-    <div class="col-xs-12 col-md-8 col-lg-9">
+    <div id="main" class="col-xs-12 col-md-8 col-lg-9">
         <div class="row">
         <div class="col-xs-12">
         <div class="panel panel-default">
 
-            <div id="bindfit-result-chart" class="panel-body">
+            <div id="chart" class="panel-body">
                 {{bindfit-high-charts content=fitResult.chartData chartOptions=fitLabels.chartOptions theme=chartTheme}}
             </div> <!-- Chart -->
 
