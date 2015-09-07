@@ -3,10 +3,10 @@ import Ember from 'ember';
 export default Ember.Object.extend({
     data: null,
     fit: null,
-    residuals: null, 
     params: null,
+    residuals: null, 
 
-    chartData: Ember.computed("data", "fit", "residuals", function() {
+    chartData: Ember.computed("data", "fit", function() {
         // Generate Highcharts series formatted fit data
 
         var series = [];
@@ -65,7 +65,7 @@ export default Ember.Object.extend({
         this.set('params', null);
     },
 
-    isPopulated: Ember.computed('data', 'fit', 'residuals', 'params', function() {
-        return (this.get('data') && this.get('fit') && this.get('residuals') && this.get('params'));
+    isPopulated: Ember.computed('data', 'fit', 'params', function() {
+        return (this.get('data') && this.get('fit') && this.get('params'));
     })
 });
