@@ -60,7 +60,8 @@
                     </div>
                 </form>
 
-                <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button>
+                <!-- <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button> -->
+                {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" class="btn btn-primary btn-block"}}
             {{/if}}
 
         </div> <!-- Panel body -->

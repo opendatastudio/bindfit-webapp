@@ -79,7 +79,7 @@ export default Ember.Controller.extend({
             this.get('fitSave').reset();
         },
 
-        runFitter: function() {
+        runFitter: function(callback) {
             // Clear any previous fit results and exports
             // Retain options
             this.get('fitResult').reset();
@@ -92,7 +92,7 @@ export default Ember.Controller.extend({
             console.log("actions.runFitter: current fitOptions TO SEND");
             console.log(controller.get("fitOptions"));
 
-            Ember.$.ajax({
+            var promise = Ember.$.ajax({
                 url:  root+"fit",
                 type: "POST",
                 data: JSON.stringify(controller.get("fitOptions")),
@@ -113,6 +113,9 @@ export default Ember.Controller.extend({
                 console.log("actions.runFitter: $.ajax: bindfit call failed");
                 console.log(data);
             });
+
+            // For async button
+            callback(promise);
         } // runFitter
     }, // actions
 });
