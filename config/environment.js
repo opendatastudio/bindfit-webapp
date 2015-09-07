@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'supramolecular-client',
+    modulePrefix: 'bindfit-client',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',

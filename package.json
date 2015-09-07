@@ -1,7 +1,7 @@
 {
-  "name": "supramolecular-client",
-  "version": "0.0.0",
-  "description": "Small description for supramolecular-client goes here",
+  "name": "bindfit-client",
+  "version": "0.5.0",
+  "description": "Binding constant fitter for supramolecular chemistry",
   "private": true,
   "directories": {
     "doc": "doc",
