@@ -12,6 +12,23 @@
                 }
             }
         } // accordion
+
+        .async-button {
+            @extend .btn;
+            @extend .btn-block;
+        }
+        .async-button.default {
+            @extend .btn-primary;
+        }
+        .async-button.pending {
+            @extend .btn-default;
+        }
+        .async-button.fulfilled {
+            @extend .btn-info;
+        }
+        .async-button.rejected {
+            @extend .btn-warning;
+        }
     } // sidebar
     
     #main {
