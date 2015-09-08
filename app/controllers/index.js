@@ -92,14 +92,23 @@ export default Ember.Controller.extend({
             console.log("actions.runFitter: current fitOptions TO SEND");
             console.log(controller.get("fitOptions"));
 
-            var promise = Ember.$.ajax({
-                url:  root+"fit",
-                type: "POST",
-                data: JSON.stringify(controller.get("fitOptions")),
-                contentType: "application/json; charset=utf-8",
-                dataType:    "json"
-            })
-            .done(function(data) {
+            var promise = new Ember.RSVP.Promise(function(resolve, reject) {
+                Ember.$.ajax({
+                    url:  root+"fit",
+                    type: "POST",
+                    data: JSON.stringify(controller.get("fitOptions")),
+                    contentType: "application/json; charset=utf-8",
+                    dataType:    "json"
+                })
+                .done(resolve)
+                .fail(reject);
+            });
+
+            // For async button
+            callback(promise);
+
+            promise.then(
+            function(data) {
                 console.log("actions.runFitter: $.ajax: bindfit call success");
                 console.log(data);
 
@@ -108,14 +117,11 @@ export default Ember.Controller.extend({
 
                 console.log("actions.runFitter: $.ajax: fit model properties set");
                 console.log(controller.fitResult);
-            })
-            .fail(function(data) {
+            },
+            function(error) {
                 console.log("actions.runFitter: $.ajax: bindfit call failed");
-                console.log(data);
+                console.log(error);
             });
-
-            // For async button
-            callback(promise);
         } // runFitter
     }, // actions
 });
