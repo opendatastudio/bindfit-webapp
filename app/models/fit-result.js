@@ -9,6 +9,9 @@ export default Ember.Object.extend({
     chartData: Ember.computed("data", "fit", function() {
         // Generate Highcharts series formatted fit data
 
+        // Limit number of datas to plot
+        var PLOT_LIMIT = 8;
+
         var series = [];
         var i = 0;
 
@@ -22,8 +25,14 @@ export default Ember.Object.extend({
             var data_series = [];
             var fit_series  = [];
 
+            var y_len = d.y.length;
+            
+            if (y_len > PLOT_LIMIT) {
+                y_len = PLOT_LIMIT;
+            }
+
             // For each observation
-            for (var obs = 0; obs < d.y.length; obs++) {
+            for (var obs = 0; obs < y_len; obs++) {
                 data_series = [];
                 fit_series = [];
 
