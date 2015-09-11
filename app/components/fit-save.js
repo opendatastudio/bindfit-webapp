@@ -11,6 +11,9 @@ export default Ember.Component.extend({
                 options:  _this.get("options")
             };
 
+            console.log("actions.exportFit: request to send");
+            console.log(request);
+
             // Send fitResult to backend for exporting
             Ember.$.ajax({
                 url: "http://api.supramolecular.echus.co/bindfit/fit/save",

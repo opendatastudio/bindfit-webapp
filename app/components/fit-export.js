@@ -5,7 +5,11 @@ export default Ember.Component.extend({
         exportFit: function() {
             var _this = this;
 
-            var request = {data: _this.get('data')};
+            var request = {
+                result:   _this.get("data"),
+                metadata: _this.get("metadata"),
+                options:  _this.get("options")
+            };
 
             console.log("actions.exportFit: request to send");
             console.log(request);
