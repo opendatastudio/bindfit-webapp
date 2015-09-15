@@ -5,6 +5,8 @@ export default Ember.Object.extend({
     fit: null,
     params: null,
     residuals: null, 
+    species_coeff: null,
+    species_molefrac: null,
 
     chartData: Ember.computed("data", "fit", function() {
         // Generate Highcharts series formatted fit data
@@ -72,6 +74,8 @@ export default Ember.Object.extend({
         this.set('fit', null);
         this.set('residuals', null);
         this.set('params', null);
+        this.set('species_coeff', null);
+        this.set('species_molefrac', null);
     },
 
     isPopulated: Ember.computed('data', 'fit', 'params', function() {
