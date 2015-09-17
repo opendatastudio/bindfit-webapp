@@ -15,16 +15,19 @@ export default Ember.Route.extend({
         var urls = this.urls;
 
         // Retrieve specified fit data from backend
-        return Ember.$.getJSON(urls.view+params.id).then(function(fit) {
+        return Ember.$.getJSON(urls.view+params.id).then(function(response) {
             // Populate full model for retrieved fit
             // (labels must be retrieved separately)
             var model = {
-                fitOptions: FitOptions.create(fit.options),
-                fitResult:  FitResult.create(fit.result),
+                fitOptions: FitOptions.create(response.options),
+                fitResult:  FitResult.create({
+                    fit:  response.fit,
+                    data: response.data
+                }),
                 fitLabels:  Ember.$.ajax({
                     url:  urls.labels,
                     type: "POST",
-                    data: JSON.stringify({fitter: fit.options.fitter}),
+                    data: JSON.stringify({fitter: response.options.fitter}),
                     contentType: "application/json; charset=utf-8",
                     dataType:    "json"
                     })
@@ -33,7 +36,7 @@ export default Ember.Route.extend({
                     }),
                 // TODO set human readable name here after retrieving
                 // urls.list
-                fitMeta:    FitMeta.create(fit.metadata)
+                fitMeta:    FitMeta.create(response.meta)
             };
 
             return Ember.RSVP.hash(model);

@@ -43,7 +43,7 @@
 
         <table class="table">
             <tbody>
-                {{#each fitResult.params key="@index" as |param pi|}}
+                {{#each fitResult.fit.params key="@index" as |param pi|}}
                     <tr>
                         <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
                         <td>{{round param.value 2}}</td>
