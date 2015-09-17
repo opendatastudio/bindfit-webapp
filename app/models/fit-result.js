@@ -2,11 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Object.extend({
     data: null,
-    fit: null,
-    params: null,
-    residuals: null, 
-    species_coeff: null,
-    species_molefrac: null,
+    fit:  null,
 
     chartData: Ember.computed("data", "fit", function() {
         // Generate Highcharts series formatted fit data
@@ -22,15 +18,25 @@ export default Ember.Object.extend({
             
         // If model has been populated
         if (d) {
-            // Assume all data matches data.geq length
-            // TODO if not throw error
             var data_series = [];
             var fit_series  = [];
 
-            var y_len = d.y.length;
+            var data_y = d.y[0];
+            var fit_y  = f.y[0];
             
+            // Assume all data and fits matche data.x[0] length
+            // TODO if not throw error
+            var y_len  = data_y.length;
             if (y_len > PLOT_LIMIT) {
                 y_len = PLOT_LIMIT;
+            }
+
+            // Calculate geq for x axis
+            var data_x = [];
+            var h0 = d.x[0];
+            var g0 = d.x[1];
+            for (i = 0; i < g0.length; i++) {
+                data_x.push(g0[i]/h0[i]);
             }
 
             // For each observation
@@ -40,9 +46,9 @@ export default Ember.Object.extend({
 
                 // Create [[geq, y], [geq, y]...] array for each obs 
                 // For each point in current observation
-                for (i = 0; i < d.geq.length; i++) {
-                    data_series.push([d.geq[i], d.y[obs][i]]);
-                    fit_series.push([d.geq[i], f.y[obs][i]]);
+                for (i = 0; i < data_x.length; i++) {
+                    data_series.push([data_x[i], data_y[obs][i]]);
+                    fit_series.push([data_x[i], fit_y[obs][i]]);
                 }
 
                 series.push({
@@ -72,13 +78,10 @@ export default Ember.Object.extend({
     reset: function() {
         this.set('data', null);
         this.set('fit', null);
-        this.set('residuals', null);
-        this.set('params', null);
-        this.set('species_coeff', null);
-        this.set('species_molefrac', null);
+        this.set('abs', false);
     },
 
-    isPopulated: Ember.computed('data', 'fit', 'params', function() {
-        return (this.get('data') && this.get('fit') && this.get('params'));
+    isPopulated: Ember.computed('data', 'fit', function() {
+        return (this.get('data') && this.get('fit'));
     })
 });

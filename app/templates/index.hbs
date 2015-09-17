@@ -88,7 +88,7 @@
                 </thead> -->
 
                 <tbody>
-                    {{#each fitResult.params key="@index" as |param pi|}}
+                    {{#each fitResult.fit.params key="@index" as |param pi|}}
                         <tr>
                             <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
                             <td>{{round param.value 2}}</td>
@@ -112,12 +112,12 @@
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
             <div class="panel-body">
                 <!-- Save form -->
-                {{fit-save data=fitResult metadata=fitMeta options=fitOptions output=fitSave}}
+                {{fit-save data=fitResult.data fit=fitResult.fit meta=fitMeta options=fitOptions output=fitSave}}
 
                 <hr/>
 
                 <!-- Export button -->
-                {{fit-export data=fitResult metadata=fitMeta options=fitOptions labels=fitLabels output=fitExport}}
+                {{fit-export data=fitResult.data fit=fitResult.fit meta=fitMeta options=fitOptions output=fitExport}}
             </div> <!-- Panel body -->
             </div> <!-- Panel body collapse wrapper -->
         </div> <!-- Panel -->
