@@ -13,6 +13,7 @@
             }
         } // accordion
 
+        // Async button styles
         .async-button {
             @extend .btn;
             @extend .btn-block;
@@ -28,6 +29,11 @@
         }
         .async-button.rejected {
             @extend .btn-warning;
+        }
+
+        // Left align horizontal forms
+        .form-horizontal .control-label {
+            text-align: left;
         }
     } // sidebar
     

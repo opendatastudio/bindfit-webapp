@@ -24,6 +24,7 @@
     "ember-cli-app-version": "0.4.0",
     "ember-cli-async-button": "^0.5.0",
     "ember-cli-babel": "^5.0.0",
+    "ember-cli-bootstrap-datepicker": "0.5.4",
     "ember-cli-bootstrap-sassy": "0.0.18",
     "ember-cli-dependency-checker": "^1.0.0",
     "ember-cli-deploy": "^0.4.3",
