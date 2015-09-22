@@ -24,7 +24,7 @@ export default Ember.Object.extend({
             var data_y = d.y[0];
             var fit_y  = f.y[0];
             
-            // Assume all data and fits matche data.x[0] length
+            // Assume all data and fits match data.y[0] length
             // TODO if not throw error
             var y_len  = data_y.length;
             if (y_len > PLOT_LIMIT) {
