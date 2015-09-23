@@ -20,8 +20,6 @@ export default Ember.Controller.extend({
         // In order to synchronize tooltips and crosshairs, override the 
         // built-in events with handlers defined on the parent element.
         Ember.$("#charts").bind("mousemove touchmove", function (e) {
-            console.log("SYNCH CHART CODE TRIGGERED");
-
             var chart,
                 point,
                 i;
@@ -29,12 +27,14 @@ export default Ember.Controller.extend({
             for (i = 0; i < Highcharts.charts.length; i = i + 1) {
                 chart = Highcharts.charts[i];
                 e = chart.pointer.normalize(e); // Find coordinates within the chart
-                point = chart.series[0].searchPoint(e, true); // Get the hovered point
+                point = chart.series[0].searchPoint(e); // Get the hovered point
 
                 if (point) {
                     console.log(point);
                     point.onMouseOver(); // Show the hover marker
                     // chart.tooltip.refresh(point); // Show the tooltip
+                    // Tooltip refresh doesn't work with shared tooltip - need
+                    // to send array of points - TODO how to obtain this?
                     chart.xAxis[0].drawCrosshair(e, point); // Show the crosshair
                 }
             }
