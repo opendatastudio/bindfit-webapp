@@ -1,9 +1,5 @@
 #bindfit-index {
     #sidebar {
-        form {
-            padding: 0px 15px;
-        } // form
-
         #accordion {
             .panel-title {
                 a {
@@ -11,6 +7,11 @@
                     display: block;
                 }
             }
+
+            // Fix input group extending past panel padding boundaries
+            .input-group {
+                padding: 0px 15px;
+            } // form
         } // accordion
 
         // Async button styles

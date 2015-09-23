@@ -34,7 +34,7 @@
         <div class="panel-body">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <div class="input-group col-xs-12">
+                    <div class="col-xs-12">
                         {{#x-select action="onFitterSelect" class="form-control"}}
                             <option>Choose fitter</option>
                             {{#each fitList as |fitter|}}
@@ -48,7 +48,7 @@
             {{#if fitOptions.isPopulated}}
                 <form class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
-                        <div class="input-group col-xs-12">
+                        <div class="col-xs-12">
                             {{data-file-upload onComplete="onUploadComplete" onRestart="onUploadRestart"}}
                         </div>
 
