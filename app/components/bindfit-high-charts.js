@@ -79,7 +79,6 @@ export default EmberHighChartsComponent.extend({
                 point = chart.series[0].searchPoint(e); // Get the hovered point
 
                 if (point) {
-                    console.log(point);
                     point.onMouseOver(); // Show the hover marker
                     // chart.tooltip.refresh(point); // Show the tooltip
                     // Tooltip refresh doesn't work with shared tooltip - need

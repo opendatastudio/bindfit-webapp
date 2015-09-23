@@ -58,6 +58,7 @@
 <!-- Button or link displayed depending on whether save is available -->
 {{#if output.isPopulated}}
     <a href={{output.url}} target="_blank" class="btn btn-info btn-block">Link to saved fit</a>
+    {{input id="bindfit-save-output-url" value=output.url type="text" class="form-control"}}
 {{else}}
     <button class="btn btn-default btn-block" {{action "saveFit"}}>Save</button>
 {{/if}}

@@ -29,11 +29,23 @@ export default Ember.Component.extend({
 
                 // Set saved Fit ID
                 _this.get('output').setProperties(data);
+
+                // Select and focus generated link
+                var url = _this.$("#bindfit-save-output-url");
+                console.log(url);
+                url.select();
+                url.focus();
             })
             .fail(function(error) {
                 console.log("actions.saveFit: $.ajax: save fail");
                 console.log(error);
             });
-        } // saveFit
+        }, // saveFit
+
+        selectURL: function() {
+            // TODO trigger this on mouseup in textfield
+            console.log("Focused");
+            this.$().select();
+        } // selectURL
     } // actions
 });
