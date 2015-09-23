@@ -143,6 +143,40 @@ export default Ember.Controller.extend({
         return series;
     }.property("fitResult.data", "fitResult.fit"),
 
+    chartOptions: function() {
+        // Generate Highcharts options formatted fit labels
+
+        var x      = this.get("fitLabels.x");
+        var y      = this.get("fitLabels.y");
+
+        var chartOptions = {
+            title: {
+                text: "",
+            },
+            subtitle: {
+                text: "",
+            },
+            xAxis: {
+                title: {
+                    text: x.label
+                },
+                labels: {
+                    format: "{value} "+x.units
+                }
+            },
+            yAxis: { // Primary y axis
+                title: {
+                    text: y.label
+                },
+                labels: {
+                    format: "{value} "+y.units
+                }
+            }
+        };
+
+        return chartOptions;
+    }.property("fitLabels.x", "fitLabels.y"),
+
 
 
     actions: {
