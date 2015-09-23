@@ -177,6 +177,10 @@ export default Ember.Controller.extend({
         var y      = this.get("fitLabels.y");
 
         var chartOptions = {
+            chart: {
+                marginRight: 100, // For chart stacking consistency w/
+                                  // differing axis label lengths
+            },
             title: {
                 text: "",
             },
