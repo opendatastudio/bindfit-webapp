@@ -3,7 +3,50 @@
     <div id="sidebar" class="col-xs-12 col-md-4 col-lg-3">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Fit info</h3>
+            <h3 class="panel-title">Input</h3>
+        </div>
+
+        <table class="table">
+            <tbody>
+                <!-- Fitter -->
+                <tr>
+                    <th scope="row">Fitter</th>
+                    <td>{{fitOptions.fitter}}</td>
+                </tr>
+
+                <!-- Parameters -->
+                {{#each fitOptions.params key="@index" as |param pi|}}
+                    <tr>
+                        <th scope="row">{{get-at-index fitLabels.params pi "label"}} guess</th>
+                        <td>{{round param.value 0}}</td>
+                        <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Results</h3>
+        </div>
+
+        <table class="table">
+            <tbody>
+                {{#each fitResult.fit.params key="@index" as |param pi|}}
+                    <tr>
+                        <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
+                        <td>{{round param.value 2}}</td>
+                        <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div> <!-- Panel -->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Metadata</h3>
         </div>
 
         <table class="table">
@@ -49,42 +92,10 @@
                     <th scope="row">Notes</th>
                     <td>{{fitMeta.notes}}</td>
                 </tr>
-                    
-                <!-- Fitter -->
-                <tr>
-                    <th scope="row">Fitter</th>
-                    <td>{{fitOptions.fitter}}</td>
-                </tr>
-
-                <!-- Parameters -->
-                {{#each fitOptions.params key="@index" as |param pi|}}
-                    <tr>
-                        <th scope="row">{{get-at-index fitLabels.params pi "label"}} guess</th>
-                        <td>{{round param.value 0}}</td>
-                        <td>{{get-at-index fitLabels.params pi "units"}}</td>
-                    </tr>
-                {{/each}}
             </tbody>
         </table>
     </div> <!-- Panel -->
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Calculated parameters</h3>
-        </div>
-
-        <table class="table">
-            <tbody>
-                {{#each fitResult.fit.params key="@index" as |param pi|}}
-                    <tr>
-                        <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
-                        <td>{{round param.value 2}}</td>
-                        <td>{{get-at-index fitLabels.params pi "units"}}</td>
-                    </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div> <!-- Panel -->
 
     </div> <!-- Sidebar -->
 
@@ -95,8 +106,9 @@
         <div class="col-xs-12">
         <div class="panel panel-default">
 
-            <div class="panel-body">
+            <div id="charts" class="panel-body">
                 {{bindfit-high-charts content=fitResult.chartData chartOptions=fitLabels.chartOptions theme=chartTheme}}
+                {{bindfit-high-charts content=fitResult.chartDataResiduals chartOptions=fitLabels.chartOptions theme=chartTheme}}
             </div> <!-- Chart -->
 
         </div> <!-- Panel for results -->

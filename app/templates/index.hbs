@@ -73,7 +73,7 @@
     <div {{bind-attr class=":panel fitResult.isPopulated:panel-info:panel-default"}}>
         <div class="panel-heading" role="tab" id="headingTwo">
             <h3 class="panel-title">
-            <a {{bind-attr class="fitResult.isPopulated:hello:collapsed"}} role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
             Results
             </a>
             </h3>
@@ -146,8 +146,8 @@
         <div class="panel panel-default">
 
             <div id="charts" class="panel-body">
-                {{bindfit-high-charts content=chartData chartOptions=chartOptions theme=chartTheme}}
-                {{bindfit-high-charts content=chartDataResiduals chartOptions=chartOptions theme=chartTheme}}
+                {{bindfit-high-charts content=fitResult.chartData chartOptions=fitLabels.chartOptions theme=chartTheme}}
+                {{bindfit-high-charts content=fitResult.chartDataResiduals chartOptions=fitLabels.chartOptions theme=chartTheme}}
             </div> <!-- Chart panel -->
 
         </div> <!-- Panel for results -->
