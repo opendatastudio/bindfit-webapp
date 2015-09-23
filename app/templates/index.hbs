@@ -1,4 +1,5 @@
 <div id="bindfit-index" class="container-fluid">
+<!-- 
 <div class="row">
     <div class="col-xs-12 col-md-4 col-md-offset-4">
         <div class="alert alert-default alert-dismissable" role="alert">
@@ -10,9 +11,10 @@
                 <li>Enter initial parameter guesses</li>
                 <li>Click "Fit"</li>
             </ol>
-        </div> <! -- Alert -->
-    </div> <!-- Col -->
-</div> <!-- Row -->
+        </div>
+    </div>
+</div>
+-->
 
 <div class="row">
 
@@ -68,48 +70,54 @@
         </div> <!-- Panel body collapse wrapper -->
     </div> <!-- Panel -->
 
-    {{#if fitResult.isPopulated}}
-        <div class="panel panel-info">
-            <div class="panel-heading" role="tab" id="headingTwo">
-                <h3 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Results
-                </a>
-                </h3>
-            </div>
+    <div {{bind-attr class=":panel fitResult.isPopulated:panel-info:panel-default"}}>
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <h3 class="panel-title">
+            <a {{bind-attr class="fitResult.isPopulated:hello:collapsed"}} role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Results
+            </a>
+            </h3>
+        </div>
 
-            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <table class="table">
-                <!-- <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Result</th>
-                    </tr>
-                </thead> -->
-
-                <tbody>
-                    {{#each fitResult.fit.params key="@index" as |param pi|}}
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            {{#if fitResult.isPopulated}}
+                <table class="table">
+                    <!-- <thead>
                         <tr>
-                            <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
-                            <td>{{round param.value 2}}</td>
-                            <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                            <th>Parameter</th>
+                            <th>Result</th>
                         </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-            </div> <!-- Panel body collapse wrapper -->
-        </div> <!-- Panel -->
+                    </thead> -->
 
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Share
-                </a>
-                </h3>
-            </div>
+                    <tbody>
+                        {{#each fitResult.fit.params key="@index" as |param pi|}}
+                            <tr>
+                                <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
+                                <td>{{round param.value 2}}</td>
+                                <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <div class="panel-body">
+                    <p>Fitted parameters will be displayed here once you've run a fitter in the Control panel.</p>
+                </div>
+            {{/if}}
+        </div> <!-- Panel body collapse wrapper -->
+    </div> <!-- Panel -->
 
-            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div {{bind-attr class=":panel fitResult.isPopulated:panel-info:panel-default"}}>
+        <div class="panel-heading">
+            <h3 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Save
+            </a>
+            </h3>
+        </div>
+
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+        {{#if fitResult.isPopulated}}
             <div class="panel-body">
                 <!-- Save form -->
                 {{fit-save data=fitResult.data fit=fitResult.fit meta=fitMeta options=fitOptions output=fitSave}}
@@ -119,9 +127,13 @@
                 <!-- Export button -->
                 {{fit-export data=fitResult.data fit=fitResult.fit meta=fitMeta options=fitOptions output=fitExport}}
             </div> <!-- Panel body -->
-            </div> <!-- Panel body collapse wrapper -->
-        </div> <!-- Panel -->
-    {{/if}}
+        {{else}}
+                <div class="panel-body">
+                    <p>Run a fitter in the Control panel first.</p>
+                </div>
+        {{/if}}
+        </div> <!-- Panel body collapse wrapper -->
+    </div> <!-- Panel -->
     </div> <!-- Panel group (accordion) -->
 
     </div> <!-- Sidebar -->
