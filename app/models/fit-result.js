@@ -62,7 +62,7 @@ export default Ember.Object.extend({
                 }
 
                 series.push({
-                    name: "Data "+String(obs+1),
+                    name: "Fit "+String(obs+1),
                     type: "line",
                     marker: {enabled: true},
                     lineWidth: 0,
@@ -70,11 +70,11 @@ export default Ember.Object.extend({
                 });
 
                 series.push({
-                    name: "Fit "+String(obs+1),
+                    linkedTo: ":previous",
                     type: "spline",
                     marker: {enabled: false},
                     lineWidth: 2,
-                    data: fit_series 
+                    data: fit_series
                 });
             }
         }
