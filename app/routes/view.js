@@ -36,7 +36,8 @@ export default Ember.Route.extend({
                     }),
                 // TODO set human readable name here after retrieving
                 // urls.list
-                fitMeta:    FitMeta.create(response.meta)
+                fitMeta:    FitMeta.create(response.meta),
+                fitID:      params.id
             };
 
             return Ember.RSVP.hash(model);
