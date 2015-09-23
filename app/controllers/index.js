@@ -11,8 +11,35 @@ export default Ember.Controller.extend({
 
     // Highcharts theme
     chartTheme: ChartTheme,
+       
+    // Hacky jQuery setup function for synchronised charts, called afterRender
+    // Overrides default Highcharts mousmove/touchmove methods
+    // TODO move charts container ID to external constants module
 
+    setupHighcharts: function() {
+        // In order to synchronize tooltips and crosshairs, override the 
+        // built-in events with handlers defined on the parent element.
+        Ember.$("#charts").bind("mousemove touchmove", function (e) {
+            console.log("SYNCH CHART CODE TRIGGERED");
 
+            var chart,
+                point,
+                i;
+
+            for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+                chart = Highcharts.charts[i];
+                e = chart.pointer.normalize(e); // Find coordinates within the chart
+                point = chart.series[0].searchPoint(e, true); // Get the hovered point
+
+                if (point) {
+                    console.log(point);
+                    point.onMouseOver(); // Show the hover marker
+                    // chart.tooltip.refresh(point); // Show the tooltip
+                    chart.xAxis[0].drawCrosshair(e, point); // Show the crosshair
+                }
+            }
+        });
+    },
 
     // Computed properties for Highcharts data munging and chart series 
     // formatting
@@ -176,6 +203,14 @@ export default Ember.Controller.extend({
 
         return chartOptions;
     }.property("fitLabels.x", "fitLabels.y"),
+
+
+
+    init: function() {
+        this._super();
+        // Set up Highcharts synchronisation
+        Ember.run.schedule("afterRender", this, "setupHighcharts");
+    },
 
 
 

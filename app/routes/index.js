@@ -29,7 +29,7 @@ export default Ember.Route.extend({
 
         return model;
     },
-       
+
     setupController: function(controller, model) {
         controller.setProperties(model);
     }
