@@ -3,7 +3,8 @@ import EmberHighChartsComponent from 'ember-highcharts/components/high-charts';
 
 const {
   get,
-  observer
+  observer,
+  on
 } = Ember;
 
 export default EmberHighChartsComponent.extend({
@@ -58,5 +59,34 @@ export default EmberHighChartsComponent.extend({
         x.update(xNew);
         y.update(yNew);
         return;
-    })
+    }),
+
+    // Hacky jQuery setup function for synchronised charts, called afterRender
+    // Overrides default Highcharts mousmove/touchmove methods
+    // TODO move charts container ID to external constants module
+
+    setupHighcharts: on("didInsertElement", function() {
+        // In order to synchronize tooltips and crosshairs, override the 
+        // built-in events with handlers defined on the parent element.
+        Ember.$("#charts").bind("mousemove touchmove", function (e) {
+            var chart,
+                point,
+                i;
+
+            for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+                chart = Highcharts.charts[i];
+                e = chart.pointer.normalize(e); // Find coordinates within the chart
+                point = chart.series[0].searchPoint(e); // Get the hovered point
+
+                if (point) {
+                    console.log(point);
+                    point.onMouseOver(); // Show the hover marker
+                    // chart.tooltip.refresh(point); // Show the tooltip
+                    // Tooltip refresh doesn't work with shared tooltip - need
+                    // to send array of points - TODO how to obtain this?
+                    chart.xAxis[0].drawCrosshair(e, point); // Show the crosshair
+                }
+            }
+        });
+    }),
 });
