@@ -133,9 +133,14 @@
         <div class="col-xs-12">
         <div class="panel panel-default">
 
-            <div id="chart" class="panel-body">
-                {{bindfit-high-charts content=fitResult.chartData chartOptions=fitLabels.chartOptions theme=chartTheme}}
-            </div> <!-- Chart -->
+            <div id="charts" class="panel-body">
+                <div id="chart-fit">
+                    {{bindfit-high-charts content=fitResult.chartData chartOptions=fitLabels.chartOptions theme=chartTheme}}
+                </div> <!-- Chart: Fit -->
+                <div id="chart-residuals">
+                    {{bindfit-high-charts content=fitResult.chartDataResiduals chartOptions=fitLabels.chartOptions theme=chartTheme}}
+                </div> <!-- Chart: Residuals -->
+            </div> <!-- Chart panel -->
 
         </div> <!-- Panel for results -->
         </div> <!-- col -->

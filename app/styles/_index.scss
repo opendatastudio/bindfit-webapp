@@ -38,11 +38,19 @@
     } // sidebar
     
     #main {
-        #chart {
-            height: 500px;
+        #chart-fit {
+            height: 400px;
+        } // chart fit
+
+        #chart-residuals {
+            height: 250px;
+        } // chart residuals
+
+        #charts {
+            // For proper parent div sizing
             .highcharts-wrapper {
                 height: 100%;
             }
-        } // chart
+        }
     } // main
 }

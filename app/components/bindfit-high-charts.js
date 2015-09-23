@@ -21,7 +21,7 @@ export default EmberHighChartsComponent.extend({
         }
         
         // Hack to fix old series sticking around
-        // Remove all series from chart
+        // Remove all series from chart before redrawing
         while( chart.series.length > 0 ) {
             chart.series[0].remove( false );
         }

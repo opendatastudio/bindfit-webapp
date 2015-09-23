@@ -4,11 +4,10 @@ export default Ember.Object.extend({
     data: null,
     fit:  null,
 
+    PLOT_LIMIT: 8, // TODO TEMP, limit number of datas to plot
+
     chartData: Ember.computed("data", "fit", function() {
         // Generate Highcharts series formatted fit data
-
-        // Limit number of datas to plot
-        var PLOT_LIMIT = 8;
 
         var series = [];
         var i = 0;
@@ -17,18 +16,15 @@ export default Ember.Object.extend({
         var f  = this.get("fit");
             
         // If model has been populated
-        if (d) {
-            var data_series = [];
-            var fit_series  = [];
-
+        if (d && f) {
             var data_y = d.y[0];
             var fit_y  = f.y[0];
             
             // Assume all data and fits match data.y[0] length
             // TODO if not throw error
             var y_len  = data_y.length;
-            if (y_len > PLOT_LIMIT) {
-                y_len = PLOT_LIMIT;
+            if (y_len > this.PLOT_LIMIT) {
+                y_len = this.PLOT_LIMIT;
             }
 
             // Calculate geq for x axis
@@ -38,6 +34,10 @@ export default Ember.Object.extend({
             for (i = 0; i < g0.length; i++) {
                 data_x.push(g0[i]/h0[i]);
             }
+
+            // Temporary storage for each series added to chart
+            var data_series = [];
+            var fit_series  = [];
 
             // For each observation
             for (var obs = 0; obs < y_len; obs++) {
@@ -70,6 +70,64 @@ export default Ember.Object.extend({
         }
 
         console.log("FitOptions.chartData: chartData computed");
+        console.log(series);
+
+        return series;
+    }),
+
+    chartDataResiduals: Ember.computed("data", "fit", function() {
+        // Generate Highcharts series formatted fit residual data
+
+        var series = [];
+        var i = 0;
+
+        var d = this.get("data");
+        var f  = this.get("fit");
+            
+        // If model has been populated
+        if (d && f) {
+
+            // Only use first dataset
+            var y = f.residuals[0];
+            
+            // Limit plot length
+            var y_len  = y.length;
+            if (y_len > this.PLOT_LIMIT) {
+                y_len = this.PLOT_LIMIT;
+            }
+
+            // Calculate geq for x axis
+            var x  = [];
+            var h0 = d.x[0];
+            var g0 = d.x[1];
+            for (i = 0; i < g0.length; i++) {
+                x.push(g0[i]/h0[i]);
+            }
+
+            // Temporary storage for each series added to chart
+            var obs_series  = [];
+
+            // For each observation
+            for (var obs = 0; obs < y_len; obs++) {
+                obs_series = [];
+
+                // Create [[geq, y], [geq, y]...] array for each obs 
+                // For each point in current observation
+                for (i = 0; i < x.length; i++) {
+                    obs_series.push([x[i], y[obs][i]]);
+                }
+
+                series.push({
+                    name: "Residuals "+String(obs+1),
+                    type: "line",
+                    marker: {enabled: true},
+                    lineWidth: 2,
+                    data: obs_series
+                });
+            }
+        }
+
+        console.log("FitOptions.chartDataResiduals: chartDataResiduals computed");
         console.log(series);
 
         return series;
