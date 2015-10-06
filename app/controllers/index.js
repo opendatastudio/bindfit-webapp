@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ChartTheme from '../themes/bindfit-high-charts';
+import ChartTheme from '../helpers/bindfit-high-charts';
 
 // Constants?
 var root = "http://api.supramolecular.echus.co/bindfit/";
