@@ -38,8 +38,18 @@ export function genChartData(data, fit, labels) {
             // Create [[geq, y], [geq, y]...] array for each obs 
             // For each point in current observation
             for (i = 0; i < data_x.length; i++) {
-                data_series.push([data_x[i], data_y[obs][i]]);
-                fit_series.push([data_x[i], fit_y[obs][i]]);
+                data_series.push({x: data_x[i], 
+                                  y: data_y[obs][i],
+                                  xLabel: "TEST",
+                                  yLabel: "TEST",
+                                  xUnits: labels.x.units,
+                                  yUnits: labels.y.units});
+                fit_series.push( {x: data_x[i], 
+                                  y: fit_y[obs][i],
+                                  xLabel: labels.x.label,
+                                  yLabel: labels.y.label,
+                                  xUnits: labels.x.units,
+                                  yUnits: labels.y.units});
             }
 
             series.push({
@@ -103,7 +113,12 @@ export function genChartDataResiduals(data, fit, labels) {
             // Create [[geq, y], [geq, y]...] array for each obs 
             // For each point in current observation
             for (i = 0; i < x.length; i++) {
-                obs_series.push([x[i], y[obs][i]]);
+                obs_series.push({x: x[i], 
+                                 y: y[obs][i],
+                                 xLabel: labels.x.label,
+                                 yLabel: labels.y.label,
+                                 xUnits: labels.x.units,
+                                 yUnits: labels.y.units});
             }
 
             series.push({
@@ -152,15 +167,21 @@ export function genChartOptions(labels) {
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size: 10px">{point.key:.2f}</span><br/>',
-            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f} '+y.units+"</b><br/>"
+            useHTML: true,
+            headerFormat: '<span style="font-size: 10px">x: {point.key:.4f}</span><br/><table>',
+            pointFormat: '<tr>'+
+                '<td style="color: {point.color}">\u25CF {series.name}</td>'+
+                '<td style="text-align: right"><b>{point.y} {point.yUnits}</b></td>'+
+                '</tr>',
+            footerFormat: '</table>',
+            valueDecimals: 4
         }
     };
 
     return opts;
 }
 
-var chartTheme =  {
+var defaultChartTheme = {
     colors: ["#79BCB8", "#EE6C4D", "#0B4F6C", "#FA8334", "#197BBD", "#033860", "#47A8BD", "#1E3888"],
     chart: {
         marginTop: 50,
@@ -221,4 +242,4 @@ var chartTheme =  {
     }
 };
 
-export default chartTheme;
+export var defaultChartTheme;

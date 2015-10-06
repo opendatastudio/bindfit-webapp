@@ -12,9 +12,5 @@ export default Ember.Object.extend({
         units: null,
     },
 
-    params: null,
-
-    chartOptions: function() {
-        return genChartOptions(this);
-    }.property("x", "y"),
+    params: null
 });

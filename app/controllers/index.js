@@ -1,5 +1,8 @@
 import Ember from 'ember';
-import ChartTheme from '../helpers/bindfit-high-charts';
+import {defaultChartTheme, 
+        genChartData, 
+        genChartDataResiduals,
+        genChartOptions} from '../helpers/bindfit-high-charts';
 
 // Constants?
 var root = "http://api.supramolecular.echus.co/bindfit/";
@@ -10,7 +13,32 @@ export default Ember.Controller.extend({
     PLOT_LIMIT: 8,
 
     // Highcharts theme
-    chartTheme: ChartTheme,
+    chartTheme: defaultChartTheme,
+
+    // Highcharts data munging
+    // Wrapper anon functions used to get "this" reference to controller model 
+    // values, I'm lazy
+    // TODO: figure out how to access current controller values from top-level?
+    chartData: function() {
+        return genChartData(
+            this.get("fitResult.data"),
+            this.get("fitResult.fit"),
+            this.get("fitLabels"));
+                                                  // Observes only one prop in
+                                                  // labels, assuming all props
+                                                  // are updated simultaneously
+    }.property("fitResult.data", "fitResult.fit", "fitLabels.x"),
+
+    chartDataResiduals: function() {
+        return genChartDataResiduals(
+            this.get("fitResult.data"),
+            this.get("fitResult.fit"),
+            this.get("fitLabels"));
+    }.property("fitResult.data", "fitResult.fit", "fitLabels.x"),
+
+    chartOptions: function() {
+        return genChartOptions(this.get("fitLabels"));
+    }.property("fitLabels.x"),
 
 
 

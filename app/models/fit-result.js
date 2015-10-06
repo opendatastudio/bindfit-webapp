@@ -12,25 +12,5 @@ export default Ember.Object.extend({
 
     isPopulated: Ember.computed('data', 'fit', function() {
         return (this.get('data') && this.get('fit'));
-    }),
-
-    // Computed properties for Highcharts data munging and chart series 
-    // formatting
-    chartData: function() {
-        var series = genChartData(this.get("data"), this.get("fit"), {});
-
-        console.log("FitOptions.chartData: chartData computed");
-        console.log(series);
-
-        return series;
-    }.property("data", "fit"),
-
-    chartDataResiduals: function() {
-        var series = genChartDataResiduals(this.get("data"), this.get("fit"), {});
-
-        console.log("FitOptions.chartDataResiduals: chartDataResiduals computed");
-        console.log(series);
-
-        return series;
-    }.property("data", "fit"),
+    })
 });
