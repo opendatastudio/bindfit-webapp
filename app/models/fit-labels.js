@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import {genChartOptions} from '../helpers/bindfit-high-charts';
 
 export default Ember.Object.extend({
     x: {
