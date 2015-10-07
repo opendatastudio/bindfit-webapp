@@ -2,6 +2,7 @@ import Ember from 'ember';
 import FitResult  from "../models/fit-result";
 import FitLabels  from "../models/fit-labels";
 import FitOptions from "../models/fit-options";
+import FitExport  from "../models/fit-export";
 import FitMeta    from "../models/fit-meta";
 
 export default Ember.Route.extend({
@@ -20,6 +21,7 @@ export default Ember.Route.extend({
             // (labels must be retrieved separately)
             var model = {
                 fitList:    Ember.$.getJSON(urls.list),
+
                 fitOptions: FitOptions.create(response.options),
                 fitResult:  FitResult.create({
                     fit:  response.fit,
@@ -35,10 +37,11 @@ export default Ember.Route.extend({
                     .then(function(data) {
                         return FitLabels.create(data);
                     }),
-                // TODO set human readable name here after retrieving
-                // urls.list
+
                 fitMeta:    FitMeta.create(response.meta),
-                fitID:      params.id
+                fitID:      params.id,
+                
+                fitExport:  FitExport.create({})
             };
 
             return Ember.RSVP.hash(model);

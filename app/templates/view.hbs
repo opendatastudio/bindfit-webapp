@@ -37,13 +37,13 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
             <h3 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 Results
                 </a>
             </h3>
         </div>
 
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
             <table class="table">
                 <tbody>
                     {{#each fitResult.fit.params key="@index" as |param pi|}}
@@ -119,6 +119,24 @@
             </table>
         </div> <!-- Collapse div -->
     </div> <!-- Panel -->
+
+    <div class="panel panel-info">
+        <div class="panel-heading" role="tab" id="headingFour">
+            <h3 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                Edit
+                </a>
+            </h3>
+        </div>
+
+        <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+            <div class="panel-body">
+                {{fit-export data=fitResult.data fit=fitResult.fit meta=fitMeta options=fitOptions output=fitExport}}
+            </div>
+        </div> <!-- Collapse div -->
+    </div> <!-- Panel -->
+
+
     </div> <!-- Panel group (accordion) -->
 
     </div> <!-- Sidebar -->
