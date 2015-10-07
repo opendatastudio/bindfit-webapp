@@ -1,110 +1,131 @@
 <div class="row">
 
-    <div id="sidebar" class="col-xs-12 col-md-4 col-lg-3">
+    <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Input</h3>
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h3 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Input
+                </a>
+            </h3>
         </div>
 
-        <table class="table">
-            <tbody>
-                <!-- Fitter -->
-                <tr>
-                    <th scope="row">Fitter</th>
-                    <td>{{fitOptions.fitter}}</td>
-                </tr>
-
-                <!-- Parameters -->
-                {{#each fitOptions.params key="@index" as |param pi|}}
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <table class="table">
+                <tbody>
+                    <!-- Fitter -->
                     <tr>
-                        <th scope="row">{{get-at-index fitLabels.params pi "label"}} guess</th>
-                        <td>{{round param.value 0}}</td>
-                        <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                        <th scope="row">Fitter</th>
+                        <td>{{fitOptions.fitter}}</td>
                     </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Results</h3>
-        </div>
-
-        <table class="table">
-            <tbody>
-                {{#each fitResult.fit.params key="@index" as |param pi|}}
-                    <tr>
-                        <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
-                        <td>{{round param.value 2}}</td>
-                        <td>{{get-at-index fitLabels.params pi "units"}}</td>
-                    </tr>
-                {{/each}}
-            </tbody>
-        </table>
+                    <!-- Parameters -->
+                    {{#each fitOptions.params key="@index" as |param pi|}}
+                        <tr>
+                            <th scope="row">{{get-at-index fitLabels.params pi "label"}} guess</th>
+                            <td>{{round param.value 0}}</td>
+                            <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div> <!-- Collapse div -->
     </div> <!-- Panel -->
 
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Metadata</h3>
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <h3 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Results
+                </a>
+            </h3>
         </div>
 
-        <table class="table">
-            <tbody>
-                <!-- Metadata -->
-                <tr>
-                    <th scope="row">Author(s)</th>
-                    <td>{{fitMeta.author}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Experiment name</th>
-                    <td>{{fitMeta.name}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Experiment date</th>
-                    <td>{{fitMeta.date}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Fit date</th>
-                    <td>{{fitMeta.timestamp}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Lab book reference</th>
-                    <td>{{fitMeta.ref}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Host species</th>
-                    <td>{{fitMeta.host}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Guest species</th>
-                    <td>{{fitMeta.guest}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Solvent</th>
-                    <td>{{fitMeta.solvent}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Temperature</th>
-                    <td>{{fitMeta.temp}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Notes</th>
-                    <td>{{fitMeta.notes}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Fit ID</th>
-                    <td>{{fitID}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <table class="table">
+                <tbody>
+                    {{#each fitResult.fit.params key="@index" as |param pi|}}
+                        <tr>
+                            <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
+                            <td>{{round param.value 2}}</td>
+                            <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div> <!-- Collapse div -->
     </div> <!-- Panel -->
 
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+            <h3 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Metadata 
+                </a>
+            </h3>
+        </div> <!-- Panel heading -->
+
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <table class="table">
+                <tbody>
+                    <!-- Metadata -->
+                    <tr>
+                        <th scope="row">Author(s)</th>
+                        <td>{{fitMeta.author}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Experiment name</th>
+                        <td>{{fitMeta.name}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Experiment date</th>
+                        <td>{{fitMeta.date}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fit date</th>
+                        <td>{{fitMeta.timestamp}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Lab book reference</th>
+                        <td>{{fitMeta.ref}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Host species</th>
+                        <td>{{fitMeta.host}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Guest species</th>
+                        <td>{{fitMeta.guest}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Solvent</th>
+                        <td>{{fitMeta.solvent}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Temperature</th>
+                        <td>{{fitMeta.temp}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Notes</th>
+                        <td>{{fitMeta.notes}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fit ID</th>
+                        <td>{{fitID}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> <!-- Collapse div -->
+    </div> <!-- Panel -->
+    </div> <!-- Panel group (accordion) -->
 
     </div> <!-- Sidebar -->
 
 
-    <div class="col-xs-12 col-md-8 col-lg-9">
+
+    <div id="main" class="col-xs-12 col-md-7 col-lg-8">
 
         <div class="row">
         <div class="col-xs-12">

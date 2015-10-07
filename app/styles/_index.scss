@@ -1,37 +1,5 @@
 #bindfit-index {
     #sidebar {
-        #accordion {
-            .panel-title {
-                a {
-                    width: 100%;
-                    display: block;
-                }
-            }
-
-            // Fix input group extending past panel padding boundaries
-            .input-group {
-                padding: 0px 15px;
-            } // form
-        } // accordion
-
-        // Async button styles
-        .async-button {
-            @extend .btn;
-            @extend .btn-block;
-        }
-        .async-button.default {
-            @extend .btn-primary;
-        }
-        .async-button.pending {
-            @extend .btn-default;
-        }
-        .async-button.fulfilled {
-            @extend .btn-info;
-        }
-        .async-button.rejected {
-            @extend .btn-warning;
-        }
-
         // Left align horizontal forms
         .form-horizontal .control-label {
             text-align: left;
