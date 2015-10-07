@@ -28,4 +28,23 @@ export default Ember.Controller.extend({
     chartOptions: function() {
         return genChartOptions(this.get("fitLabels"));
     }.property("fitLabels.x"),
+
+    fitterString: function() {
+        var list = this.get("fitList");
+        var fitter = this.get("fitOptions.fitter");
+
+        // If no matching fitter is found, return raw fitter name
+        // (This shouldn't happen!)
+        var string = fitter;
+
+        // Search for a matching fitter key in fitter list
+        // and return its human-readable name
+        list.forEach(function(item) {
+            if (item.key === fitter) {
+                string = item.name;
+            }
+        });
+
+        return string;
+    }.property("fitList", "fitOptions.fitter")
 });

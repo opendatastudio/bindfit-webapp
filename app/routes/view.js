@@ -19,6 +19,7 @@ export default Ember.Route.extend({
             // Populate full model for retrieved fit
             // (labels must be retrieved separately)
             var model = {
+                fitList:    Ember.$.getJSON(urls.list),
                 fitOptions: FitOptions.create(response.options),
                 fitResult:  FitResult.create({
                     fit:  response.fit,
