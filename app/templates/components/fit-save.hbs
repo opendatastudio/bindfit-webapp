@@ -43,8 +43,15 @@
     </div>
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-temp">Temperature</label>
-        <div class="col-xs-9">
+        <div class="col-xs-6">
             {{input id="bindfit-form-save-temp" value=meta.temp type="number" class="form-control"}}
+        </div>
+        <div class="col-xs-3">
+            {{#x-select action="onTempUnitSelect" class="form-control"}}
+                {{#x-option value="C"}}C{{/x-option}}
+                {{#x-option value="K"}}K{{/x-option}}
+                {{#x-option value="F"}}F{{/x-option}}
+            {{/x-select}}
         </div>
     </div>
     <div class="form-group">

@@ -10,6 +10,7 @@ export default Ember.Object.extend({
     guest: null,
     solvent: null,
     temp: null,
+    temp_unit: "C", // Default temperature unit is Celsius
     notes: null,
 
     reset: function() {
@@ -21,7 +22,8 @@ export default Ember.Object.extend({
         this.set('host', null);
         this.set('guest', null);
         this.set('solvent', null);
-        this.set('temp', null);
+        this.set('temp', "C");
+        this.set('temp_unit', null);
         this.set('notes', null);
     }
 });

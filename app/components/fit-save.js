@@ -2,6 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     actions: {
+        onTempUnitSelect: function(selection) {
+            this.set("meta.temp_unit", selection);
+            console.log("Temp unit selected");
+            console.log(this.get("meta.temp_unit"));
+        },
+
         saveFit: function() {
             var _this = this;
 
