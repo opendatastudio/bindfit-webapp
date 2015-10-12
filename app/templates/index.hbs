@@ -37,7 +37,7 @@
                     <div class="col-xs-12">
                         {{#x-select action="onFitterSelect" class="form-control"}}
                             <option>Choose fitter</option>
-                            {{#each fitList as |fitter|}}
+                            {{#each model.fitList as |fitter|}}
                                 {{#x-option value=fitter.key}}{{fitter.name}}{{/x-option}}
                             {{/each}}
                         {{/x-select}}
@@ -45,18 +45,18 @@
                 </div>
             </form>
 
-            {{#if fitOptions.isPopulated}}
+            {{#if model.fitOptions.isPopulated}}
                 <form class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
                         <div class="col-xs-12">
                             {{data-file-upload onComplete="onUploadComplete" onRestart="onUploadRestart"}}
                         </div>
 
-                        {{#each fitOptions.params key="@index" as |param pi|}}
+                        {{#each model.fitOptions.params key="@index" as |param pi|}}
                             <div class="input-group col-xs-12">
-                                <div class="input-group-addon">{{get-at-index fitLabels.params pi "label"}} guess</div>
+                                <div class="input-group-addon">{{get-at-index model.fitLabels.params pi "label"}} guess</div>
                                 {{input value=param.value type="number" class="form-control"}}
-                                <div class="input-group-addon">{{get-at-index fitLabels.params pi "units"}}</div>
+                                <div class="input-group-addon">{{get-at-index model.fitLabels.params pi "units"}}</div>
                             </div>
                         {{/each}}
                     </div>
@@ -70,7 +70,7 @@
         </div> <!-- Panel body collapse wrapper -->
     </div> <!-- Panel -->
 
-    <div {{bind-attr class=":panel fitResult.isPopulated:panel-info:panel-default"}}>
+    <div {{bind-attr class=":panel model.fitResult.isPopulated:panel-info:panel-default"}}>
         <div class="panel-heading" role="tab" id="headingTwo">
             <h3 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -80,7 +80,7 @@
         </div>
 
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            {{#if fitResult.isPopulated}}
+            {{#if model.fitResult.isPopulated}}
                 <table class="table">
                     <!-- <thead>
                         <tr>
@@ -90,11 +90,11 @@
                     </thead> -->
 
                     <tbody>
-                        {{#each fitResult.fit.params key="@index" as |param pi|}}
+                        {{#each model.fitResult.fit.params key="@index" as |param pi|}}
                             <tr>
-                                <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
+                                <th scope="row">{{get-at-index model.fitLabels.params pi "label"}}</th>
                                 <td>{{round param.value 2}}</td>
-                                <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                                <td>{{get-at-index model.fitLabels.params pi "units"}}</td>
                             </tr>
                         {{/each}}
                     </tbody>
@@ -107,7 +107,7 @@
         </div> <!-- Panel body collapse wrapper -->
     </div> <!-- Panel -->
 
-    <div {{bind-attr class=":panel fitResult.isPopulated:panel-info:panel-default"}}>
+    <div {{bind-attr class=":panel model.fitResult.isPopulated:panel-info:panel-default"}}>
         <div class="panel-heading" role="tab" id="headingThree">
             <h3 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -117,15 +117,15 @@
         </div>
 
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-        {{#if fitResult.isPopulated}}
+        {{#if model.fitResult.isPopulated}}
             <div class="panel-body">
                 <!-- Save form -->
-                {{fit-save data=fitResult.data fit=fitResult.fit meta=fitMeta options=fitOptions output=fitSave}}
+                {{fit-save data=model.fitResult.data fit=model.fitResult.fit meta=model.fitMeta options=model.fitOptions output=model.fitSave}}
 
                 <hr/>
 
                 <!-- Export button -->
-                {{fit-export data=fitResult.data fit=fitResult.fit meta=fitMeta options=fitOptions output=fitExport}}
+                {{fit-export data=model.fitResult.data fit=model.fitResult.fit meta=model.fitMeta options=model.fitOptions output=model.fitExport}}
             </div> <!-- Panel body -->
         {{else}}
                 <div class="panel-body">

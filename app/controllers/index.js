@@ -21,24 +21,24 @@ export default Ember.Controller.extend({
     // TODO: figure out how to access current controller values from top-level?
     chartData: function() {
         return genChartData(
-            this.get("fitResult.data"),
-            this.get("fitResult.fit"),
-            this.get("fitLabels"));
+            this.get("model.fitResult.data"),
+            this.get("model.fitResult.fit"),
+            this.get("model.fitLabels"));
                                                   // Observes only one prop in
                                                   // labels, assuming all props
                                                   // are updated simultaneously
-    }.property("fitResult.data", "fitResult.fit", "fitLabels.x"),
+    }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
 
     chartDataResiduals: function() {
         return genChartDataResiduals(
-            this.get("fitResult.data"),
-            this.get("fitResult.fit"),
-            this.get("fitLabels"));
-    }.property("fitResult.data", "fitResult.fit", "fitLabels.x"),
+            this.get("model.fitResult.data"),
+            this.get("model.fitResult.fit"),
+            this.get("model.fitLabels"));
+    }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
 
     chartOptions: function() {
-        return genChartOptions(this.get("fitLabels"));
-    }.property("fitLabels.x"),
+        return genChartOptions(this.get("model.fitLabels"));
+    }.property("model.fitLabels.x"),
 
 
 
@@ -56,10 +56,10 @@ export default Ember.Controller.extend({
             var controller = this;
 
             // Clear any previous fit options, results and exports
-            controller.get('fitResult').reset();
-            controller.get('fitOptions').reset();
-            controller.get('fitExport').reset();
-            controller.get('fitSave').reset();
+            controller.get('model.fitResult').reset();
+            controller.get('model.fitOptions').reset();
+            controller.get('model.fitExport').reset();
+            controller.get('model.fitSave').reset();
 
             // If a fitter is selected (not undefined)
             // Populate fitOptions and fitLabels
@@ -84,23 +84,23 @@ export default Ember.Controller.extend({
                 };
 
                 Ember.RSVP.hash(promises).then(function(hash) {
-                    controller.fitLabels.setProperties(hash.labels);
-                    controller.fitOptions.setProperties(hash.options);
+                    controller.model.fitLabels.setProperties(hash.labels);
+                    controller.model.fitOptions.setProperties(hash.options);
                     console.log("actions.onFitterSelect: RSVP succeeded");
                     console.log("actions.onFitterSelect: fitLables and fitOptions set");
-                    console.log(controller.get("fitLabels"));
-                    console.log(controller.get("fitOptions"));
+                    console.log(controller.get("model.fitLabels"));
+                    console.log(controller.get("model.fitOptions"));
                 });
             }
         }, // onFitterSelect
 
         onUploadComplete: function(details) {
             // Set unique file id in fitOptions
-            this.set('fitOptions.data_id', details.id);
+            this.set('model.fitOptions.data_id', details.id);
 
             console.log("actions.onUploadComplete: called");
             console.log("actions.onUploadComplete: Updated fitOptions.data_id");
-            console.log(this.get("fitOptions.data_id"));
+            console.log(this.get("model.fitOptions.data_id"));
         },
 
         onUploadRestart: function() {
@@ -108,29 +108,29 @@ export default Ember.Controller.extend({
 
             // Clear any previous fit results and exports
             // Retain options
-            this.get('fitResult').reset();
-            this.get('fitExport').reset();
-            this.get('fitSave').reset();
+            this.get('model.fitResult').reset();
+            this.get('model.fitExport').reset();
+            this.get('model.fitSave').reset();
         },
 
         runFitter: function(callback) {
             // Clear any previous fit results and exports
             // Retain options
-            this.get('fitResult').reset();
-            this.get('fitExport').reset();
-            this.get('fitSave').reset();
+            this.get('model.fitResult').reset();
+            this.get('model.fitExport').reset();
+            this.get('model.fitSave').reset();
 
             var controller = this;
 
             console.log("actions.runFitter: called");
             console.log("actions.runFitter: current fitOptions TO SEND");
-            console.log(controller.get("fitOptions"));
+            console.log(controller.get("model.fitOptions"));
 
             var promise = new Ember.RSVP.Promise(function(resolve, reject) {
                 Ember.$.ajax({
                     url:  root+"fit",
                     type: "POST",
-                    data: JSON.stringify(controller.get("fitOptions")),
+                    data: JSON.stringify(controller.get("model.fitOptions")),
                     contentType: "application/json; charset=utf-8",
                     dataType:    "json"
                 })
@@ -147,10 +147,10 @@ export default Ember.Controller.extend({
                 console.log(data);
 
                 // Set fit model properties with returned JSON
-                controller.fitResult.setProperties(data);
+                controller.model.fitResult.setProperties(data);
 
                 console.log("actions.runFitter: $.ajax: fit model properties set");
-                console.log(controller.fitResult);
+                console.log(controller.model.fitResult);
             },
             function(error) {
                 console.log("actions.runFitter: $.ajax: bindfit call failed");

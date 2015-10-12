@@ -1,3 +1,4 @@
+<div id="bindfit-view" class="container-fluid">
 <div class="row">
 
     <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
@@ -22,11 +23,11 @@
                     </tr>
 
                     <!-- Parameters -->
-                    {{#each fitOptions.params key="@index" as |param pi|}}
+                    {{#each model.fitOptions.params key="@index" as |param pi|}}
                         <tr>
-                            <th scope="row">{{get-at-index fitLabels.params pi "label"}} guess</th>
+                            <th scope="row">{{get-at-index model.fitLabels.params pi "label"}} guess</th>
                             <td>{{round param.value 0}}</td>
-                            <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                            <td>{{get-at-index model.fitLabels.params pi "units"}}</td>
                         </tr>
                     {{/each}}
                 </tbody>
@@ -46,11 +47,11 @@
         <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
             <table class="table">
                 <tbody>
-                    {{#each fitResult.fit.params key="@index" as |param pi|}}
+                    {{#each model.fitResult.fit.params key="@index" as |param pi|}}
                         <tr>
-                            <th scope="row">{{get-at-index fitLabels.params pi "label"}}</th>
+                            <th scope="row">{{get-at-index model.fitLabels.params pi "label"}}</th>
                             <td>{{round param.value 2}}</td>
-                            <td>{{get-at-index fitLabels.params pi "units"}}</td>
+                            <td>{{get-at-index model.fitLabels.params pi "units"}}</td>
                         </tr>
                     {{/each}}
                 </tbody>
@@ -73,47 +74,47 @@
                     <!-- Metadata -->
                     <tr>
                         <th scope="row">Author(s)</th>
-                        <td>{{fitMeta.author}}</td>
+                        <td>{{model.fitMeta.author}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Experiment name</th>
-                        <td>{{fitMeta.name}}</td>
+                        <td>{{model.fitMeta.name}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Experiment date</th>
-                        <td>{{parse-date fitMeta.date}}</td>
+                        <td>{{parse-date model.fitMeta.date}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Fit date</th>
-                        <td>{{parse-date fitMeta.timestamp}}</td>
+                        <td>{{parse-date model.fitMeta.timestamp}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Lab book reference</th>
-                        <td>{{fitMeta.ref}}</td>
+                        <td>{{model.fitMeta.ref}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Host species</th>
-                        <td>{{fitMeta.host}}</td>
+                        <td>{{model.fitMeta.host}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Guest species</th>
-                        <td>{{fitMeta.guest}}</td>
+                        <td>{{model.fitMeta.guest}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Solvent</th>
-                        <td>{{fitMeta.solvent}}</td>
+                        <td>{{model.fitMeta.solvent}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Temperature</th>
-                        <td>{{fitMeta.temp}}</td>
+                        <td>{{model.fitMeta.temp}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Notes</th>
-                        <td>{{fitMeta.notes}}</td>
+                        <td>{{model.fitMeta.notes}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Fit ID</th>
-                        <td>{{fitID}}</td>
+                        <td>{{model.fitID}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -131,7 +132,9 @@
 
         <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
             <div class="panel-body">
-                {{fit-export data=fitResult.data fit=fitResult.fit meta=fitMeta options=fitOptions output=fitExport}}
+                {{fit-export data=model.fitResult.data fit=model.fitResult.fit meta=model.fitMeta options=model.fitOptions output=model.fitExport}}
+                <hr/>
+                {{#link-to "edit" model.fitID class="btn btn-info btn-block"}}Edit fit{{/link-to}}
             </div>
         </div> <!-- Collapse div -->
     </div> <!-- Panel -->
@@ -161,3 +164,4 @@
     </div> <!-- Main -->
 
 </div> <!-- global row -->
+</div> <!-- container fluid -->

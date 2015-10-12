@@ -13,25 +13,25 @@ export default Ember.Controller.extend({
     // TODO this should be made into a mixin
     chartData: function() {
         return genChartData(
-            this.get("fitResult.data"),
-            this.get("fitResult.fit"),
-            this.get("fitLabels"));
-    }.property("fitResult.data", "fitResult.fit", "fitLabels.x"),
+            this.get("model.fitResult.data"),
+            this.get("model.fitResult.fit"),
+            this.get("model.fitLabels"));
+    }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
 
     chartDataResiduals: function() {
         return genChartDataResiduals(
-            this.get("fitResult.data"),
-            this.get("fitResult.fit"),
-            this.get("fitLabels"));
-    }.property("fitResult.data", "fitResult.fit", "fitLabels.x"),
+            this.get("model.fitResult.data"),
+            this.get("model.fitResult.fit"),
+            this.get("model.fitLabels"));
+    }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
 
     chartOptions: function() {
-        return genChartOptions(this.get("fitLabels"));
-    }.property("fitLabels.x"),
+        return genChartOptions(this.get("model.fitLabels"));
+    }.property("model.fitLabels.x"),
 
     fitterString: function() {
-        var list = this.get("fitList");
-        var fitter = this.get("fitOptions.fitter");
+        var list = this.get("model.fitList");
+        var fitter = this.get("model.fitOptions.fitter");
 
         // If no matching fitter is found, return raw fitter name
         // (This shouldn't happen!)
@@ -46,5 +46,5 @@ export default Ember.Controller.extend({
         });
 
         return string;
-    }.property("fitList", "fitOptions.fitter")
+    }.property("model.fitList", "model.fitOptions.fitter")
 });

@@ -6,6 +6,13 @@ import FitExport  from "../models/fit-export";
 import FitMeta    from "../models/fit-meta";
 
 export default Ember.Route.extend({
+    controllerName: "index",
+
+    renderTemplate: function () {
+        var controller = this.controllerFor("index");
+        this.render("index", {controller: controller});
+    },
+
     urls: {
         view:   "http://api.supramolecular.echus.co/bindfit/fit/",
         list:   "http://api.supramolecular.echus.co/bindfit/list",
