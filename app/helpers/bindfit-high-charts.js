@@ -140,10 +140,6 @@ export function genChartOptions(labels) {
     var y = labels.y;
 
     var opts = {
-        chart: {
-            marginRight: 100, // For chart stacking consistency w/
-                              // differing axis label lengths
-        },
         title: {
             text: "",
         },
@@ -185,6 +181,8 @@ var defaultChartTheme = {
     colors: ["#79BCB8", "#EE6C4D", "#0B4F6C", "#FA8334", "#197BBD", "#033860", "#47A8BD", "#1E3888"],
     chart: {
         marginTop: 50,
+        marginLeft: 100, // For chart stacking consistency w/
+                         // differing axis label lengths
         backgroundColor: null,
         style: {'font-family': 'Lato, Helvetica, Arial, Verdana', 'text-transform': 'none'}
     },
@@ -204,7 +202,7 @@ var defaultChartTheme = {
     legend: {
         layout: 'horizontal',
         floating: true,
-        align: 'left',
+        align: 'center',
         verticalAlign: 'top',
         borderWidth: 0,
         itemStyle: {
@@ -232,8 +230,8 @@ var defaultChartTheme = {
             style: {
                 fontSize: '12px'
             }
-        },
-        opposite: true,
+        }
+        // opposite: true,
     },
     plotOptions: {
         candlestick: {
