@@ -21,7 +21,7 @@
     <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
         <div class="panel-heading" role="tab" id="headingOne">
             <h3 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -82,21 +82,48 @@
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             {{#if model.fitResult.isPopulated}}
                 <table class="table">
-                    <!-- <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead> -->
-
                     <tbody>
+                        <tr class="active">
+                            <th scope="row">Parameter</th>
+                            <th>Value</th>
+                        </tr>
                         {{#each model.fitResult.fit.params key="@index" as |param pi|}}
                             <tr>
                                 <th scope="row">{{get-at-index model.fitLabels.params pi "label"}}</th>
-                                <td>{{round param.value 2}}</td>
-                                <td>{{get-at-index model.fitLabels.params pi "units"}}</td>
+                                <td>{{round param.value 2}} {{get-at-index model.fitLabels.params pi "units"}}</td>
                             </tr>
                         {{/each}}
+                    </tbody>
+                </table>
+                <table class="table">
+                    <tbody>
+                        <tr class="active">
+                            <th scope="row">Fit</th>
+                            <!-- Deal with multiple inputs here later -->
+                            {{#each model.fitResult.fit.rms as |rmsList|}}
+                                {{#each rmsList as |rms index|}}
+                                    <th>{{index}}</th>
+                                {{/each}}
+                            {{/each}}
+                        </tr>
+                        <tr>
+                            <th scope="row">RMS</th>
+                            <!-- Deal with multiple inputs here later -->
+                            {{#each model.fitResult.fit.rms as |rmsList|}}
+                                {{#each rmsList as |rms|}}
+                                    <td>{{round rms 4}}</td>
+                                {{/each}}
+                            {{/each}}
+                        </tr>
+                        <tr>
+                            <th scope="row">Covariance</th>
+                            <!-- Deal with multiple inputs here later -->
+                            {{#each model.fitResult.fit.cov as |covList|}}
+                                {{#each covList as |cov|}}
+                                    <td>{{round cov 4}}</td>
+                                {{/each}}
+                            {{/each}}
+                        </tr>
                     </tbody>
                 </table>
             {{else}}

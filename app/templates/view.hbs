@@ -23,11 +23,14 @@
                     </tr>
 
                     <!-- Parameters -->
+                    <tr class="active">
+                        <th scope="row">Parameter</th>
+                        <th>Input guess</th>
+                    </tr>
                     {{#each model.fitOptions.params key="@index" as |param pi|}}
                         <tr>
-                            <th scope="row">{{get-at-index model.fitLabels.params pi "label"}} guess</th>
-                            <td>{{round param.value 0}}</td>
-                            <td>{{get-at-index model.fitLabels.params pi "units"}}</td>
+                            <th scope="row">{{get-at-index model.fitLabels.params pi "label"}}</th>
+                            <td>{{round param.value 2}} {{get-at-index model.fitLabels.params pi "units"}}</td>
                         </tr>
                     {{/each}}
                 </tbody>
@@ -47,15 +50,50 @@
         <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
             <table class="table">
                 <tbody>
+                    <tr class="active">
+                        <th scope="row">Parameter</th>
+                        <th>Value</th>
+                    </tr>
                     {{#each model.fitResult.fit.params key="@index" as |param pi|}}
                         <tr>
                             <th scope="row">{{get-at-index model.fitLabels.params pi "label"}}</th>
-                            <td>{{round param.value 2}}</td>
-                            <td>{{get-at-index model.fitLabels.params pi "units"}}</td>
+                            <td>{{round param.value 2}} {{get-at-index model.fitLabels.params pi "units"}}</td>
                         </tr>
                     {{/each}}
                 </tbody>
             </table>
+            <table class="table">
+                <tbody>
+                    <tr class="active">
+                        <th scope="row">Fit</th>
+                        <!-- Deal with multiple inputs here later -->
+                        {{#each model.fitResult.fit.rms as |rmsList|}}
+                            {{#each rmsList as |rms index|}}
+                                <th>{{index}}</th>
+                            {{/each}}
+                        {{/each}}
+                    </tr>
+                    <tr>
+                        <th scope="row">RMS</th>
+                        <!-- Deal with multiple inputs here later -->
+                        {{#each model.fitResult.fit.rms as |rmsList|}}
+                            {{#each rmsList as |rms|}}
+                                <td>{{round rms 4}}</td>
+                            {{/each}}
+                        {{/each}}
+                    </tr>
+                    <tr>
+                        <th scope="row">Covariance</th>
+                        <!-- Deal with multiple inputs here later -->
+                        {{#each model.fitResult.fit.cov as |covList|}}
+                            {{#each covList as |cov|}}
+                                <td>{{round cov 4}}</td>
+                            {{/each}}
+                        {{/each}}
+                    </tr>
+                </tbody>
+            </table>
+
         </div> <!-- Collapse div -->
     </div> <!-- Panel -->
 
