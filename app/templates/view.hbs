@@ -33,6 +33,17 @@
                             <td>{{round param.value 2}} {{get-at-index model.fitLabels.params pi "units"}}</td>
                         </tr>
                     {{/each}}
+
+                    <tr>
+                        <th scope="row">Dilution factor</th>
+                        <td>
+                            {{#if model.fitOptions.dilute}}
+                                Yes
+                            {{else}}
+                                No 
+                            {{/if}}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div> <!-- Collapse div -->

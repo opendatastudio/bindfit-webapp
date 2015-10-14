@@ -59,10 +59,18 @@
                                 <div class="input-group-addon">{{get-at-index model.fitLabels.params pi "units"}}</div>
                             </div>
                         {{/each}}
+
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <div class="input-group col-xs-12">
+                                {{input checked=model.fitOptions.dilute type="checkbox"}} Dilution factor
+                            </div>
+                        </label>
                     </div>
                 </form>
 
-                <!-- <button class="btn btn-primary btn-block" {{action "runFitter"}}>Fit</button> -->
+                <hr/>
                 {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" id="fit-button"}}
             {{/if}}
 
