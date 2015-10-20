@@ -35,7 +35,7 @@
                     {{/each}}
 
                     <tr>
-                        <th scope="row">Dilution factor</th>
+                        <th scope="row">Dilution correction</th>
                         <td>
                             {{#if model.fitOptions.dilute}}
                                 Yes
@@ -131,7 +131,9 @@
                     </tr>
                     <tr>
                         <th scope="row">Experiment date</th>
-                        <td>{{parse-date model.fitMeta.date}}</td>
+                        <td>
+                            {{parse-date model.fitMeta.date}}
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">Fit date</th>
