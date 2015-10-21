@@ -104,34 +104,22 @@
                     </tbody>
                 </table>
                 <table class="table">
+                    <!-- Deal with multiple inputs here later -->
                     <tbody>
                         <tr class="active">
                             <th scope="row">Fit</th>
-                            <!-- Deal with multiple inputs here later -->
-                            {{#each model.fitResult.fit.rms as |rmsList|}}
-                                {{#each rmsList as |rms index|}}
-                                    <th>{{index}}</th>
-                                {{/each}}
-                            {{/each}}
+                            <th>RMS</th>
+                            <th>Covariance</th>
+                            <th>Coefficients</th>
                         </tr>
-                        <tr>
-                            <th scope="row">RMS</th>
-                            <!-- Deal with multiple inputs here later -->
-                            {{#each model.fitResult.fit.rms as |rmsList|}}
-                                {{#each rmsList as |rms|}}
-                                    <td>{{round rms 4}}</td>
-                                {{/each}}
-                            {{/each}}
-                        </tr>
-                        <tr>
-                            <th scope="row">Covariance</th>
-                            <!-- Deal with multiple inputs here later -->
-                            {{#each model.fitResult.fit.cov as |covList|}}
-                                {{#each covList as |cov|}}
-                                    <td>{{round cov 4}}</td>
-                                {{/each}}
-                            {{/each}}
-                        </tr>
+                        {{#each model.fitResult.data.labels.y as |label index|}}
+                                <tr>
+                                    <th>{{label}}</th>
+                                    <td>{{round (get-at-index model.fitResult.fit.coeffs 0 index) 4}}</td>
+                                    <td>{{round (get-at-index model.fitResult.fit.rms 0 index) 4}}</td>
+                                    <td>{{round (get-at-index model.fitResult.fit.cov 0 index) 4}}</td>
+                                </tr>
+                        {{/each}}
                     </tbody>
                 </table>
             {{else}}
