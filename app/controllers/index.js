@@ -23,7 +23,8 @@ export default Ember.Controller.extend({
         return genChartData(
             this.get("model.fitResult.data"),
             this.get("model.fitResult.fit"),
-            this.get("model.fitLabels"));
+            this.get("model.fitLabels"),
+            this.get("PLOT_LIMIT"));
                                                   // Observes only one prop in
                                                   // labels, assuming all props
                                                   // are updated simultaneously
@@ -33,7 +34,8 @@ export default Ember.Controller.extend({
         return genChartDataResiduals(
             this.get("model.fitResult.data"),
             this.get("model.fitResult.fit"),
-            this.get("model.fitLabels"));
+            this.get("model.fitLabels"),
+            this.get("PLOT_LIMIT"));
     }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
 
     chartOptions: function() {

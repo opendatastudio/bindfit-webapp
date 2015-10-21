@@ -5,6 +5,10 @@ import {defaultChartTheme,
         genChartOptions} from '../helpers/bindfit-high-charts';
 
 export default Ember.Controller.extend({
+    // Limit number of fits to plot
+    // TEMP TODO: move this to a constants file
+    PLOT_LIMIT: 8,
+
     // Highcharts theme
     chartTheme: defaultChartTheme,
 
@@ -15,14 +19,16 @@ export default Ember.Controller.extend({
         return genChartData(
             this.get("model.fitResult.data"),
             this.get("model.fitResult.fit"),
-            this.get("model.fitLabels"));
+            this.get("model.fitLabels"),
+            this.get("PLOT_LIMIT"));
     }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
 
     chartDataResiduals: function() {
         return genChartDataResiduals(
             this.get("model.fitResult.data"),
             this.get("model.fitResult.fit"),
-            this.get("model.fitLabels"));
+            this.get("model.fitLabels"),
+            this.get("PLOT_LIMIT"));
     }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
 
     chartOptions: function() {

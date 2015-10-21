@@ -1,4 +1,4 @@
-export function genChartData(data, fit, labels) {
+export function genChartData(data, fit, labels, nlimit) {
     // Generate Highcharts series formatted fit data
     var series = [];
     var i = 0;
@@ -14,8 +14,8 @@ export function genChartData(data, fit, labels) {
         // Assume all data and fits match data.y[0] length
         // TODO if not throw error
         var y_len  = data_y.length;
-        if (y_len > this.PLOT_LIMIT) {
-            y_len = this.PLOT_LIMIT;
+        if (y_len > nlimit) {
+            y_len = nlimit;
         }
 
         // Calculate geq for x axis
@@ -74,7 +74,7 @@ export function genChartData(data, fit, labels) {
     return series;
 }
 
-export function genChartDataResiduals(data, fit, labels) {
+export function genChartDataResiduals(data, fit, labels, nlimit) {
     // Generate Highcharts series formatted fit residual data
 
     var series = [];
@@ -91,8 +91,8 @@ export function genChartDataResiduals(data, fit, labels) {
         
         // Limit plot length
         var y_len  = y.length;
-        if (y_len > this.PLOT_LIMIT) {
-            y_len = this.PLOT_LIMIT;
+        if (y_len > nlimit) {
+            y_len = nlimit;
         }
 
         // Calculate geq for x axis
