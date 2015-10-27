@@ -108,9 +108,15 @@
                     <tbody>
                         <tr class="active">
                             <th scope="row">Fit</th>
+                            <th>Coefficients</th>
                             <th>RMS</th>
                             <th>Covariance</th>
-                            <th>Coefficients</th>
+                        </tr>
+                        <tr class="active">
+                            <th scope="row">Total</th>
+                            <th>---</th>
+                            <th>{{round model.fitResult.fit.rms_total.[0] 4}}</th>
+                            <th>{{round model.fitResult.fit.cov_total.[0] 4}}</th>
                         </tr>
                         {{#each model.fitResult.data.labels.y as |label index|}}
                                 <tr>
