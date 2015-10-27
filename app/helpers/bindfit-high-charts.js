@@ -5,9 +5,12 @@ export function genChartData(data, fit, labels, nlimit) {
 
     var d = data;
     var f = fit;
-        
+
     // If model has been populated
     if (d && f) {
+        console.log("genChartData: data");
+        console.log(d.labels.y[0]);
+
         var data_y = d.y[0];
         var fit_y  = f.y[0];
         
@@ -40,8 +43,8 @@ export function genChartData(data, fit, labels, nlimit) {
             for (i = 0; i < data_x.length; i++) {
                 data_series.push({x: data_x[i], 
                                   y: data_y[obs][i],
-                                  xLabel: "TEST",
-                                  yLabel: "TEST",
+                                  xLabel: labels.x.label,
+                                  yLabel: labels.y.label,
                                   xUnits: labels.x.units,
                                   yUnits: labels.y.units});
                 fit_series.push( {x: data_x[i], 
@@ -53,7 +56,7 @@ export function genChartData(data, fit, labels, nlimit) {
             }
 
             series.push({
-                name: "Fit "+String(obs+1),
+                name: d.labels.y[obs]+" fit",
                 type: "line",
                 marker: {enabled: true},
                 lineWidth: 0,
@@ -62,7 +65,7 @@ export function genChartData(data, fit, labels, nlimit) {
 
             series.push({
                 linkedTo: ":previous",
-                name: "Data "+String(obs+1),
+                name: d.labels.y[obs]+" data",
                 type: "spline",
                 marker: {enabled: false},
                 lineWidth: 2,
@@ -122,7 +125,7 @@ export function genChartDataResiduals(data, fit, labels, nlimit) {
             }
 
             series.push({
-                name: "Residuals "+String(obs+1),
+                name: d.labels.y[obs]+" residuals",
                 type: "line",
                 marker: {enabled: true},
                 lineWidth: 2,
