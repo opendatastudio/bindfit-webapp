@@ -128,6 +128,14 @@
                         {{/each}}
                     </tbody>
                 </table>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Time to fit</th>
+                            <td>{{round model.fitResult.fit.time 4}} s</td>
+                        </tr>
+                    </tbody>
+                </table>
             {{else}}
                 <div class="panel-body">
                     <p>Fitted parameters will be displayed here once you've run a fitter in the Control panel.</p>
