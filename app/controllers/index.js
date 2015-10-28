@@ -59,7 +59,7 @@ export default Ember.Controller.extend({
 
             // Clear any previous fit options, results and exports
             controller.get('model.fitResult').reset();
-            controller.get('model.fitOptions').reset();
+            //controller.get('model.fitOptions').reset();
             controller.get('model.fitExport').reset();
             controller.get('model.fitSave').reset();
 
@@ -87,7 +87,13 @@ export default Ember.Controller.extend({
 
                 Ember.RSVP.hash(promises).then(function(hash) {
                     controller.model.fitLabels.setProperties(hash.labels);
+
+                    // Carry over options.data_id to save any previously 
+                    // uploaded data file
+                    var data_id = controller.model.fitOptions.data_id;
                     controller.model.fitOptions.setProperties(hash.options);
+                    controller.set("model.fitOptions.data_id", data_id);
+
                     console.log("actions.onFitterSelect: RSVP succeeded");
                     console.log("actions.onFitterSelect: fitLables and fitOptions set");
                     console.log(controller.get("model.fitLabels"));
