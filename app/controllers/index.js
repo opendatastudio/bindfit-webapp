@@ -2,6 +2,8 @@ import Ember from 'ember';
 import {defaultChartTheme, 
         genChartData, 
         genChartDataResiduals,
+        genChartDataTEMP,
+        genChartOptionsTEMP,
         genChartOptions} from '../helpers/bindfit-high-charts';
 
 // Constants?
@@ -49,18 +51,27 @@ export default Ember.Controller.extend({
         console.log("chartDataMolefrac: geq, molefrac");
         console.log(geq);
         console.log(molefrac);
-/*
+
         // If model has been populated
-        if (d && f) {
-            // Calculate geq for x axis
-            return genChartDataResiduals(
-                d.x[0]
-                this.get("model.fitLabels.x"),
-                this.get("model.fitLabels.y"),
-                this.get("PLOT_LIMIT"));
+        if (geq && molefrac) {
+            return genChartDataTEMP(
+                geq,
+                molefrac,
+                ["H", "HG", "HG2"],
+                this.get("model.fitLabels.x.label"),
+                "Molefraction",
+                this.get("model.fitLabels.x.units"),
+                "");
         }
-*/
-    }.property("model.fitResult.geq", "model.fitResult.fit.molefrac", "model.fitLabels.x"),
+    }.property("model.fitResult.data.labels.y", "model.fitResult.geq", "model.fitResult.fit.molefrac", "model.fitLabels.x", "model.fitLabels.y"),
+
+    chartOptionsMolefrac: function() {
+        return genChartOptionsTEMP(
+            this.get("model.fitLabels.x.label"),
+            "Molefraction",
+            this.get("model.fitLabels.x.units"),
+            "");
+    }.property("model.fitLabels.x", "model.fitLabels.y"),
 
 
 

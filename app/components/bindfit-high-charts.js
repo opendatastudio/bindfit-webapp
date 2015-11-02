@@ -68,7 +68,7 @@ export default EmberHighChartsComponent.extend({
     setupHighcharts: on("didInsertElement", function() {
         // In order to synchronize tooltips and crosshairs, override the 
         // built-in events with handlers defined on the parent element.
-        Ember.$("#charts").bind("mousemove touchmove", function (e) {
+        Ember.$("#chart-fit").bind("mousemove touchmove", function (e) {
             var chart,
                 point,
                 i;

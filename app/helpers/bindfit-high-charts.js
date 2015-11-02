@@ -137,6 +137,41 @@ export function genChartDataResiduals(data, fit, labels, nlimit) {
     return series;
 }
 
+export function genChartDataTEMP(x, y, ynames, xlabel, ylabel, xunits, yunits) {
+    // Generate Highcharts series formatted chartData
+    
+    var series = [];
+        
+    // Temporary storage for each y added to chart
+    var data  = [];
+
+    // For each y dataset 
+    for (let yi = 0; yi < y.length; yi++) {
+        // Clear previously added series
+        data = [];
+
+        // Create [[x, y], [x, y]...] array for this y dataset 
+        for (let xi = 0; xi < x.length; xi++) {
+            data.push({x: x[xi], 
+                       y: y[yi][xi],
+                       xLabel: xlabel,
+                       yLabel: ylabel,
+                       xUnits: xunits,
+                       yUnits: yunits});
+        }
+
+        series.push({
+            name: ynames[yi]+" molefraction",
+            type: "spline",
+            marker: {enabled: false},
+            lineWidth: 2,
+            data: data
+        });
+    }
+
+    return series;
+}
+
 export function genChartOptions(labels) {
     // Generate Highcharts options formatted fit labels
     var x = labels.x;
@@ -163,6 +198,49 @@ export function genChartOptions(labels) {
             },
             labels: {
                 format: "{value} "+y.units
+            }
+        },
+        tooltip: {
+            useHTML: true,
+            headerFormat: '<span style="font-size: 10px">x: {point.key:.4f}</span><br/><table>',
+            pointFormat: '<tr>'+
+                '<td style="color: {point.color}">\u25CF {series.name}</td>'+
+                '<td style="text-align: right"><b>{point.y} {point.yUnits}</b></td>'+
+                '</tr>',
+            footerFormat: '</table>',
+            valueDecimals: 4
+        }
+    };
+
+    return opts;
+}
+
+export function genChartOptionsTEMP(xlabel, ylabel, xunits, yunits) {
+    // Generate Highcharts chartOptions object formatted with custom labels
+
+    // TODO a way to set extremes here?
+
+    var opts = {
+        title: {
+            text: "",
+        },
+        subtitle: {
+            text: "",
+        },
+        xAxis: {
+            title: {
+                text: xlabel
+            },
+            labels: {
+                format: "{value} "+xunits
+            }
+        },
+        yAxis: { // Primary y axis
+            title: {
+                text: ylabel
+            },
+            labels: {
+                format: "{value} "+yunits
             }
         },
         tooltip: {
