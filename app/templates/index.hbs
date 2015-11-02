@@ -21,7 +21,7 @@
     <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-primary">
+    <div class="panel panel-info">
         <div class="panel-heading" role="tab" id="headingOne">
             <h3 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -181,14 +181,32 @@
 
         <div class="row">
         <div class="col-xs-12">
-        <div class="panel panel-default">
 
-            <div id="charts" class="panel-body">
-                {{bindfit-high-charts content=chartData chartOptions=chartOptions theme=chartTheme}}
-                {{bindfit-high-charts content=chartDataResiduals chartOptions=chartOptions theme=chartTheme}}
-            </div> <!-- Chart panel -->
+            <ul class="nav nav-tabs">
+                <li class="nav active"><a href="#tab-fit" data-toggle="tab">Fit</a></li>
+                <li class="nav"><a href="#tab-molefrac" data-toggle="tab">Molefractions</a></li>
+            </ul>
 
-        </div> <!-- Panel for results -->
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab-fit">
+                    <div class="row">
+                        <div id="chart-fit" class="panel-body">
+                            {{bindfit-high-charts content=chartData chartOptions=chartOptions theme=chartTheme}}
+                            {{bindfit-high-charts content=chartDataResiduals chartOptions=chartOptions theme=chartTheme}}
+                        </div> <!-- Chart panel -->
+                    </div>
+                </div> <!-- #tab-fit -->
+
+                <div class="tab-pane fade" id="tab-molefrac">
+                    <div class="row">
+                        <div id="chart-molefrac" class="panel-body">
+                            {{bindfit-high-charts content=chartDataMolefrac chartOptions=chartOptionsMolefrac theme=chartTheme}}
+                        </div> <!-- Chart panel -->
+                    </div>
+                </div> <!-- #tab-molefrac -->
+            </div>
+
         </div> <!-- col -->
         </div> <!-- row -->
 

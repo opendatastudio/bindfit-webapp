@@ -42,6 +42,26 @@ export default Ember.Controller.extend({
         return genChartOptions(this.get("model.fitLabels"));
     }.property("model.fitLabels.x"),
 
+    chartDataMolefrac: function() {
+        var geq = this.get("model.fitResult.geq");
+        var molefrac = this.get("model.fitResult.fit.molefrac");
+
+        console.log("chartDataMolefrac: geq, molefrac");
+        console.log(geq);
+        console.log(molefrac);
+/*
+        // If model has been populated
+        if (d && f) {
+            // Calculate geq for x axis
+            return genChartDataResiduals(
+                d.x[0]
+                this.get("model.fitLabels.x"),
+                this.get("model.fitLabels.y"),
+                this.get("PLOT_LIMIT"));
+        }
+*/
+    }.property("model.fitResult.geq", "model.fitResult.fit.molefrac", "model.fitLabels.x"),
+
 
 
     actions: {
