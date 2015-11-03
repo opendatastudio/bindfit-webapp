@@ -48,10 +48,6 @@ export default Ember.Controller.extend({
         var geq = this.get("model.fitResult.geq");
         var molefrac = this.get("model.fitResult.fit.molefrac");
 
-        console.log("chartDataMolefrac: geq, molefrac");
-        console.log(geq);
-        console.log(molefrac);
-
         // If model has been populated
         if (geq && molefrac) {
             return genChartDataTEMP(

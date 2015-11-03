@@ -8,6 +8,11 @@ const {
 } = Ember;
 
 export default EmberHighChartsComponent.extend({
+    // Identify Highcharts container divs for Highcarts/Bootstrap tabs 
+    // reflow fix
+    // See this.setupHighcharts()
+    classNames: ["contains-chart"],
+
     contentDidChange: observer('content.@each.isLoaded', function() {
         // If no content or chart, return
         if (!(get(this, 'content') && get(this, 'chart'))) {
@@ -63,7 +68,7 @@ export default EmberHighChartsComponent.extend({
 
     // Hacky jQuery setup function for synchronised charts, called afterRender
     // Overrides default Highcharts mousmove/touchmove methods
-    // TODO move charts container ID to external constants module
+    // TODO move charts container ID here to external constants module
 
     setupHighcharts: on("didInsertElement", function() {
         // In order to synchronize tooltips and crosshairs, override the 
@@ -86,6 +91,16 @@ export default EmberHighChartsComponent.extend({
                     chart.xAxis[0].drawCrosshair(e, point); // Show the crosshair
                 }
             }
+        });
+
+        // Highcharts reflow/resize within Bootstrap tab fix
+        // http://stackoverflow.com/questions/14954624/
+        // highcharts-does-not-resize-charts-inside-tabs 
+        Ember.$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+            Ember.$(".contains-chart" ).each(function() { // Target elements w/ "contains-chart" class applied
+                var chart = Ember.$(this).highcharts(); // Target chart itself
+                chart.reflow(); // Reflow chart
+            });
         });
     }),
 });
