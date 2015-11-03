@@ -8,9 +8,6 @@ export function genChartData(data, fit, labels, nlimit) {
 
     // If model has been populated
     if (d && f) {
-        console.log("genChartData: data");
-        console.log(d.labels.y[0]);
-
         var data_y = d.y[0];
         var fit_y  = f.y[0];
         
