@@ -26,7 +26,7 @@ export default Ember.Object.extend({
          * work w/ input helper. See workaround setter in setParamsLabelled.
          */
         var params = this.get("params");
-        var labels = this.get("labels");
+        var labels = this.get("labels.params");
 
         var list = [];
         for (var key in params) {
