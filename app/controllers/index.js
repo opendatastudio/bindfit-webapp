@@ -69,7 +69,14 @@ export default Ember.Controller.extend({
             "");
     }.property("model.fitLabels.x", "model.fitLabels.y"),
 
-
+    watchParamsLabelled: function(key, value, previousValue) {
+        // Force Ember to manually call fitOptions.paramsLabelled's setter when
+        // a user updates a parameter's value
+        var newParamsLabelled = this.get("model.fitOptions.paramsLabelled");
+        this.model.fitOptions.setParamsLabelled(newParamsLabelled);
+        console.log("watchParamsLabelled: params changed:");
+        console.log(this.model.fitOptions.params);
+    }.observes("model.fitOptions.paramsLabelled.@each.value"),
 
     actions: {
         onFitterSelect: function(selection) {

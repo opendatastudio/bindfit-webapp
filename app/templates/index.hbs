@@ -52,11 +52,11 @@
                             {{data-file-upload onComplete="onUploadComplete" onRestart="onUploadRestart"}}
                         </div>
 
-                        {{#each model.fitOptions.params key="@index" as |param pi|}}
+                        {{#each model.fitOptions.paramsLabelled as |param|}}
                             <div class="input-group col-xs-12">
-                                <div class="input-group-addon">{{get-at-index model.fitLabels.params pi "label"}} guess</div>
+                                <div class="input-group-addon">{{param.label}} guess</div>
                                 {{input value=param.value type="number" class="form-control"}}
-                                <div class="input-group-addon">{{get-at-index model.fitLabels.params pi "units"}}</div>
+                                <div class="input-group-addon">{{param.units}}</div>
                             </div>
                         {{/each}}
 
