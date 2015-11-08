@@ -2,7 +2,6 @@ import Ember from 'ember';
 import {defaultChartTheme, 
         genChartData, 
         genChartDataLinked, 
-        genChartOptionsTEMP,
         genChartOptions} from '../helpers/bindfit-high-charts';
 
 // Constants?
@@ -96,7 +95,7 @@ export default Ember.Controller.extend({
                                    labels.data.y.axis_label,
                                    labels.data.x.axis_units,
                                    labels.data.y.axis_units);
-        };
+        }
     }.property("model.fitResult.labels.data.x.axis_label",
                "model.fitResult.labels.data.y.axis_units",
                "model.fitResult.labels.data.x.axis_label",
@@ -130,7 +129,7 @@ export default Ember.Controller.extend({
                                    "Molefraction",
                                    labels.data.x.axis_units,
                                    "");
-        };
+        }
     }.property("model.fitResult.labels.data.x.axis_label",
                "model.fitResult.labels.data.x.axis_label"),
 

@@ -107,12 +107,6 @@ export function genChartOptions(xlabel, ylabel, xunits, yunits) {
 
     // TODO a way to set extremes here?
     var opts = {
-        title: {
-            text: "HELLO",
-        },
-        subtitle: {
-            text: "WORLD",
-        },
         xAxis: {
             title: {
                 text: xlabel
@@ -154,17 +148,30 @@ var defaultChartTheme = {
         style: {'font-family': 'Lato, Helvetica, Arial, Verdana', 'text-transform': 'none'}
     },
     title: {
+        text: "",
         style: {
             fontSize: '16px',
             fontWeight: 'bold',
         }
+    },
+    subtitle: {
+        text: ""
     },
     tooltip: {
         shared: true,
         crosshairs: [true, false],
         borderWidth: 0,
         backgroundColor: 'rgba(219,219,216,0.8)',
-        shadow: false
+        shadow: false,
+
+        useHTML: true,
+        headerFormat: '<span style="font-size: 10px">x: {point.key:.4f}</span><br/><table>',
+        pointFormat: '<tr>'+
+            '<td style="color: {point.color}">\u25CF {series.name}</td>'+
+            '<td style="text-align: right"><b>{point.y} {point.yUnits}</b></td>'+
+            '</tr>',
+        footerFormat: '</table>',
+        valueDecimals: 4
     },
     legend: {
         layout: 'horizontal',
