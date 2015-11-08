@@ -89,45 +89,7 @@
 
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             {{#if model.fitResult.isPopulated}}
-                <table class="table">
-                    <tbody>
-                        <tr class="active">
-                            <th scope="row">Parameter</th>
-                            <th>Value</th>
-                        </tr>
-                        {{#each model.fitResult.paramsLabelled as |param|}}
-                            <tr>
-                                <th scope="row">{{param.label}}</th>
-                                <td>{{round param.value 2}} {{param.units}}</td>
-                            </tr>
-                        {{/each}}
-                    <!-- Deal with multiple inputs here later -->
-                        <tr class="active">
-                            <th scope="row">Fit</th>
-                            <th>Coefficients</th>
-                            <th>RMS</th>
-                            <th>Covariance</th>
-                        </tr>
-                        <tr class="active">
-                            <th scope="row">Total</th>
-                            <th>---</th>
-                            <th>{{round model.fitResult.qof.rms_total 4}}</th>
-                            <th>{{round model.fitResult.qof.cov_total 4}}</th>
-                        </tr>
-                        {{#each model.fitResult.labels.data.y.row_labels as |label index|}}
-                                <tr>
-                                    <th>{{label}}</th>
-                                    <td>{{round (get-at-index model.fitResult.fit.coeffs 0 index) 4}}</td>
-                                    <td>{{round (get-index model.fitResult.qof.rms index) 4}}</td>
-                                    <td>{{round (get-index model.fitResult.qof.cov index) 4}}</td>
-                                </tr>
-                        {{/each}}
-                        <tr>
-                            <th scope="row">Time to fit</th>
-                            <td>{{round model.fitResult.time 4}} s</td>
-                        </tr>
-                    </tbody>
-                </table>
+                {{fit-result-table fitResult=model.fitResult}}
             {{else}}
                 <div class="panel-body">
                     <p>Fitted parameters will be displayed here once you've run a fitter in the Control panel.</p>
