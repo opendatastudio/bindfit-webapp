@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import {defaultChartTheme, 
         genChartData, 
-        genChartDataResiduals,
-        genChartDataTEMP,
+        genChartDataLinked, 
         genChartOptionsTEMP,
         genChartOptions} from '../helpers/bindfit-high-charts';
 
@@ -21,28 +20,87 @@ export default Ember.Controller.extend({
     // Wrapper anon functions used to get "this" reference to controller model 
     // values, I'm lazy
     // TODO: figure out how to access current controller values from top-level?
-    chartData: function() {
-        return genChartData(
-            this.get("model.fitResult.data"),
-            this.get("model.fitResult.fit"),
-            this.get("model.fitLabels"),
-            this.get("PLOT_LIMIT"));
+    chartDataFit: function() {
+            // plotlimit = this.get("PLOT_LIMIT"));
+            var geq = this.get("model.fitResult.geq");
+            var data = this.get("model.fitResult.data.y");
+            var fit = this.get("model.fitResult.fit.y");
+
+            var labels = this.get("model.fitResult.labels");
+
+            // If data has been populated, plot only data
+            if (geq && data && !fit) {
+                return genChartData(
+                    geq,
+                    data,
+                    labels.data.y.row_labels,
+                    "",
+                    labels.data.x.axis_label,
+                    labels.data.y.axis_label,
+                    labels.data.x.axis_units,
+                    labels.data.y.axis_units,
+                    "line",
+                    true,
+                    2);
+            }
+            // If fit has been populated
+            else if (geq && data && fit) {
+                return genChartDataLinked(
+                    geq,
+                    data, fit,
+                    labels.data.y.row_labels, ["temp", "temp", "temp", "temp"],
+                    "", "fit",
+                    labels.data.x.axis_label, labels.fit.y.axis_label,
+                    labels.data.x.axis_units, labels.fit.y.axis_units,
+                    "line", true, 0,
+                    "spline", false, 2);
+            }
+
                                                   // Observes only one prop in
                                                   // labels, assuming all props
                                                   // are updated simultaneously
-    }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
+    }.property("model.fitResult.geq", "model.fitResult.data.y", "model.fitResult.fit.y"),
 
     chartDataResiduals: function() {
-        return genChartDataResiduals(
-            this.get("model.fitResult.data"),
-            this.get("model.fitResult.fit"),
-            this.get("model.fitLabels"),
-            this.get("PLOT_LIMIT"));
-    }.property("model.fitResult.data", "model.fitResult.fit", "model.fitLabels.x"),
+        // plotlimit = this.get("PLOT_LIMIT"));
+        var geq = this.get("model.fitResult.geq");
+        var residuals = this.get("model.fitResult.qof.residuals");
 
-    chartOptions: function() {
-        return genChartOptions(this.get("model.fitLabels"));
-    }.property("model.fitLabels.x"),
+        var labels = this.get("model.fitResult.labels");
+
+        // If data has been populated, plot only data
+        if (geq && residuals) {
+            return genChartData(
+                geq,
+                residuals,
+                labels.data.y.row_labels,
+                "residuals",
+                labels.data.x.axis_label,
+                labels.fit.y.axis_label,
+                labels.data.x.axis_units,
+                labels.fit.y.axis_units,
+                "line",
+                true,
+                2);
+        }
+    }.property("model.fitResult.geq", "model.fitResult.qof.residuals"),
+
+    chartOptionsFit: function() {
+        console.log("chartOptionsFit: called");
+        var labels = this.get("model.fitResult.labels");
+        console.log("chartOptionsFit: labels.data");
+        console.log(labels.data);
+        if (labels.data) {
+            console.log("chartOptionsFit: updating ...");
+            return genChartOptions(labels.data.x.axis_label,
+                                   labels.data.y.axis_label,
+                                   labels.data.x.axis_units,
+                                   labels.data.y.axis_units);
+        };
+    }.property("model.fitResult.labels.data.x.axis_label",
+               "model.fitResult.labels.data.y.axis_units",
+               "model.fitResult.labels.data.x.axis_label",
+               "model.fitResult.labels.data.y.axis_units"),
 
     chartDataMolefrac: function() {
         var geq = this.get("model.fitResult.geq");
@@ -50,26 +108,33 @@ export default Ember.Controller.extend({
 
         // If model has been populated
         if (geq && molefrac) {
-            return genChartDataTEMP(
+            return genChartData(
                 geq,
                 molefrac,
                 ["H", "HG", "HG2"],
-                this.get("model.fitLabels.x.label"),
+                "molefraction",
+                this.get("model.fitResult.labels.data.x.axis_label"),
                 "Molefraction",
-                this.get("model.fitLabels.x.units"),
-                "");
+                this.get("model.fitResult.labels.data.x.axis_units"),
+                "",
+                "spline",
+                false,
+                2);
         }
-    }.property("model.fitResult.data.labels.y", "model.fitResult.geq", "model.fitResult.fit.molefrac", "model.fitLabels.x", "model.fitLabels.y"),
+    }.property("model.fitResult.geq", "model.fitResult.fit.molefrac"),
 
     chartOptionsMolefrac: function() {
-        return genChartOptionsTEMP(
-            this.get("model.fitLabels.x.label"),
-            "Molefraction",
-            this.get("model.fitLabels.x.units"),
-            "");
-    }.property("model.fitLabels.x", "model.fitLabels.y"),
+        var labels = this.get("model.fitResult.labels");
+        if (labels.data) {
+            return genChartOptions(labels.data.x.axis_label,
+                                   "Molefraction",
+                                   labels.data.x.axis_units,
+                                   "");
+        };
+    }.property("model.fitResult.labels.data.x.axis_label",
+               "model.fitResult.labels.data.x.axis_label"),
 
-    watchParamsLabelled: function(key, value, previousValue) {
+    watchParamsLabelled: function() {
         // Force Ember to manually call fitOptions.paramsLabelled's setter when
         // a user updates a parameter's value
         var newParamsLabelled = this.get("model.fitOptions.paramsLabelled");
@@ -137,10 +202,14 @@ export default Ember.Controller.extend({
         }, // onFitterSelect
 
         onUploadComplete: function(response) {
+            console.log("actions.onUploadComplete: called");
             // Set unique file id in fitOptions
             this.set('model.fitOptions.data_id', response.data_id);
+            // Save parsed data in fitResult
+            this.model.fitResult.setProperties(response);
 
-            console.log("actions.onUploadComplete: called");
+            console.log("actions.onUploadComplete: Updated fitResult");
+            console.log(this.get("model.fitResult"));
             console.log("actions.onUploadComplete: Updated fitOptions.data_id");
             console.log(this.get("model.fitOptions.data_id"));
         },

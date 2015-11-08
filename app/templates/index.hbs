@@ -95,17 +95,13 @@
                             <th scope="row">Parameter</th>
                             <th>Value</th>
                         </tr>
-                        {{#each model.fitResult.fit.params key="@index" as |param pi|}}
+                        {{#each model.fitResult.paramsLabelled as |param|}}
                             <tr>
-                                <th scope="row">{{get-at-index model.fitLabels.params pi "label"}}</th>
-                                <td>{{round param.value 2}} {{get-at-index model.fitLabels.params pi "units"}}</td>
+                                <th scope="row">{{param.label}}</th>
+                                <td>{{round param.value 2}} {{param.units}}</td>
                             </tr>
                         {{/each}}
-                    </tbody>
-                </table>
-                <table class="table">
                     <!-- Deal with multiple inputs here later -->
-                    <tbody>
                         <tr class="active">
                             <th scope="row">Fit</th>
                             <th>Coefficients</th>
@@ -115,24 +111,20 @@
                         <tr class="active">
                             <th scope="row">Total</th>
                             <th>---</th>
-                            <th>{{round model.fitResult.fit.rms_total.[0] 4}}</th>
-                            <th>{{round model.fitResult.fit.cov_total.[0] 4}}</th>
+                            <th>{{round model.fitResult.qof.rms_total 4}}</th>
+                            <th>{{round model.fitResult.qof.cov_total 4}}</th>
                         </tr>
-                        {{#each model.fitResult.data.labels.y as |label index|}}
+                        {{#each model.fitResult.labels.data.y.row_labels as |label index|}}
                                 <tr>
                                     <th>{{label}}</th>
                                     <td>{{round (get-at-index model.fitResult.fit.coeffs 0 index) 4}}</td>
-                                    <td>{{round (get-at-index model.fitResult.fit.rms 0 index) 4}}</td>
-                                    <td>{{round (get-at-index model.fitResult.fit.cov 0 index) 4}}</td>
+                                    <td>{{round (get-index model.fitResult.qof.rms index) 4}}</td>
+                                    <td>{{round (get-index model.fitResult.qof.cov index) 4}}</td>
                                 </tr>
                         {{/each}}
-                    </tbody>
-                </table>
-                <table class="table">
-                    <tbody>
                         <tr>
                             <th scope="row">Time to fit</th>
-                            <td>{{round model.fitResult.fit.time 4}} s</td>
+                            <td>{{round model.fitResult.time 4}} s</td>
                         </tr>
                     </tbody>
                 </table>
@@ -191,8 +183,8 @@
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="tab-fit">
                     <div id="chart-fit">
-                        {{bindfit-high-charts content=chartData chartOptions=chartOptions theme=chartTheme}}
-                        {{bindfit-high-charts content=chartDataResiduals chartOptions=chartOptions theme=chartTheme}}
+                        {{bindfit-high-charts content=chartDataFit chartOptions=chartOptionsFit theme=chartTheme}}
+                        {{bindfit-high-charts content=chartDataResiduals chartOptions=chartOptionsFit theme=chartTheme}}
                     </div> <!-- Chart panel -->
                 </div> <!-- #tab-fit -->
 

@@ -1,142 +1,75 @@
-export function genChartData(data, fit, labels, nlimit) {
+export function genChartDataLinked(x, 
+                                   y1, y2, 
+                                   y1names, y2names,
+                                   y1namessuffix, y2namessuffix, 
+                                   xlabel, ylabel, 
+                                   xunits, yunits, 
+                                   y1type, y1marker, y1linewidth,
+                                   y2type, y2marker, y2linewidth,
+                                   nlimit) {
     // Generate Highcharts series formatted fit data
     var series = [];
-    var i = 0;
 
-    var d = data;
-    var f = fit;
-
-    // If model has been populated
-    if (d && f) {
-        var data_y = d.y[0];
-        var fit_y  = f.y[0];
-        
-        // Assume all data and fits match data.y[0] length
-        // TODO if not throw error
-        var y_len  = data_y.length;
-        if (y_len > nlimit) {
-            y_len = nlimit;
-        }
-
-        // Calculate geq for x axis
-        var data_x = [];
-        var h0 = d.x[0];
-        var g0 = d.x[1];
-        for (i = 0; i < g0.length; i++) {
-            data_x.push(g0[i]/h0[i]);
-        }
-
-        // Temporary storage for each series added to chart
-        var data_series = [];
-        var fit_series  = [];
-
-        // For each observation
-        for (var obs = 0; obs < y_len; obs++) {
-            data_series = [];
-            fit_series = [];
-
-            // Create [[geq, y], [geq, y]...] array for each obs 
-            // For each point in current observation
-            for (i = 0; i < data_x.length; i++) {
-                data_series.push({x: data_x[i], 
-                                  y: data_y[obs][i],
-                                  xLabel: labels.x.label,
-                                  yLabel: labels.y.label,
-                                  xUnits: labels.x.units,
-                                  yUnits: labels.y.units});
-                fit_series.push( {x: data_x[i], 
-                                  y: fit_y[obs][i],
-                                  xLabel: labels.x.label,
-                                  yLabel: labels.y.label,
-                                  xUnits: labels.x.units,
-                                  yUnits: labels.y.units});
-            }
-
-            series.push({
-                name: d.labels.y[obs]+" fit",
-                type: "line",
-                marker: {enabled: true},
-                lineWidth: 0,
-                data: data_series
-            });
-
-            series.push({
-                linkedTo: ":previous",
-                name: d.labels.y[obs]+" data",
-                type: "spline",
-                marker: {enabled: false},
-                lineWidth: 2,
-                data: fit_series
-            });
-        }
-    }
-
-    return series;
-}
-
-export function genChartDataResiduals(data, fit, labels, nlimit) {
-    // Generate Highcharts series formatted fit residual data
-
-    var series = [];
-    var i = 0;
-
-    var d = data;
-    var f = fit;
-        
-    // If model has been populated
-    if (d && f) {
-
-        // Only use first dataset
-        var y = f.residuals[0];
-        
-        // Limit plot length
-        var y_len  = y.length;
-        if (y_len > nlimit) {
-            y_len = nlimit;
-        }
-
-        // Calculate geq for x axis
-        var x  = [];
-        var h0 = d.x[0];
-        var g0 = d.x[1];
-        for (i = 0; i < g0.length; i++) {
-            x.push(g0[i]/h0[i]);
-        }
-
-        // Temporary storage for each series added to chart
-        var obs_series  = [];
-
-        // For each observation
-        for (var obs = 0; obs < y_len; obs++) {
-            obs_series = [];
-
-            // Create [[geq, y], [geq, y]...] array for each obs 
-            // For each point in current observation
-            for (i = 0; i < x.length; i++) {
-                obs_series.push({x: x[i], 
-                                 y: y[obs][i],
-                                 xLabel: labels.x.label,
-                                 yLabel: labels.y.label,
-                                 xUnits: labels.x.units,
-                                 yUnits: labels.y.units});
-            }
-
-            series.push({
-                name: d.labels.y[obs]+" residuals",
-                type: "line",
-                marker: {enabled: true},
-                lineWidth: 2,
-                data: obs_series
-            });
-        }
-    }
-
-    return series;
-}
-
-export function genChartDataTEMP(x, y, ynames, xlabel, ylabel, xunits, yunits) {
-    // Generate Highcharts series formatted chartData
+    var data_x = x;
+    var data_y = y1;
+    var fit_y  = y2;
     
+    // Assume all data and fits match data.y[0] length
+    // TODO if not throw error
+    var y_len  = data_y.length;
+    if (y_len > nlimit) {
+        y_len = nlimit;
+    }
+
+    // Temporary storage for each series added to chart
+    var data_series = [];
+    var fit_series  = [];
+
+    // For each observation
+    for (let obs = 0; obs < y_len; obs++) {
+        data_series = [];
+        fit_series = [];
+
+        // Create [[geq, y], [geq, y]...] array for each obs 
+        // For each point in current observation
+        for (let i = 0; i < data_x.length; i++) {
+            data_series.push({x: data_x[i], 
+                              y: data_y[obs][i],
+                              xLabel: xlabel,
+                              yLabel: ylabel,
+                              xUnits: xunits,
+                              yUnits: yunits});
+            fit_series.push( {x: data_x[i], 
+                              y: fit_y[obs][i],
+                              xLabel: xlabel,
+                              yLabel: ylabel,
+                              xUnits: xunits,
+                              yUnits: yunits});
+        }
+
+        series.push({
+            name: y1names[obs]+" "+y1namessuffix,
+            type: y1type,
+            marker: {enabled: y1marker},
+            lineWidth: y1linewidth,
+            data: data_series
+        });
+
+        series.push({
+            linkedTo: ":previous",
+            name: y2names[obs]+" "+y2namessuffix,
+            type: y2type,
+            marker: {enabled: y2marker},
+            lineWidth: y2linewidth,
+            data: fit_series
+        });
+    }
+
+    return series;
+}
+
+export function genChartData(x, y, ynames, ynamessuffix, xlabel, ylabel, xunits, yunits, type, marker, linewidth) {
+    // Generate Highcharts series formatted chartData
     var series = [];
         
     // Temporary storage for each y added to chart
@@ -158,10 +91,10 @@ export function genChartDataTEMP(x, y, ynames, xlabel, ylabel, xunits, yunits) {
         }
 
         series.push({
-            name: ynames[yi]+" molefraction",
-            type: "spline",
-            marker: {enabled: false},
-            lineWidth: 2,
+            name: ynames[yi]+" "+ynamessuffix,
+            type: type,
+            marker: {enabled: marker},
+            lineWidth: linewidth,
             data: data
         });
     }
@@ -169,60 +102,16 @@ export function genChartDataTEMP(x, y, ynames, xlabel, ylabel, xunits, yunits) {
     return series;
 }
 
-export function genChartOptions(labels) {
-    // Generate Highcharts options formatted fit labels
-    var x = labels.x;
-    var y = labels.y;
-
-    var opts = {
-        title: {
-            text: "",
-        },
-        subtitle: {
-            text: "",
-        },
-        xAxis: {
-            title: {
-                text: x.label
-            },
-            labels: {
-                format: "{value} "+x.units
-            }
-        },
-        yAxis: { // Primary y axis
-            title: {
-                text: y.label
-            },
-            labels: {
-                format: "{value} "+y.units
-            }
-        },
-        tooltip: {
-            useHTML: true,
-            headerFormat: '<span style="font-size: 10px">x: {point.key:.4f}</span><br/><table>',
-            pointFormat: '<tr>'+
-                '<td style="color: {point.color}">\u25CF {series.name}</td>'+
-                '<td style="text-align: right"><b>{point.y} {point.yUnits}</b></td>'+
-                '</tr>',
-            footerFormat: '</table>',
-            valueDecimals: 4
-        }
-    };
-
-    return opts;
-}
-
-export function genChartOptionsTEMP(xlabel, ylabel, xunits, yunits) {
+export function genChartOptions(xlabel, ylabel, xunits, yunits) {
     // Generate Highcharts chartOptions object formatted with custom labels
 
     // TODO a way to set extremes here?
-
     var opts = {
         title: {
-            text: "",
+            text: "HELLO",
         },
         subtitle: {
-            text: "",
+            text: "WORLD",
         },
         xAxis: {
             title: {

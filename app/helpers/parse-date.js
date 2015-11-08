@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Handlebars.helper("parse-date", function(timestamp) {
+export function parseDate(params) {
     /***
      * Return formatted date from timestamp
      */
+    var timestamp = params[0];
 
     // Check if timestamp is a valid date string
     // Return empty string if not
@@ -12,4 +13,6 @@ export default Ember.Handlebars.helper("parse-date", function(timestamp) {
     } else {
         return "";
     }
-});
+}
+
+export default Ember.Helper.helper(parseDate);
