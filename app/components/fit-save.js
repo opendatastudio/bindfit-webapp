@@ -12,7 +12,6 @@ export default Ember.Component.extend({
             var _this = this;
 
             var request = {
-                data:    _this.get("data"),
                 fit:     _this.get("fit"),
                 meta:    _this.get("meta"),
                 options: _this.get("options")
