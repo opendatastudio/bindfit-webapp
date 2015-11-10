@@ -4,14 +4,23 @@ import Ember from 'ember';
 var root = "http://api.supramolecular.echus.co/bindfit/";
 
 export default Ember.Controller.extend({
-    watchParamsLabelled: function() {
-        // Force Ember to manually call fitOptions.paramsLabelled's setter when
+    optionsParamsLabelled: function() {
+        /***
+         * Array of labelled parameters for display in template, bound by
+         * observer watchOptionsParamsLabelled
+         */
+        var labels = this.get("model.fitLabels.fit.params");
+        return this.model.fitOptions.paramsLabelled(labels);
+    }.property("model.fitOptions.params", "model.fitLabels.fit.params"),
+
+    watchOptionsParamsLabelled: function() {
+        // Force Ember to manually call fitOptions.setParamsLabelled setter when
         // a user updates a parameter's value
-        var newParamsLabelled = this.get("model.fitOptions.paramsLabelled");
+        var newParamsLabelled = this.get("optionsParamsLabelled");
         this.model.fitOptions.setParamsLabelled(newParamsLabelled);
         console.log("watchParamsLabelled: params changed:");
         console.log(this.model.fitOptions.params);
-    }.observes("model.fitOptions.paramsLabelled.@each.value"),
+    }.observes("optionsParamsLabelled.@each.value"),
 
     actions: {
         onFitterSelect: function(selection) {
@@ -33,7 +42,7 @@ export default Ember.Controller.extend({
             controller.get('model.fitSave').reset();
 
             // If a fitter is selected (not undefined)
-            // Populate fitOptions and fitLabels
+            // Pre-populate fitOptions and fitLabels for this selection
             if (selection !== undefined) {
                 console.log("actions.onFitterSelect: selection !== undefined");
 

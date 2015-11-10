@@ -52,7 +52,7 @@
                             {{data-file-upload onComplete="onUploadComplete" onRestart="onUploadRestart"}}
                         </div>
 
-                        {{#each model.fitOptions.paramsLabelled as |param|}}
+                        {{#each optionsParamsLabelled as |param|}}
                             <div class="input-group col-xs-12">
                                 <div class="input-group-addon">{{param.label}} guess</div>
                                 {{input value=param.value type="number" class="form-control"}}
@@ -64,7 +64,7 @@
                     <div class="checkbox">
                         <label>
                             <div class="input-group col-xs-12">
-                                {{input checked=model.fitOptions.dilute type="checkbox"}} Correct for dilution (if applicable) 
+                                {{input checked=model.fitOptions.options.dilute type="checkbox"}} Correct for dilution (if applicable) 
                             </div>
                         </label>
                     </div>
@@ -89,7 +89,7 @@
 
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             {{#if model.fitResult.isPopulated}}
-                {{fit-result-table fitResult=model.fitResult}}
+                {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
             {{else}}
                 <div class="panel-body">
                     <p>Fitted parameters will be displayed here once you've run a fitter in the Control panel.</p>
@@ -134,7 +134,7 @@
     <div id="main" class="col-xs-12 col-md-7 col-lg-8">
         <div class="row">
             <div class="col-xs-12">
-                {{fit-charts fitResult=model.fitResult}}
+                {{fit-charts fitResult=model.fitResult fitLabels=model.fitLabels}}
             </div> <!-- col -->
         </div> <!-- row -->
 

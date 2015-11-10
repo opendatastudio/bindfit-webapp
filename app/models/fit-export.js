@@ -7,7 +7,7 @@ export default Ember.Object.extend({
         this.set('export_url', null);
     },
 
-    isPopulated: Ember.computed('url', function() {
+    isPopulated: function() {
         return this.get('export_url');
-    })
+    }.property("export_url"),
 });

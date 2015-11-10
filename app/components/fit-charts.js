@@ -22,14 +22,15 @@ export default Ember.Component.extend({
             var data = this.get("fitResult.data.y");
             var fit = this.get("fitResult.fit.y");
 
-            var labels = this.get("fitResult.labels");
+            var labels = this.get("fitLabels");
+            var user_labels = this.get("fitResult.labels");
 
             // If data has been populated, plot only data
             if (geq && data && !fit) {
                 return genChartData(
                     geq,
                     data,
-                    labels.data.y.row_labels,
+                    user_labels.data.y.row_labels,
                     "",
                     labels.data.x.axis_label,
                     labels.data.y.axis_label,
@@ -44,7 +45,7 @@ export default Ember.Component.extend({
                 return genChartDataLinked(
                     geq,
                     data, fit,
-                    labels.data.y.row_labels, ["temp", "temp", "temp", "temp"],
+                    user_labels.data.y.row_labels, ["temp", "temp", "temp", "temp"],
                     "", "fit",
                     labels.data.x.axis_label, labels.fit.y.axis_label,
                     labels.data.x.axis_units, labels.fit.y.axis_units,
@@ -62,14 +63,15 @@ export default Ember.Component.extend({
         var geq = this.get("fitResult.geq");
         var residuals = this.get("fitResult.qof.residuals");
 
-        var labels = this.get("fitResult.labels");
+        var labels = this.get("fitLabels");
+        var user_labels = this.get("fitResult.labels");
 
         // If data has been populated, plot only data
         if (geq && residuals) {
             return genChartData(
                 geq,
                 residuals,
-                labels.data.y.row_labels,
+                user_labels.data.y.row_labels,
                 "residuals",
                 labels.data.x.axis_label,
                 labels.fit.y.axis_label,
@@ -83,9 +85,10 @@ export default Ember.Component.extend({
 
     chartOptionsFit: function() {
         console.log("chartOptionsFit: called");
-        var labels = this.get("fitResult.labels");
+        var labels = this.get("fitLabels");
         console.log("chartOptionsFit: labels.data");
         console.log(labels.data);
+
         if (labels.data) {
             console.log("chartOptionsFit: updating ...");
             return genChartOptions(labels.data.x.axis_label,
@@ -93,10 +96,10 @@ export default Ember.Component.extend({
                                    labels.data.x.axis_units,
                                    labels.data.y.axis_units);
         }
-    }.property("fitResult.labels.data.x.axis_label",
-               "fitResult.labels.data.y.axis_units",
-               "fitResult.labels.data.x.axis_label",
-               "fitResult.labels.data.y.axis_units"),
+    }.property("fitLabels.data.x.axis_label",
+               "fitLabels.data.y.axis_units",
+               "fitLabels.data.x.axis_label",
+               "fitLabels.data.y.axis_units"),
 
     chartDataMolefrac: function() {
         var geq = this.get("fitResult.geq");
@@ -109,9 +112,9 @@ export default Ember.Component.extend({
                 molefrac,
                 ["H", "HG", "HG2"],
                 "molefraction",
-                this.get("fitResult.labels.data.x.axis_label"),
+                this.get("fitLabels.data.x.axis_label"),
                 "Molefraction",
-                this.get("fitResult.labels.data.x.axis_units"),
+                this.get("fitLabels.data.x.axis_units"),
                 "",
                 "spline",
                 false,
@@ -120,13 +123,13 @@ export default Ember.Component.extend({
     }.property("fitResult.geq", "fitResult.fit.molefrac"),
 
     chartOptionsMolefrac: function() {
-        var labels = this.get("fitResult.labels");
+        var labels = this.get("fitLabels");
         if (labels.data) {
             return genChartOptions(labels.data.x.axis_label,
                                    "Molefraction",
                                    labels.data.x.axis_units,
                                    "");
         }
-    }.property("fitResult.labels.data.x.axis_label",
-               "fitResult.labels.data.x.axis_label"),
+    }.property("fitLabels.data.x.axis_label",
+               "fitLabels.data.x.axis_label"),
 });

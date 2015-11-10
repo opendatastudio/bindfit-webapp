@@ -5,7 +5,14 @@ export default Ember.Object.extend({
         x: null,
         y: null
     },
-    
+
+    labels: {
+        data: {
+            x: null,
+            y: null
+        }
+    }, 
+
     fit:  {
         y: null,
         coeffs: null,
@@ -22,19 +29,6 @@ export default Ember.Object.extend({
     },
 
     time: null,
-
-    labels: {
-        fit: {
-            y: {
-                row_labels: null,
-                axis_label: null,
-                axis_units: null
-            },
-            params: null
-        }
-    },
-
-
 
     geq: function() {
         var x = this.get("data.x");
@@ -55,12 +49,16 @@ export default Ember.Object.extend({
         }
     }.property("data.x"),
 
-    paramsLabelled: function() {
+    paramsLabelled: function(labels) {
         /***
          * Array of labelled parameters for display in template.
          */
         var params = this.get("fit.params");
-        var labels = this.get("labels.fit.params");
+        
+        console.log("MODEL fitResult.paramsLabelled: called");
+        console.log("MODEL fitResult.paramsLabelled: params, labels");
+        console.log(params);
+        console.log(labels);
 
         var list = [];
         for (var key in params) {
@@ -75,7 +73,7 @@ export default Ember.Object.extend({
         }
 
         return list;
-    }.property("fit.params", "labels.fit.params"),
+    },
 
     isPopulated: function() {
         return this.get("time");
@@ -84,14 +82,10 @@ export default Ember.Object.extend({
     reset: function() {
         var clear = {
             data: {x: null, y: null},
+            labels: {data: {x: null, y: null}},
             fit:  {y: null, coeffs: null, molefrac: null, params: null},
             qof: {residuals: null, cov: null, cov_total: null, rms: null, rms_total:null},
-            time: null,
-            labels: {
-                fit: {
-                    y: {row_labels: null, axis_label: null, axis_units: null}
-                }
-            }
+            time: null
         };
 
         this.setProperties(clear);

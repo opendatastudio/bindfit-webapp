@@ -1,15 +1,22 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-    x: {
-        label: null,
-        units: null,
+    data: {
+        x: {
+            axis_label: null,
+            axis_units: null
+        },
+        y: {
+            axis_label: null,
+            axis_units: null
+        }
     },
 
-    y: {
-        label: null,
-        units: null,
-    },
-
-    params: null
+    fit: {
+        params: null,
+        y: {
+            axis_label: null,
+            axis_units: null
+        }
+    }
 });

@@ -4,7 +4,7 @@
             <th scope="row">Parameter</th>
             <th>Value</th>
         </tr>
-        {{#each fitResult.paramsLabelled as |param|}}
+        {{#each paramsLabelled as |param|}}
             <tr>
                 <th scope="row">{{param.label}}</th>
                 <td>{{round param.value 2}} {{param.units}}</td>

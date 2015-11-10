@@ -59,7 +59,7 @@
         </div>
 
         <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-            {{fit-result-table fitResult=model.fitResult}}
+            {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
         </div> <!-- Collapse div -->
     </div> <!-- Panel -->
 
@@ -156,7 +156,7 @@
 
         <div class="row">
             <div class="col-xs-12">
-                {{fit-charts fitResult=model.fitResult}}
+                {{fit-charts fitResult=model.fitResult fitLabels=model.fitLabels}}
             </div> <!-- col -->
         </div> <!-- row -->
 

@@ -1,5 +1,5 @@
 {{#if output.isPopulated}}
-    <a href={{output.url}} class="btn btn-info btn-block">Download</a>
+    <a href={{output.export_url}} class="btn btn-info btn-block">Download</a>
 {{else}}
     <button class="btn btn-default btn-block" {{action "exportFit"}}>Export</button>
 {{/if}}

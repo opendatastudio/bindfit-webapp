@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import FitResult  from "../models/fit-result";
+import FitLabels  from "../models/fit-labels";
 import FitOptions from "../models/fit-options";
 import FitExport  from "../models/fit-export";
 import FitSave    from "../models/fit-save";
@@ -9,6 +10,7 @@ export default Ember.Route.extend({
     urls: {
         view:   "http://api.supramolecular.echus.co/bindfit/fit/",
         list:   "http://api.supramolecular.echus.co/bindfit/list",
+        labels: "http://api.supramolecular.echus.co/bindfit/labels",
     },
 
     model: function(params) {
@@ -20,6 +22,17 @@ export default Ember.Route.extend({
             // (labels must be retrieved separately)
             var model = {
                 fitList:    Ember.$.getJSON(urls.list),
+
+                fitLabels:  Ember.$.ajax({
+                    url:  urls.labels,
+                    type: "POST",
+                    data: JSON.stringify({fitter: response.options.fitter}),
+                    contentType: "application/json; charset=utf-8",
+                    dataType:    "json"
+                    })
+                    .then(function(data) {
+                        return FitLabels.create(data);
+                    }),
 
                 fitOptions: FitOptions.create(response.options),
                 fitResult:  FitResult.create(response.fit),
