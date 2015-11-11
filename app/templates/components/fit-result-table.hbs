@@ -10,8 +10,8 @@
             <tr>
                 <th scope="row">{{param.label}}</th>
                 <td>{{round param.value 2}} {{param.units}}</td>
-                <td>&plusmn; {{round param.stderr 4}}</td>
-                <td>{{round param.init 2}}</td>
+                <td>&plusmn; {{round param.stderr 4}} {{param.units}}</td>
+                <td>{{round param.init 2}} {{param.units}}</td>
             </tr>
         {{/each}}
     <!-- Deal with multiple inputs here later -->
