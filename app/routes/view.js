@@ -21,12 +21,14 @@ export default Ember.Route.extend({
             // Populate full model for retrieved fit
             // (labels must be retrieved separately)
             var model = {
+                fitID:      params.id,
+
                 fitList:    Ember.$.getJSON(urls.list),
 
                 fitLabels:  Ember.$.ajax({
                     url:  urls.labels,
                     type: "POST",
-                    data: JSON.stringify({fitter: response.options.fitter}),
+                    data: JSON.stringify({fitter: response.fitter}),
                     contentType: "application/json; charset=utf-8",
                     dataType:    "json"
                     })
@@ -34,10 +36,8 @@ export default Ember.Route.extend({
                         return FitLabels.create(data);
                     }),
 
-                fitOptions: FitOptions.create(response.options),
-                fitResult:  FitResult.create(response.fit),
+                fitResult:  FitResult.create(response),
                 fitMeta:    FitMeta.create(response.meta),
-                fitID:      params.id,
                 
                 fitExport:  FitExport.create({}),
                 fitSave:    FitSave.create({})

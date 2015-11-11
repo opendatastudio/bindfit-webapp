@@ -11,11 +11,8 @@ export default Ember.Component.extend({
         saveFit: function() {
             var _this = this;
 
-            var request = {
-                fit:     _this.get("fit"),
-                meta:    _this.get("meta"),
-                options: _this.get("options")
-            };
+            var request = _this.get("fit");
+            request.meta = _this.get("meta");
 
             console.log("actions.saveFit: request to send");
             console.log(request);
