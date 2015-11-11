@@ -64,13 +64,18 @@ export default Ember.Object.extend({
         for (var key in params) {
             if (params.hasOwnProperty(key)) {
                 list.push({
-                    key:   key,
-                    label: labels[key].label,
-                    units: labels[key].units,
-                    value: params[key]
+                    key:    key,
+                    label:  labels[key].label,
+                    units:  labels[key].units,
+                    value:  params[key].value,
+                    init:   params[key].init,
+                    stderr: params[key].stderr,
                 });
             }
         }
+
+        console.log("MODEL fitResult.paramsLabelled: paramsLabelled");
+        console.log(list);
 
         return list;
     },
