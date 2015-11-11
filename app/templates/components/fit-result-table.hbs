@@ -2,12 +2,16 @@
     <tbody>
         <tr class="active">
             <th scope="row">Parameter</th>
-            <th>Value</th>
+            <th>Optimised</th>
+            <th>Error</th>
+            <th>Initial</th>
         </tr>
         {{#each paramsLabelled as |param|}}
             <tr>
                 <th scope="row">{{param.label}}</th>
                 <td>{{round param.value 2}} {{param.units}}</td>
+                <td>&plusmn; {{round param.stderr 4}}</td>
+                <td>{{round param.init 2}}</td>
             </tr>
         {{/each}}
     <!-- Deal with multiple inputs here later -->
