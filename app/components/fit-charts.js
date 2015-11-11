@@ -45,7 +45,7 @@ export default Ember.Component.extend({
                 return genChartDataLinked(
                     geq,
                     data, fit,
-                    user_labels.data.y.row_labels, ["temp", "temp", "temp", "temp"],
+                    user_labels.data.y.row_labels, user_labels.data.y.row_labels,
                     "", "fit",
                     labels.data.x.axis_label, labels.fit.y.axis_label,
                     labels.data.x.axis_units, labels.fit.y.axis_units,
@@ -110,7 +110,7 @@ export default Ember.Component.extend({
             return genChartData(
                 geq,
                 molefrac,
-                ["H", "HG", "HG2"],
+                ["H", "HG", "HG2"], // Add this to fit labels in backend!
                 "molefraction",
                 this.get("fitLabels.data.x.axis_label"),
                 "Molefraction",
