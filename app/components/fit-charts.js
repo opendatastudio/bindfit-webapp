@@ -17,41 +17,44 @@ export default Ember.Component.extend({
     // values, I'm lazy
     // TODO: figure out how to access current controller values from top-level?
     chartDataFit: function() {
-            // plotlimit = this.get("PLOT_LIMIT"));
-            var geq = this.get("fitResult.geq");
-            var data = this.get("fitResult.data.y");
-            var fit = this.get("fitResult.fit.y");
+        var plot_limit = this.get("PLOT_LIMIT");
 
-            var labels = this.get("fitLabels");
-            var user_labels = this.get("fitResult.labels");
+        var geq = this.get("fitResult.geq");
+        var data = this.get("fitResult.data.y");
+        var fit = this.get("fitResult.fit.y");
 
-            // If data has been populated, plot only data
-            if (geq && data && !fit) {
-                return genChartData(
-                    geq,
-                    data,
-                    user_labels.data.y.row_labels,
-                    "",
-                    labels.data.x.axis_label,
-                    labels.data.y.axis_label,
-                    labels.data.x.axis_units,
-                    labels.data.y.axis_units,
-                    "line",
-                    true,
-                    2);
-            }
-            // If fit has been populated
-            else if (geq && data && fit) {
-                return genChartDataLinked(
-                    geq,
-                    data, fit,
-                    user_labels.data.y.row_labels, user_labels.data.y.row_labels,
-                    "", "fit",
-                    labels.data.x.axis_label, labels.fit.y.axis_label,
-                    labels.data.x.axis_units, labels.fit.y.axis_units,
-                    "line", true, 0,
-                    "spline", false, 2);
-            }
+        var labels = this.get("fitLabels");
+        var user_labels = this.get("fitResult.labels");
+
+        // If data has been populated, plot only data
+        if (geq && data && !fit) {
+            return genChartData(
+                geq,
+                data,
+                user_labels.data.y.row_labels,
+                "",
+                labels.data.x.axis_label,
+                labels.data.y.axis_label,
+                labels.data.x.axis_units,
+                labels.data.y.axis_units,
+                "line",
+                true,
+                2,
+                plot_limit);
+        }
+        // If fit has been populated
+        else if (geq && data && fit) {
+            return genChartDataLinked(
+                geq,
+                data, fit,
+                user_labels.data.y.row_labels, user_labels.data.y.row_labels,
+                "", "fit",
+                labels.data.x.axis_label, labels.fit.y.axis_label,
+                labels.data.x.axis_units, labels.fit.y.axis_units,
+                "line", true, 0,
+                "spline", false, 2,
+                plot_limit);
+        }
 
                                                   // Observes only one prop in
                                                   // labels, assuming all props
@@ -59,6 +62,8 @@ export default Ember.Component.extend({
     }.property("fitResult.geq", "fitResult.data.y", "fitResult.fit.y"),
 
     chartDataResiduals: function() {
+        var plot_limit = this.get("PLOT_LIMIT");
+
         // plotlimit = this.get("PLOT_LIMIT"));
         var geq = this.get("fitResult.geq");
         var residuals = this.get("fitResult.qof.residuals");
@@ -79,7 +84,8 @@ export default Ember.Component.extend({
                 labels.fit.y.axis_units,
                 "line",
                 true,
-                2);
+                2,
+                plot_limit);
         }
     }.property("fitResult.geq", "fitResult.qof.residuals"),
 
@@ -102,6 +108,8 @@ export default Ember.Component.extend({
                "fitLabels.data.y.axis_units"),
 
     chartDataMolefrac: function() {
+        var plot_limit = this.get("PLOT_LIMIT");
+
         var geq = this.get("fitResult.geq");
         var molefrac = this.get("fitResult.fit.molefrac");
 
@@ -118,7 +126,8 @@ export default Ember.Component.extend({
                 "",
                 "spline",
                 false,
-                2);
+                2,
+                plot_limit);
         }
     }.property("fitResult.geq", "fitResult.fit.molefrac"),
 

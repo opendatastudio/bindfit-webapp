@@ -68,7 +68,13 @@ export function genChartDataLinked(x,
     return series;
 }
 
-export function genChartData(x, y, ynames, ynamessuffix, xlabel, ylabel, xunits, yunits, type, marker, linewidth) {
+export function genChartData(x, y, ynames, ynamessuffix, xlabel, ylabel, xunits, yunits, type, marker, linewidth, nlimit) {
+    // Limit amount of datasets plotted
+    var y_len  = y.length;
+    if (y_len > nlimit) {
+        y_len = nlimit;
+    }
+    
     // Generate Highcharts series formatted chartData
     var series = [];
         
@@ -76,7 +82,7 @@ export function genChartData(x, y, ynames, ynamessuffix, xlabel, ylabel, xunits,
     var data  = [];
 
     // For each y dataset 
-    for (let yi = 0; yi < y.length; yi++) {
+    for (let yi = 0; yi < y_len; yi++) {
         // Clear previously added series
         data = [];
 
