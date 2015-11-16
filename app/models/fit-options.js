@@ -33,12 +33,17 @@ export default Ember.Object.extend({
         console.log("fitOptions.paramsLabelled: params");
         console.log(params);
 
-        var list = [];
-        for (var key in params) {
+        var paramsArray = [];
+
+        // Sort keys to display in order
+        var sortedKeys = Object.keys(params).sort()
+
+        // Populate parameter aray
+        sortedKeys.forEach(function(key) {
             if (params.hasOwnProperty(key)) {
                 // Ensure labels has been updated
                 if (labels.hasOwnProperty(key)) {
-                    list.push({
+                    paramsArray.push({
                         key:   key,
                         label: labels[key].label,
                         units: labels[key].units,
@@ -46,9 +51,9 @@ export default Ember.Object.extend({
                     });
                 }
             }
-        }
+        });
 
-        return list;
+        return paramsArray;
     },
 
     reset: function() {

@@ -74,10 +74,15 @@ export default Ember.Object.extend({
         console.log(params);
         console.log(labels);
 
-        var list = [];
-        for (var key in params) {
+        var paramsArray = [];
+
+        // Sort keys to display in order
+        var sortedKeys = Object.keys(params).sort()
+
+        // Populate parameter aray
+        sortedKeys.forEach(function(key) {
             if (params.hasOwnProperty(key)) {
-                list.push({
+                paramsArray.push({
                     key:    key,
                     label:  labels[key].label,
                     units:  labels[key].units,
@@ -86,12 +91,9 @@ export default Ember.Object.extend({
                     stderr: params[key].stderr,
                 });
             }
-        }
+        });
 
-        console.log("MODEL fitResult.paramsLabelled: paramsLabelled");
-        console.log(list);
-
-        return list;
+        return paramsArray;
     },
 
     isPopulated: function() {
