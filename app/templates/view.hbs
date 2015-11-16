@@ -112,7 +112,11 @@
                     </tr>
                     <tr>
                         <th scope="row">Temperature</th>
-                        <td>{{model.fitResult.meta.temp}} {{model.fitResult.meta.temp_unit}}</td>
+                        <td>
+                            {{#if model.fitResult.meta.temp}}
+                                {{model.fitResult.meta.temp}} {{model.fitResult.meta.temp_unit}}
+                            {{/if}}
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">Notes</th>
