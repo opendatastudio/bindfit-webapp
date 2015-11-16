@@ -62,6 +62,7 @@ export default Ember.Component.extend({
     }.property("fitResult.geq", "fitResult.data.y", "fitResult.fit.y"),
 
     chartDataResiduals: function() {
+        console.log("COMPONENT fit-charts chartDataResiduals: called");
         var plot_limit = this.get("PLOT_LIMIT");
 
         // plotlimit = this.get("PLOT_LIMIT"));
@@ -71,7 +72,6 @@ export default Ember.Component.extend({
         var labels = this.get("fitLabels");
         var user_labels = this.get("fitResult.labels");
 
-        // If data has been populated, plot only data
         if (geq && residuals) {
             return genChartData(
                 geq,
@@ -86,6 +86,9 @@ export default Ember.Component.extend({
                 true,
                 2,
                 plot_limit);
+        } else {
+            // Empty plot (clears any previous residuals)
+            return genChartData([], []);
         }
     }.property("fitResult.geq", "fitResult.qof.residuals"),
 

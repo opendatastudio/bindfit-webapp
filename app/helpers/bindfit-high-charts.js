@@ -145,7 +145,7 @@ export function genChartOptions(xlabel, ylabel, xunits, yunits) {
 }
 
 var defaultChartTheme = {
-    colors: ["#79BCB8", "#EE6C4D", "#0B4F6C", "#FA8334", "#197BBD", "#033860", "#47A8BD", "#1E3888"],
+    colors: ["#79BCB8", "#0B4F6C", "#197BBD", "#033860", "#47A8BD", "#1E3888", "#EE6C4D", "#FA8334"],
     chart: {
         marginTop: 50,
         marginLeft: 100, // For chart stacking consistency w/

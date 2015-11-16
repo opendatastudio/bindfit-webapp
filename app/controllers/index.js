@@ -82,6 +82,9 @@ export default Ember.Controller.extend({
 
         onUploadComplete: function(response) {
             console.log("actions.onUploadComplete: called");
+            // Reset fit result
+            this.get("model.fitResult").reset();
+            console.log("actions.onUploadComplete: fitResult reset");
             // Set unique file id in fitOptions
             this.set('model.fitOptions.data_id', response.data_id);
             // Save parsed data in fitResult
