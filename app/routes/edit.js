@@ -4,7 +4,6 @@ import FitLabels  from "../models/fit-labels";
 import FitOptions from "../models/fit-options";
 import FitExport  from "../models/fit-export";
 import FitSave    from "../models/fit-save";
-import FitMeta    from "../models/fit-meta";
 
 export default Ember.Route.extend({
     controllerName: "index",
@@ -36,7 +35,7 @@ export default Ember.Route.extend({
                 fitLabels:  Ember.$.ajax({
                     url:  urls.labels,
                     type: "POST",
-                    data: JSON.stringify({fitter: response.options.fitter}),
+                    data: JSON.stringify({fitter: response.fitter}),
                     contentType: "application/json; charset=utf-8",
                     dataType:    "json"
                     })
@@ -44,7 +43,6 @@ export default Ember.Route.extend({
                         return FitLabels.create(data);
                     }),
 
-                fitMeta:    FitMeta.create(response.meta),
                 fitID:      params.id,
                 
                 fitExport:  FitExport.create({}),
