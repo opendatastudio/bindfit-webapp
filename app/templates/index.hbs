@@ -111,12 +111,12 @@
         {{#if model.fitResult.isPopulated}}
             <div class="panel-body">
                 <!-- Save form -->
-                {{fit-save fit=model.fitResult meta=model.fitMeta output=model.fitSave}}
+                {{fit-save fit=model.fitResult output=model.fitSave}}
 
                 <hr/>
 
                 <!-- Export button -->
-                {{fit-export fit=model.fitResult meta=model.fitMeta output=model.fitExport}}
+                {{fit-export fit=model.fitResult output=model.fitExport}}
             </div> <!-- Panel body -->
         {{else}}
                 <div class="panel-body">

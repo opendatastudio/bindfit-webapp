@@ -3,16 +3,15 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     actions: {
         onTempUnitSelect: function(selection) {
-            this.set("meta.temp_unit", selection);
+            this.set("fit.meta.temp_unit", selection);
             console.log("Temp unit selected");
-            console.log(this.get("meta.temp_unit"));
+            console.log(this.get("fit.meta.temp_unit"));
         },
 
         saveFit: function() {
             var _this = this;
 
             var request = _this.get("fit");
-            request.meta = _this.get("meta");
 
             console.log("actions.saveFit: request to send");
             console.log(request);

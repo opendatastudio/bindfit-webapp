@@ -2,49 +2,49 @@
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-name">Author(s)</label>
         <div class="col-xs-9">
-            {{input id="bindfit-form-save-author" value=meta.author type="text" class="form-control"}}
+            {{input id="bindfit-form-save-author" value=fit.meta.author type="text" class="form-control"}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-name">Experiment name</label>
         <div class="col-xs-9">
-            {{input id="bindfit-form-save-name" value=meta.name type="text" class="form-control"}}
+            {{input id="bindfit-form-save-name" value=fit.meta.name type="text" class="form-control"}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-date">Experiment date</label>
         <div class="col-xs-9">
-           {{bootstrap-datepicker value=meta.date format="dd/mm/yyyy" todayHighlight=true autoclose=true placeholder="Select date" class="form-control"}}
+           {{bootstrap-datepicker value=fit.meta.date format="dd/mm/yyyy" todayHighlight=true autoclose=true placeholder="Select date" class="form-control"}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-ref">Lab book reference</label>
         <div class="col-xs-9">
-            {{input id="bindfit-form-save-ref" value=meta.ref type="text" class="form-control"}}
+            {{input id="bindfit-form-save-ref" value=fit.meta.ref type="text" class="form-control"}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-host">Host species</label>
         <div class="col-xs-9">
-            {{input id="bindfit-form-save-host" value=meta.host type="text" class="form-control"}}
+            {{input id="bindfit-form-save-host" value=fit.meta.host type="text" class="form-control"}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-guest">Guest species</label>
         <div class="col-xs-9">
-            {{input id="bindfit-form-save-guest" value=meta.guest type="text" class="form-control"}}
+            {{input id="bindfit-form-save-guest" value=fit.meta.guest type="text" class="form-control"}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-solvent">Solvent</label>
         <div class="col-xs-9">
-            {{input id="bindfit-form-save-solvent" value=meta.solvent type="text" class="form-control"}}
+            {{input id="bindfit-form-save-solvent" value=fit.meta.solvent type="text" class="form-control"}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-temp">Temperature</label>
         <div class="col-xs-6">
-            {{input id="bindfit-form-save-temp" value=meta.temp type="number" class="form-control"}}
+            {{input id="bindfit-form-save-temp" value=fit.meta.temp type="number" class="form-control"}}
         </div>
         <div class="col-xs-3">
             {{#x-select action="onTempUnitSelect" class="form-control"}}
@@ -57,7 +57,7 @@
     <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-notes">Notes</label>
         <div class="col-xs-9">
-            {{textarea id="bindfit-form-save-notes" value=meta.notes class="form-control" rows="5"}}
+            {{textarea id="bindfit-form-save-notes" value=fit.meta.notes class="form-control" rows="5"}}
         </div>
     </div>
 </form>

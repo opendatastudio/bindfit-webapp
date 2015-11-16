@@ -6,7 +6,6 @@ export default Ember.Component.extend({
             var _this = this;
 
             var request = _this.get("fit");
-            request.meta = _this.get("meta");
 
             console.log("actions.exportFit: request to send");
             console.log(request);

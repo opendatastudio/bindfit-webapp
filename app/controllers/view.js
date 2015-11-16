@@ -25,6 +25,6 @@ export default Ember.Controller.extend({
          * Compute array of labelled parameters for display in template
          */
         var labels = this.get("model.fitLabels.fit.params");
-        return this.get("model.fitResult").paramsLabelled(labels)
+        return this.get("model.fitResult").paramsLabelled(labels);
     }.property("model.fitResult.fit.params", "model.fitLabels.fit.params")
 });

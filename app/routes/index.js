@@ -3,7 +3,6 @@ import FitResult  from "../models/fit-result";
 import FitLabels  from "../models/fit-labels";
 import FitOptions from "../models/fit-options";
 import FitExport  from "../models/fit-export";
-import FitMeta    from "../models/fit-meta";
 import FitSave    from "../models/fit-save";
 
 export default Ember.Route.extend({
@@ -23,7 +22,6 @@ export default Ember.Route.extend({
             fitResult:  FitResult.create({}),
 
             fitExport:  FitExport.create({}),
-            fitMeta:    FitMeta.create({}),
             fitSave:    FitSave.create({})
         });
 

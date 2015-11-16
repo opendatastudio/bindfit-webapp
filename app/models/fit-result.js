@@ -29,6 +29,20 @@ export default Ember.Object.extend({
     },
 
     time: null,
+    
+    meta: {
+        author: "",
+        name: "",
+        date: null,
+        timestamp: null,
+        ref: "",
+        host: "",
+        guest: "",
+        solvent: "",
+        temp: null,
+        temp_unit: "C", // Default temperature unit is Celsius
+        notes: "" 
+    },
 
     geq: function() {
         var x = this.get("data.x");
@@ -89,8 +103,23 @@ export default Ember.Object.extend({
             data: {x: null, y: null},
             labels: {data: {x: null, y: null}},
             fit:  {y: null, coeffs: null, molefrac: null, params: null},
-            qof: {residuals: null, cov: null, cov_total: null, rms: null, rms_total:null},
-            time: null
+            qof: {residuals: null, 
+                  cov: null, cov_total: null, 
+                  rms: null, rms_total:null},
+            time: null,
+            meta: {
+                author: "",
+                name: "",
+                date: "",
+                timestamp: null,
+                ref: "",
+                host: "",
+                guest: "",
+                solvent: "",
+                temp: null,
+                temp_unit: "C",
+                notes: "" 
+            },
         };
 
         this.setProperties(clear);

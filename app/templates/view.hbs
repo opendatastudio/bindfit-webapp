@@ -78,45 +78,45 @@
                     <!-- Metadata -->
                     <tr>
                         <th scope="row">Author(s)</th>
-                        <td>{{model.fitMeta.author}}</td>
+                        <td>{{model.fitResult.meta.author}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Experiment name</th>
-                        <td>{{model.fitMeta.name}}</td>
+                        <td>{{model.fitResult.meta.name}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Experiment date</th>
                         <td>
-                            {{parse-date model.fitMeta.date}}
+                            {{parse-date model.fitResult.meta.date}}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Fit date</th>
-                        <td>{{parse-date model.fitMeta.timestamp}}</td>
+                        <td>{{parse-date model.fitResult.meta.timestamp}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Lab book reference</th>
-                        <td>{{model.fitMeta.ref}}</td>
+                        <td>{{model.fitResult.meta.ref}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Host species</th>
-                        <td>{{model.fitMeta.host}}</td>
+                        <td>{{model.fitResult.meta.host}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Guest species</th>
-                        <td>{{model.fitMeta.guest}}</td>
+                        <td>{{model.fitResult.meta.guest}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Solvent</th>
-                        <td>{{model.fitMeta.solvent}}</td>
+                        <td>{{model.fitResult.meta.solvent}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Temperature</th>
-                        <td>{{model.fitMeta.temp}} {{model.fitMeta.temp_unit}}</td>
+                        <td>{{model.fitResult.meta.temp}} {{model.fitResult.meta.temp_unit}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Notes</th>
-                        <td>{{model.fitMeta.notes}}</td>
+                        <td>{{model.fitResult.meta.notes}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Fit ID</th>
@@ -138,7 +138,7 @@
 
         <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
             <div class="panel-body">
-                {{fit-export fit=model.fitResult meta=model.fitMeta output=model.fitExport}}
+                {{fit-export fit=model.fitResult output=model.fitExport}}
                 <hr/>
                 {{#link-to "edit" model.fitID class="btn btn-info btn-block"}}Edit fit{{/link-to}}
             </div>
