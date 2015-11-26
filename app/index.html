@@ -3,13 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>BindFit v0.5</title>
+    <title>Supramolecular - BindFit v0.5</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{content-for 'head'}}
 
+    <!-- Base vendor stylesheet (default Bootstrap) -->
     <link rel="stylesheet" href="assets/vendor.css">
+    <!-- Site stylesheet to override vendor settings (must be copied manually into dist/assets) -->
+    <link rel="stylesheet" href="assets/site.css">
+    <!-- App-specific customisations -->
     <link rel="stylesheet" href="assets/bindfit-client.css">
 
     {{content-for 'head-footer'}}
