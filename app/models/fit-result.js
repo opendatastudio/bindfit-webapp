@@ -77,7 +77,7 @@ export default Ember.Object.extend({
         var paramsArray = [];
 
         // Sort keys to display in order
-        var sortedKeys = Object.keys(params).sort()
+        var sortedKeys = Object.keys(params).sort();
 
         // Populate parameter aray
         sortedKeys.forEach(function(key) {
