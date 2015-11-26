@@ -18,8 +18,9 @@
          Bootstrap grid or specify 24 unit grid setting in sass files -->
     <link rel="stylesheet" href="assets/bindfit-client.css">
     <!-- Site stylesheet to override vendor settings 
-         (must be located in app/assets/site.css -->
-    <link rel="stylesheet" href="assets/site.css">
+         (must be located in app/assets/site.css if using local copy -->
+         <!-- <link rel="stylesheet" href="assets/site.css"> -->
+    <link rel="stylesheet" href="http://supramolecular.echus.co:8000/static/css/base.css">
 
     {{content-for 'head-footer'}}
 </head>
@@ -34,7 +35,6 @@
                     <a href="/">
                         <span class="sr-only"></span>
                         Supramolecular
-                        <!-- <img src="/static/img/logo-main%40print.png" alt="" /> -->
                     </a>
                 </h1>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".js-navbar-header">
@@ -55,15 +55,29 @@
                         <h2 class="sr-only">Navigation</h2>
                         <ul class="nav navbar-nav">
                             <li class="child first">
-                                <a href="#">
+                                <a href="http://supramolecular.echus.co:8000/en/">
                                     <span>Home</span>
                                 </a>
                             </li>
-                            <li class="child active last">
-                                <a href="#">
-                                    <span>Apps</span>
+                            <li class="child">
+                                <a href="http://supramolecular.echus.co:8000/en/blog/">
+                                    <span>Blog</span>
                                 </a>
                             </li>
+                            <li class="child children dropdown active last">
+                                <a href="/apps/" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span>Apps <span class="caret"></span></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <li class="child first last">
+                                        <a href="http://app.supramolecular.echus.co/bindfit/">
+                                            <span>Bindfit</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
                             <li class="divider" role="presentation"><span class="sr-only">Separator</span></li>
                         </ul>
                     </nav>
@@ -71,6 +85,7 @@
                         <li>
                             <a href="#" id="nav-logo-a">
                                 <!-- <img src="/static/img/logo-cbns%40print.png" id="nav-logo" class="hidden-md hidden-sm hidden-xs"> -->
+                                <img src="http://supramolecular.echus.co:8000/static/img/logo-cbns%40print.png" alt="" id="nav-logo" class="hidden-md hidden-sm hidden-xs">
                             </a>
                         </li>
                     </ul>
