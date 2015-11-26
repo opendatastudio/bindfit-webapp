@@ -9,12 +9,16 @@
 
     {{content-for 'head'}}
 
-    <!-- Base vendor stylesheet (default Bootstrap) -->
+    <!-- Base vendor stylesheet -->
     <link rel="stylesheet" href="assets/vendor.css">
     <!-- App-specific customisations -->
+    <!-- Currently Bootstrap settings are overwritten completely by the 
+         following site stylesheet -->
+    <!-- To use in the future either refactor templates back to 12 unit 
+         Bootstrap grid or specify 24 unit grid setting in sass files -->
     <link rel="stylesheet" href="assets/bindfit-client.css">
     <!-- Site stylesheet to override vendor settings 
-    (must be located in app/assets/site.css -->
+         (must be located in app/assets/site.css -->
     <link rel="stylesheet" href="assets/site.css">
 
     {{content-for 'head-footer'}}
@@ -76,7 +80,10 @@
 
 
 
-    {{content-for 'body'}}
+    <!-- For app-specific site formatting -->
+    <div class="supramolecular-app">
+        {{content-for 'body'}}
+    </div>
 
     <script src="assets/vendor.js"></script>
     <script src="assets/bindfit-client.js"></script>
