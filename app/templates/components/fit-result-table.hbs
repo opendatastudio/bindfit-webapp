@@ -18,27 +18,44 @@
                 <td>{{round param.init 2}} {{param.units}}</td>
             </tr>
         {{/each}}
-    <!-- Deal with multiple inputs here later -->
+
         <tr class="active">
             <th scope="row">Fit</th>
-            <th>Coefficients</th>
             <th>RMS</th>
             <th>Covariance</th>
+            <th></th>
         </tr>
         <tr class="active">
             <th scope="row">Total</th>
-            <th>---</th>
             <th>{{round fitResult.qof.rms_total 4}}</th>
             <th>{{round fitResult.qof.cov_total 4}}</th>
+            <th></th>
+        </tr>
+        {{#each fitResult.labels.data.y.row_labels as |label index|}}
+                <tr>
+                    <th>{{label}}</th>
+                    <td>{{round (get-index fitResult.qof.rms index) 4}}</td>
+                    <td>{{round (get-index fitResult.qof.cov index) 4}}</td>
+                    <th></th>
+                </tr>
+        {{/each}}
+
+        <tr class="active">
+            <th scope="row">Fit</th>
+            <th>Coefficients</th>
+            <td></td>
+            <td></td>
         </tr>
         {{#each fitResult.labels.data.y.row_labels as |label index|}}
                 <tr>
                     <th>{{label}}</th>
                     <td>{{round (get-at-index fitResult.fit.coeffs 0 index) 4}}</td>
-                    <td>{{round (get-index fitResult.qof.rms index) 4}}</td>
-                    <td>{{round (get-index fitResult.qof.cov index) 4}}</td>
+                    {{#if fitResult.fit.coeffs.[1]}}
+                        <td>{{round (get-at-index fitResult.fit.coeffs 1 index) 4}}</td>
+                    {{/if}}
                 </tr>
         {{/each}}
+
         <tr>
             <th scope="row">Time to fit</th>
             <td>{{round fitResult.time 4}} s</td>
