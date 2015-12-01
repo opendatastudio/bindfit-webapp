@@ -1,6 +1,7 @@
 # bindfit-client
 
-Developer documentation coming soon.
+Developer documentation coming soon. Bindfit is written using the Ember
+JS framework.
 
 ## Dependencies 
 
