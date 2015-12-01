@@ -101,6 +101,7 @@ export default Ember.Object.extend({
     }.property("time"),
 
     reset: function() {
+        // Clear any previous calculated values (not metadata)
         var clear = {
             data: {x: null, y: null},
             labels: {data: {x: null, y: null}},
@@ -109,19 +110,19 @@ export default Ember.Object.extend({
                   cov: null, cov_total: null, 
                   rms: null, rms_total:null},
             time: null,
-            meta: {
-                author: "",
-                name: "",
-                date: "",
-                timestamp: null,
-                ref: "",
-                host: "",
-                guest: "",
-                solvent: "",
-                temp: null,
-                temp_unit: "C",
-                notes: "" 
-            },
+            // meta: {
+            //     author: "",
+            //     name: "",
+            //     date: "",
+            //     timestamp: null,
+            //     ref: "",
+            //     host: "",
+            //     guest: "",
+            //     solvent: "",
+            //     temp: null,
+            //     temp_unit: "C",
+            //     notes: "" 
+            // },
         };
 
         this.setProperties(clear);

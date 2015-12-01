@@ -35,10 +35,10 @@ export default Ember.Controller.extend({
 
             var controller = this;
 
-            // Clear any previous fit options, results and exports
+            // Clear any previous fit results, exports and saves
             controller.get('model.fitResult').reset();
-            //controller.get('model.fitOptions').reset();
             controller.get('model.fitExport').reset();
+            //controller.get('model.fitOptions').reset();
             controller.get('model.fitSave').reset();
 
             // If a fitter is selected (not undefined)
