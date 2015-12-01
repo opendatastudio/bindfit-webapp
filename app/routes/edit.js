@@ -26,11 +26,36 @@ export default Ember.Route.extend({
         return Ember.$.getJSON(urls.view+params.id).then(function(response) {
             // Populate full model for retrieved fit
             // (labels must be retrieved separately)
+
+            // Parse fit result parameters into fitOptions hash for further
+            // fitting
+
+            // Create intial parameter hash
+            var params = response.fit.params;
+            var paramsInit = {};
+            
+            var keys = Object.keys(params);
+            keys.forEach(function(key) {
+                if (params.hasOwnProperty(key)) {
+                    paramsInit[key] = params[key].init;
+                }
+            });
+
+            // Build fitOptions object
+            var fitOptions = {
+                fitter:  response.fitter,
+                data_id: response.data_id,
+                params:  paramsInit,
+                options: response.options
+            };
+
             var model = {
                 fitList:    Ember.$.getJSON(urls.list),
 
-                fitOptions: FitOptions.create(response.options),
-                fitResult:  FitResult.create(response.fit),
+                // Parse fit settings into fitOptions object for re-fitting
+                // if required
+                fitOptions: FitOptions.create(fitOptions),
+                fitResult:  FitResult.create(response),
 
                 fitLabels:  Ember.$.ajax({
                     url:  urls.labels,
@@ -51,5 +76,12 @@ export default Ember.Route.extend({
 
             return Ember.RSVP.hash(model);
         });
+    },
+    
+    setupController: function(controller, model) {
+        console.log("setupController: model.fitResult, Options");
+        console.log(model.fitResult);
+        console.log(model.fitOptions);
+        controller.set('model', model);
     }
 });
