@@ -102,6 +102,8 @@ export default Ember.Object.extend({
 
     reset: function() {
         // Clear any previous calculated values (not metadata)
+        var _this = this;
+
         var clear = {
             data: {x: null, y: null},
             labels: {data: {x: null, y: null}},
@@ -110,19 +112,21 @@ export default Ember.Object.extend({
                   cov: null, cov_total: null, 
                   rms: null, rms_total:null},
             time: null,
-            // meta: {
-            //     author: "",
-            //     name: "",
-            //     date: "",
-            //     timestamp: null,
-            //     ref: "",
-            //     host: "",
-            //     guest: "",
-            //     solvent: "",
-            //     temp: null,
-            //     temp_unit: "C",
-            //     notes: "" 
-            // },
+            // TODO: temp hack - assigning meta: _this.meta directly breaks for a 
+            // reason I don't have time to investiage
+            meta: {
+                author: _this.meta.author,
+                name: _this.meta.name,
+                date: _this.meta.date,
+                timestamp: _this.meta.timestamp,
+                ref: _this.meta.ref,
+                host: _this.meta.host,
+                guest: _this.meta.guest,
+                solvent: _this.meta.solvent,
+                temp: _this.meta.temp,
+                temp_unit: _this.meta.temp_unit,
+                notes: _this.meta.notes 
+            },
         };
 
         this.setProperties(clear);
