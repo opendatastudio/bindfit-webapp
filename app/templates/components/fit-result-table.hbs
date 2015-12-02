@@ -49,9 +49,12 @@
         {{#each fitResult.labels.data.y.row_labels as |label index|}}
                 <tr>
                     <th>{{label}}</th>
-                    <td>{{round (get-at-index fitResult.fit.coeffs 0 index) 4}}</td>
-                    {{#if fitResult.fit.coeffs.[1]}}
-                        <td>{{round (get-at-index fitResult.fit.coeffs 1 index) 4}}</td>
+                    <td>{{round (get-at-index fitResult.fit.coeffs_calc 0 index) 4}}</td>
+                    {{#if fitResult.fit.coeffs_calc.[1]}}
+                        <td>{{round (get-at-index fitResult.fit.coeffs_calc 1 index) 4}}</td>
+                    {{/if}}
+                    {{#if fitResult.fit.coeffs_calc.[2]}}
+                        <td>{{round (get-at-index fitResult.fit.coeffs_calc 2 index) 4}}</td>
                     {{/if}}
                 </tr>
         {{/each}}
