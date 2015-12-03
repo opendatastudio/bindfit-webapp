@@ -108,10 +108,9 @@ export function genChartData(x, y, ynames, ynamessuffix, xlabel, ylabel, xunits,
     return series;
 }
 
-export function genChartOptions(xlabel, ylabel, xunits, yunits) {
+export function genChartOptions(xlabel, ylabel, xunits, yunits, ylimits) {
     // Generate Highcharts chartOptions object formatted with custom labels
 
-    // TODO a way to set extremes here?
     var opts = {
         xAxis: {
             title: {
@@ -140,6 +139,11 @@ export function genChartOptions(xlabel, ylabel, xunits, yunits) {
             valueDecimals: 4
         }
     };
+
+    if (ylimits) {
+        opts.yAxis.min = ylimits[0];
+        opts.yAxis.max = ylimits[1];
+    }
 
     return opts;
 }

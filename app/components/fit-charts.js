@@ -140,7 +140,8 @@ export default Ember.Component.extend({
             return genChartOptions(labels.data.x.axis_label,
                                    "Molefraction",
                                    labels.data.x.axis_units,
-                                   "");
+                                   "",
+                                   [0, 1]);
         }
     }.property("fitLabels.data.x.axis_label",
                "fitLabels.data.x.axis_label"),
