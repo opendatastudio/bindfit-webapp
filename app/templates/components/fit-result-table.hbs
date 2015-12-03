@@ -41,10 +41,20 @@
         {{/each}}
 
         <tr class="active">
-            <th scope="row">Fit</th>
-            <th>Coefficients</th>
-            <td></td>
-            <td></td>
+            <th scope="row">Coefficients</th>
+            <th>
+                {{fitLabels.fit.coeffs_calc.[0]}}
+            </th>
+            <th>
+                {{#if fitLabels.fit.coeffs_calc.[1]}}
+                    {{fitLabels.fit.coeffs_calc.[1]}}
+                {{/if}}
+            </th>
+            <th>
+                {{#if fitLabels.fit.coeffs_calc.[2]}}
+                    {{fitLabels.fit.coeffs_calc.[2]}}
+                {{/if}}
+            </th>
         </tr>
         {{#each fitResult.labels.data.y.row_labels as |label index|}}
                 <tr>

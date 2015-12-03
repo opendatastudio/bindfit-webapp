@@ -116,12 +116,14 @@ export default Ember.Component.extend({
         var geq = this.get("fitResult.geq");
         var molefrac = this.get("fitResult.fit.molefrac");
 
+        var labels = this.get("fitLabels");
+
         // If model has been populated
         if (geq && molefrac) {
             return genChartData(
                 geq,
                 molefrac,
-                ["H", "HG", "HG2"], // Add this to fit labels in backend!
+                labels.fit.molefrac, 
                 "molefraction",
                 this.get("fitLabels.data.x.axis_label"),
                 "Molefraction",
