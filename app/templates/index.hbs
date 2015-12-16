@@ -20,18 +20,17 @@
 
     <div id="sidebar" class="col-xs-24 col-md-10 col-lg-8">
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-info">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h3 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Control
-                </a>
-            </h3>
-        </div>
+    <ul class="nav nav-tabs">
+        <li class="nav active"><a href="#tab-control" data-toggle="tab">Control</a></li>
+        <li class="nav"><a href="#tab-results" data-toggle="tab">Results</a></li>
+        <li class="nav"><a href="#tab-save"    data-toggle="tab">Save</a></li>
+    </ul>
 
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab-control">
+        <div class="panel panel-default">
         <div class="panel-body">
+
             <form class="form-horizontal">
                 <div class="form-group">
                     <div class="col-xs-24">
@@ -53,7 +52,7 @@
                         </div>
 
                         {{#each optionsParamsLabelled as |param|}}
-                            <div class="input-group col-xs-24">
+                            <div class="input-group">
                                 <div class="input-group-addon">{{param.label}} guess</div>
                                 {{input value=param.value type="number" class="form-control"}}
                                 <div class="input-group-addon">{{param.units}}</div>
@@ -74,58 +73,50 @@
                 {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" id="fit-button"}}
             {{/if}}
 
-        </div> <!-- Panel body -->
-        </div> <!-- Panel body collapse wrapper -->
-    </div> <!-- Panel -->
+        </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+        </div> <!-- #tab-control -->
 
-    <div {{bind-attr class=":panel model.fitResult.isPopulated:panel-info:panel-default"}}>
-        <div class="panel-heading" role="tab" id="headingTwo">
-            <h3 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Results
-            </a>
-            </h3>
-        </div>
-
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="tab-pane fade" id="tab-results">
+        <div class="panel panel-default">
+        <div class="panel-body">
+        
             {{#if model.fitResult.isPopulated}}
                 {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
             {{else}}
                 <div class="panel-body">
-                    <p>Fitted parameters will be displayed here once you've run a fitter in the Control panel.</p>
+                    <p>Fitted parameters will be displayed here once you've run a fitter in the Control tab.</p>
                 </div>
             {{/if}}
-        </div> <!-- Panel body collapse wrapper -->
-    </div> <!-- Panel -->
 
-    <div {{bind-attr class=":panel model.fitResult.isPopulated:panel-info:panel-default"}}>
-        <div class="panel-heading" role="tab" id="headingThree">
-            <h3 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            Save
-            </a>
-            </h3>
-        </div>
+        </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+        </div> <!-- #tab-results -->
 
-        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-        {{#if model.fitResult.isPopulated}}
-            <div class="panel-body">
-                <!-- Save form -->
-                {{fit-save fit=model.fitResult output=model.fitSave}}
+        <div class="tab-pane fade" id="tab-save">
+        <div class="panel panel-default">
+        <div class="panel-body">
 
-                <hr/>
-
-                <!-- Export button -->
-                {{fit-export fit=model.fitResult output=model.fitExport}}
-            </div> <!-- Panel body -->
-        {{else}}
+            {{#if model.fitResult.isPopulated}}
                 <div class="panel-body">
-                    <p>Run a fitter in the Control panel first.</p>
-                </div>
-        {{/if}}
-        </div> <!-- Panel body collapse wrapper -->
-    </div> <!-- Panel -->
-    </div> <!-- Panel group (accordion) -->
+                    <!-- Save form -->
+                    {{fit-save fit=model.fitResult output=model.fitSave}}
+
+                    <hr/>
+
+                    <!-- Export button -->
+                    {{fit-export fit=model.fitResult output=model.fitExport}}
+                </div> <!-- Panel body -->
+            {{else}}
+                    <div class="panel-body">
+                        <p>Run a fitter in the Control tab first.</p>
+                    </div>
+            {{/if}}
+
+        </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+        </div> <!-- #tab-save -->
+    </div> <!-- .tab-content -->
 
     </div> <!-- Sidebar -->
 

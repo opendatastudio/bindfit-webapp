@@ -6,6 +6,26 @@
 
 // Global app styles
 
+// Sidebar tab styling
+#sidebar {
+    .nav-tabs {
+        .nav > a {
+        }
+
+        .nav.active > a {
+            background-color: $gray-lighter;
+        }
+    }
+
+    .tab-content > .tab-pane {
+        .panel {
+            background-color: $gray-lighter;
+            border-top: none;
+            border-radius: 0px 0px $border-radius-base $border-radius-base;
+        }
+    }
+}
+
 // Chart group sizes
 // TODO move this to a mixin later
 #chart-fit {
@@ -54,21 +74,12 @@
     display: block;
 }
 
-// Bootstrap accordion panel tweaks
-#accordion {
-    // Make entire panel title area clickable
-    .panel-title {
-        a {
-            width: 100%;
-            display: block;
-        }
-    }
-
-    // Fix input group extending past panel padding boundaries
+.panel {
+    // Fix input-group padding inside panel
     .input-group {
         padding: 0px 15px;
-    } // form
-} // accordion
+    }
+}
 
 // Async button styles
 .async-button {
