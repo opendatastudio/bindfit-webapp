@@ -52,10 +52,12 @@
                         </div>
 
                         {{#each optionsParamsLabelled as |param|}}
-                            <div class="input-group">
-                                <div class="input-group-addon">{{param.label}} guess</div>
-                                {{input value=param.value type="number" class="form-control"}}
-                                <div class="input-group-addon">{{param.units}}</div>
+                            <div class="col-xs-24">
+                                <div class="input-group">
+                                    <div class="input-group-addon">{{param.label}} guess</div>
+                                    {{input value=param.value type="number" class="form-control"}}
+                                    <div class="input-group-addon">{{param.units}}</div>
+                                </div>
                             </div>
                         {{/each}}
 

@@ -74,13 +74,6 @@
     display: block;
 }
 
-.panel {
-    // Fix input-group padding inside panel
-    .input-group {
-        padding: 0px 15px;
-    }
-}
-
 // Async button styles
 .async-button {
     @extend .btn;
