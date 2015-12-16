@@ -3,17 +3,18 @@
 
     <div id="sidebar" class="col-xs-24 col-md-10 col-lg-8">
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h3 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Input
-                </a>
-            </h3>
-        </div>
+    <ul class="nav nav-tabs">
+        <li class="nav active"><a href="#tab-input" data-toggle="tab">Input</a></li>
+        <li class="nav"><a href="#tab-results"  data-toggle="tab">Results</a></li>
+        <li class="nav"><a href="#tab-metadata" data-toggle="tab">Metadata</a></li>
+        <li class="nav"><a href="#tab-edit"     data-toggle="tab">Edit</a></li>
+    </ul>
 
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab-input">
+        <div class="panel panel-default">
+        <div class="panel-body">
+
             <table class="table">
                 <tbody>
                     <!-- Fitter -->
@@ -46,33 +47,25 @@
                     </tr>
                 </tbody>
             </table>
-        </div> <!-- Collapse div -->
-    </div> <!-- Panel -->
 
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingTwo">
-            <h3 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                Results
-                </a>
-            </h3>
-        </div>
+        </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+        </div> <!-- #tab-input -->
 
-        <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="tab-pane fade" id="tab-results">
+        <div class="panel panel-default">
+        <div class="panel-body">
+
             {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
-        </div> <!-- Collapse div -->
-    </div> <!-- Panel -->
 
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingThree">
-            <h3 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Metadata 
-                </a>
-            </h3>
-        </div> <!-- Panel heading -->
+        </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+        </div> <!-- #tab-results -->
 
-        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+        <div class="tab-pane fade" id="tab-metadata">
+        <div class="panel panel-default">
+        <div class="panel-body">
+
             <table class="table">
                 <tbody>
                     <!-- Metadata -->
@@ -128,29 +121,24 @@
                     </tr>
                 </tbody>
             </table>
-        </div> <!-- Collapse div -->
-    </div> <!-- Panel -->
 
-    <div class="panel panel-info">
-        <div class="panel-heading" role="tab" id="headingFour">
-            <h3 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                Edit
-                </a>
-            </h3>
-        </div>
+        </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+        </div> <!-- #tab-metadata -->
 
-        <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
-            <div class="panel-body">
-                {{fit-export fit=model.fitResult output=model.fitExport}}
-                <hr/>
-                {{#link-to "edit" model.fitID class="btn btn-info btn-block"}}Edit fit{{/link-to}}
-            </div>
-        </div> <!-- Collapse div -->
-    </div> <!-- Panel -->
+        <div class="tab-pane fade" id="tab-edit">
+        <div class="panel panel-default">
+        <div class="panel-body">
 
+            {{fit-export fit=model.fitResult output=model.fitExport}}
+            <br/>
+            {{#link-to "edit" model.fitID class="btn btn-info btn-block"}}Edit fit{{/link-to}}
 
-    </div> <!-- Panel group (accordion) -->
+        </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+        </div> <!-- #tab-edit -->
+
+    </div> <!-- .tab-content -->
 
     </div> <!-- Sidebar -->
 
