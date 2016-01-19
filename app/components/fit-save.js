@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Component.extend({
+    
     actions: {
         onTempUnitSelect: function(selection) {
             this.set("fit.meta.temp_unit", selection);
@@ -18,7 +20,7 @@ export default Ember.Component.extend({
 
             // Send fitResult to backend for exporting
             Ember.$.ajax({
-                url: "http://api.supramolecular.echus.co/bindfit/fit/save",
+                url: ENV.APIURL+"fit/save",
                 type: "POST",
                 data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",
