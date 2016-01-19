@@ -5,7 +5,7 @@ module.exports = {
         store: {
             type: 'ssh',
             remoteDir: '/var/www/bindfit_client/',
-            host: 'supramolecular.echus.co',
+            host: '54.206.121.71',
             username: 'webadmin',
             privateKeyFile: process.env.SSH_KEY_FILE,
         },
