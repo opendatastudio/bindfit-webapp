@@ -20,7 +20,7 @@ export default Ember.Component.extend({
 
             // Send fitResult to backend for exporting
             Ember.$.ajax({
-                url: ENV.APIURL+"fit/save",
+                url: ENV.API.save,
                 type: "POST",
                 data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",

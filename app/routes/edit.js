@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import ENV from 'bindfit-client/config/environment';
+
 import FitResult  from "../models/fit-result";
 import FitLabels  from "../models/fit-labels";
 import FitOptions from "../models/fit-options";
@@ -13,17 +15,9 @@ export default Ember.Route.extend({
         this.render("index", {controller: controller});
     },
 
-    urls: {
-        view:   "http://api.supramolecular.echus.co/bindfit/fit/",
-        list:   "http://api.supramolecular.echus.co/bindfit/list",
-        labels: "http://api.supramolecular.echus.co/bindfit/labels",
-    },
-
     model: function(params) {
-        var urls = this.urls;
-
         // Retrieve specified fit data from backend
-        return Ember.$.getJSON(urls.view+params.id).then(function(response) {
+        return Ember.$.getJSON(ENV.API.view+params.id).then(function(response) {
             // Populate full model for retrieved fit
             // (labels must be retrieved separately)
 
@@ -50,7 +44,7 @@ export default Ember.Route.extend({
             };
 
             var model = {
-                fitList:    Ember.$.getJSON(urls.list),
+                fitList:    Ember.$.getJSON(ENV.API.list),
 
                 // Parse fit settings into fitOptions object for re-fitting
                 // if required
@@ -58,7 +52,7 @@ export default Ember.Route.extend({
                 fitResult:  FitResult.create(response),
 
                 fitLabels:  Ember.$.ajax({
-                    url:  urls.labels,
+                    url:  ENV.API.labels,
                     type: "POST",
                     data: JSON.stringify({fitter: response.fitter}),
                     contentType: "application/json; charset=utf-8",

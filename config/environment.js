@@ -6,6 +6,12 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+    
+    // Root API URL
+    API: {
+      root: "http://api.supramolecular.echus.co/bindfit/"
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -19,6 +25,18 @@ module.exports = function(environment) {
     }
   };
 
+  // API URL definitions
+  ENV.API = {
+    fit:     ENV.API.root+"fit",
+    view:    ENV.API.root+"fit/",
+    save:    ENV.API.root+"fit/save",
+    list:    ENV.API.root+"list",
+    labels:  ENV.API.root+"labels",
+    options: ENV.API.root+"options",
+    export:  ENV.API.root+"export",
+    upload:  ENV.API.root+"upload"
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -26,7 +44,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.siteURL = "http://localhost:4200/bindfit/";
-    ENV.APIURL  = "http://api.supramolecular.echus.co/bindfit/";
   }
 
   if (environment === 'test') {
@@ -43,7 +60,6 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.siteURL = "http://app.supramolecular.echus.co/bindfit/";
-    ENV.APIURL  = "http://api.supramolecular.echus.co/bindfit/";
   }
 
   return ENV;

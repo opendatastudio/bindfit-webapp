@@ -1,7 +1,5 @@
 import Ember from 'ember';
-
-// Constants?
-var root = "http://api.supramolecular.echus.co/bindfit/";
+import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Controller.extend({
     optionsParamsLabelled: function() {
@@ -50,13 +48,13 @@ export default Ember.Controller.extend({
 
                 var promises = {
                     labels: Ember.$.ajax({
-                        url:  root+"labels",
+                        url:  ENV.API.labels,
                         type: "POST",
                         data: JSON.stringify(request),
                         contentType: "application/json; charset=utf-8",
                         dataType:    "json"}),
                     options: Ember.$.ajax({
-                        url:  root+"options",
+                        url:  ENV.API.options,
                         type: "POST",
                         data: JSON.stringify(request),
                         contentType: "application/json; charset=utf-8",
@@ -121,7 +119,7 @@ export default Ember.Controller.extend({
 
             var promise = new Ember.RSVP.Promise(function(resolve, reject) {
                 Ember.$.ajax({
-                    url:  root+"fit",
+                    url:  ENV.API.fit,
                     type: "POST",
                     data: JSON.stringify(controller.get("model.fitOptions")),
                     contentType: "application/json; charset=utf-8",

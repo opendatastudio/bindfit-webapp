@@ -6,7 +6,6 @@ export default Ember.Object.extend({
 
     url: function() {
         return ENV.siteURL+"view/"+this.get("fit_id");
-        // return "http://app.supramolecular.echus.co/bindfit/view/"+this.get("fit_id");
     }.property("fit_id"),
 
     reset: function() {

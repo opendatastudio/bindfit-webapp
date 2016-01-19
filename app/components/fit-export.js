@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Component.extend({
     actions: {
@@ -12,7 +13,7 @@ export default Ember.Component.extend({
 
             // Send input data to backend for exporting
             Ember.$.ajax({
-                url: "http://api.supramolecular.echus.co/bindfit/export",
+                url: ENV.API.export,
                 type: "POST",
                 data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",
