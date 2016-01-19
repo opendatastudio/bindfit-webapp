@@ -25,6 +25,8 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.siteURL = "http://localhost:4200/bindfit/";
+    ENV.APIURL  = "http://api.supramolecular.echus.co/bindfit/";
   }
 
   if (environment === 'test') {
@@ -40,7 +42,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.siteURL = "http://app.supramolecular.echus.co/bindfit/";
+    ENV.APIURL  = "http://api.supramolecular.echus.co/bindfit/";
   }
 
   return ENV;
