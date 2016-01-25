@@ -9,7 +9,7 @@ module.exports = function(environment) {
     
     // Root API URL
     API: {
-      root: "http://api.supramolecular.echus.co/bindfit/"
+      root: "http://api.supramolecular.org/bindfit/"
     },
 
     EmberENV: {
@@ -59,7 +59,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.siteURL = "http://app.supramolecular.echus.co/bindfit/";
+    ENV.siteURL = "http://app.supramolecular.org/bindfit/";
   }
 
   return ENV;
