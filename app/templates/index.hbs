@@ -21,7 +21,12 @@
     <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
 
     <ul class="nav nav-tabs">
-        <li class={{if (eq activeTab 1) "nav active" "nav"}}><a href="#tab-select"  {{action "selectTab" 1}}>Choose Fitter</a></li>
+        <li class={{if (eq activeTab 1) "nav active" "nav"}}><a href="#tab-select"  {{action "selectTab" 1}}>
+            Choose Fitter 
+            {{#if activeFitter}}
+                ({{activeFitter}})
+            {{/if}}
+        </a></li>
         <li class={{if (eq activeTab 2) "nav active" "nav"}}><a href="#tab-control" {{action "selectTab" 2}}>Control</a></li>
         <li class={{if (eq activeTab 3) "nav active" "nav"}}><a href="#tab-results" {{action "selectTab" 3}}>Results</a></li>
         <li class={{if (eq activeTab 4) "nav active" "nav"}}><a href="#tab-save"    {{action "selectTab" 4}}>Save</a></li>

@@ -2,6 +2,8 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Controller.extend({
+    activeFitter: null,
+
     activeTab: 1,
 
     optionsParamsLabelled: function() {
@@ -68,6 +70,8 @@ export default Ember.Controller.extend({
             // Pre-populate fitOptions and fitLabels for this selection
             if (selection !== undefined) {
                 console.log("actions.onFitterSelect: selection !== undefined");
+
+                controller.set('activeFitter', selection.name);
 
                 var request = {"fitter": selection.key};
 
