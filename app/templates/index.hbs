@@ -21,37 +21,44 @@
     <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
 
     <ul class="nav nav-tabs">
-        <li class="nav active"><a href="#tab-select" data-toggle="tab">Choose Fitter</a></li>
-        <li class="nav"><a href="#tab-control" data-toggle="tab">Control</a></li>
-        <li class="nav"><a href="#tab-results" data-toggle="tab">Results</a></li>
-        <li class="nav"><a href="#tab-save"    data-toggle="tab">Save</a></li>
+        <li class={{if (eq activeTab 1) "nav active" "nav"}}><a href="#tab-select"  {{action "selectTab" 1}}>Choose Fitter</a></li>
+        <li class={{if (eq activeTab 2) "nav active" "nav"}}><a href="#tab-control" {{action "selectTab" 2}}>Control</a></li>
+        <li class={{if (eq activeTab 3) "nav active" "nav"}}><a href="#tab-results" {{action "selectTab" 3}}>Results</a></li>
+        <li class={{if (eq activeTab 4) "nav active" "nav"}}><a href="#tab-save"    {{action "selectTab" 4}}>Save</a></li>
     </ul>
 
     <div class="tab-content">
 
-        <div class="tab-pane fade in active" id="tab-select">
+        <div class={{if (eq activeTab 1) "tab-pane fade in active" "tab-pane fade"}} id="tab-select">
         <div class="panel panel-default">
         <div class="panel-body">
             
             <div class="col-xs-12">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <h4>Search fitters</h4>
+                        <h4>Search</h4>
                         {{list-picker content=model.fitList
-                                        action=(action "onFitterSelect")
-                                        liveSearch=true
-                                        optionGroupPath="group"
-                                        optionLabelPath="content.name"
-                                        optionValuePath="content.key"}}
+                                      action=(action "onFitterSelect")
+                                      liveSearch=true
+                                      optionGroupPath="group"
+                                      optionLabelPath="content.name"
+                                      optionValuePath="content.key"}}
                     </div>
                 </form>
             </div>
+
+            <hr/>
+
+            {{#if model.fitOptions.isPopulated}}
+                <br/>
+                <button class="btn btn-block" {{action "nextTab"}}>Next</button>
+            {{/if}}
 
         </div> <!-- .panel-body -->
         </div> <!-- .panel -->
         </div> <!-- #tab-select -->
 
-        <div class="tab-pane fade" id="tab-control">
+        <div class={{if (eq activeTab 2) "tab-pane fade in active" "tab-pane fade"}} id="tab-control">
         <div class="panel panel-default">
         <div class="panel-body">
             
@@ -84,7 +91,20 @@
                 </form>
 
                 <hr/>
+
                 {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" id="fit-button"}}
+
+                {{#if model.fitResult.isPopulated}}
+                    <br/>
+                    <div class="row">
+                    <div class="col-xs-6">
+                        <button class="btn btn-block" {{action "prevTab"}}>Back</button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-block" {{action "nextTab"}}>Next</button>
+                    </div>
+                    </div>
+                {{/if}}
             {{else}}
                 <div class="panel-body">
                     <p>Select a fitter to use in the "Choose Fitter" tab first</p>
@@ -95,12 +115,22 @@
         </div> <!-- .panel -->
         </div> <!-- #tab-control -->
 
-        <div class="tab-pane fade" id="tab-results">
+        <div class={{if (eq activeTab 3) "tab-pane fade in active" "tab-pane fade"}} id="tab-results">
         <div class="panel panel-default">
         <div class="panel-body">
         
             {{#if model.fitResult.isPopulated}}
                 {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
+
+                <br/>
+                <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-block" {{action "prevTab"}}>Back</button>
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn btn-block" {{action "nextTab"}}>Next</button>
+                </div>
+                </div>
             {{else}}
                 <div class="panel-body">
                     <p>Fitted parameters will be displayed here once you've run a fitter in the Control tab.</p>
@@ -111,7 +141,7 @@
         </div> <!-- .panel -->
         </div> <!-- #tab-results -->
 
-        <div class="tab-pane fade" id="tab-save">
+        <div class={{if (eq activeTab 4) "tab-pane fade in active" "tab-pane fade"}} id="tab-save">
         <div class="panel panel-default">
         <div class="panel-body">
 
@@ -124,6 +154,17 @@
 
                     <!-- Export button -->
                     {{fit-export fit=model.fitResult output=model.fitExport}}
+                    
+                    <!-- Back/Next buttons -->
+                    <br/>
+                    <div class="row">
+                    <div class="col-xs-6">
+                        <button class="btn btn-block" {{action "prevTab"}}>Back</button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-block" {{action "nextTab"}}>Next</button>
+                    </div>
+                    </div>
                 </div> <!-- Panel body -->
             {{else}}
                     <div class="panel-body">

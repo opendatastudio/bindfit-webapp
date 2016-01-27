@@ -2,6 +2,8 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Controller.extend({
+    activeTab: 1,
+
     optionsParamsLabelled: function() {
         /***
          * Array of labelled parameters for display in template, bound by
@@ -12,8 +14,10 @@ export default Ember.Controller.extend({
     }.property("model.fitOptions.params", "model.fitLabels.fit.params"),
 
     watchOptionsParamsLabelled: function() {
-        // Force Ember to manually call fitOptions.setParamsLabelled setter when
-        // a user updates a parameter's value
+        /***
+         * Force Ember to manually call fitOptions.setParamsLabelled setter when
+         * a user updates a parameter's value
+         */
         var newParamsLabelled = this.get("optionsParamsLabelled");
         this.model.fitOptions.setParamsLabelled(newParamsLabelled);
         console.log("watchParamsLabelled: params changed:");
@@ -21,6 +25,27 @@ export default Ember.Controller.extend({
     }.observes("optionsParamsLabelled.@each.value"),
 
     actions: {
+        selectTab: function(selection) {
+            var controller = this;
+            console.log("actions.selectTab: called");
+            controller.set('activeTab', selection);
+        },
+
+        prevTab: function() {
+            var controller = this;
+            var tab = controller.get('activeTab');
+            tab--;
+            controller.set('activeTab', tab);
+        },
+
+        nextTab: function() {
+            var controller = this;
+            console.log("actions.nextTab: called");
+            var tab = controller.get('activeTab');
+            tab++;
+            controller.set('activeTab', tab);
+        },
+
         onFitterSelect: function(selection) {
             /*** 
              * On fitter select, populate fitOptions and fitLabels models
@@ -74,6 +99,9 @@ export default Ember.Controller.extend({
                     console.log("actions.onFitterSelect: fitLables and fitOptions set");
                     console.log(controller.get("model.fitLabels"));
                     console.log(controller.get("model.fitOptions"));
+                    
+                    // Advance to Control tab
+                    controller.send('nextTab');
                 });
             }
         }, // onFitterSelect
@@ -142,6 +170,9 @@ export default Ember.Controller.extend({
 
                 console.log("actions.runFitter: $.ajax: fit model properties set");
                 console.log(controller.model.fitResult);
+
+                // Advance to Results tab
+                controller.send('nextTab');
             },
             function(error) {
                 console.log("actions.runFitter: $.ajax: bindfit call failed");

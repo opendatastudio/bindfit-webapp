@@ -2,6 +2,7 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Component.extend({
+    tempUnits: ["C", "K", "F"],
     
     actions: {
         onTempUnitSelect: function(selection) {
