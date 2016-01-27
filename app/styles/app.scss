@@ -5,18 +5,6 @@
 
 // Global app styles
 
-// Font size overrides
-#supramolecular-app {
-    font-size: 14px;
-    input, 
-    select,
-    textarea,
-    .input-group-addon,
-    .btn {
-        font-size: inherit;
-    }
-}
-
 // Navbar tweaks
 #title-container {
     padding-top: $navbar-height;
@@ -54,6 +42,10 @@
     li > a {
         line-height: $navbar-height;
     }
+}
+
+.list-picker-clear-filter {
+    font-size: 10px;
 }
 
 // Sidebar tab styling
