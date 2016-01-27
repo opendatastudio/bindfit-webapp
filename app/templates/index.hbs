@@ -21,34 +21,40 @@
     <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
 
     <ul class="nav nav-tabs">
-        <li class="nav active"><a href="#tab-control" data-toggle="tab">Control</a></li>
+        <li class="nav active"><a href="#tab-select" data-toggle="tab">Choose Fitter</a></li>
+        <li class="nav"><a href="#tab-control" data-toggle="tab">Control</a></li>
         <li class="nav"><a href="#tab-results" data-toggle="tab">Results</a></li>
         <li class="nav"><a href="#tab-save"    data-toggle="tab">Save</a></li>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane fade in active" id="tab-control">
+
+        <div class="tab-pane fade in active" id="tab-select">
         <div class="panel panel-default">
         <div class="panel-body">
-
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        {{#x-select action="onFitterSelect" class="form-control"}}
-                            <option>Choose fitter</option>
-                            {{#each model.fitList as |fitter|}}
-                                {{#x-option value=fitter.key}}{{fitter.name}}{{/x-option}}
-                            {{/each}}
-                        {{/x-select}}
-                    </div>
-                    <div class="col-xs-12">
-                        <!-- {{select-picker content=model.fitList
+            
+            <div class="col-xs-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <h4>Search fitters</h4>
+                        {{list-picker content=model.fitList
+                                        action=(action "onFitterSelect")
+                                        liveSearch=true
+                                        optionGroupPath="group"
                                         optionLabelPath="content.name"
-                                        optionValuePath="content.key"}} -->
+                                        optionValuePath="content.key"}}
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
 
+        </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+        </div> <!-- #tab-select -->
+
+        <div class="tab-pane fade" id="tab-control">
+        <div class="panel panel-default">
+        <div class="panel-body">
+            
             {{#if model.fitOptions.isPopulated}}
                 <form class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
@@ -79,6 +85,10 @@
 
                 <hr/>
                 {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" id="fit-button"}}
+            {{else}}
+                <div class="panel-body">
+                    <p>Select a fitter to use in the "Choose Fitter" tab first</p>
+                </div>
             {{/if}}
 
         </div> <!-- .panel-body -->

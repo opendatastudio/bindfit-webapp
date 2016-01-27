@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
             if (selection !== undefined) {
                 console.log("actions.onFitterSelect: selection !== undefined");
 
-                var request = {"fitter": selection};
+                var request = {"fitter": selection.key};
 
                 var promises = {
                     labels: Ember.$.ajax({
