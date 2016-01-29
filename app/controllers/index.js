@@ -182,6 +182,27 @@ export default Ember.Controller.extend({
                 console.log("actions.runFitter: $.ajax: bindfit call failed");
                 console.log(error);
             });
-        } // runFitter
+        }, // runFitter
+
+        saveData: function(callback) {
+            // Clear any previous fit results and exports
+            // Retain options
+            this.get('model.fitResult').reset();
+            this.get('model.fitExport').reset();
+            this.get('model.fitSave').reset();
+
+            var controller = this;
+
+            console.log("actions.saveData: called");
+
+            // Set no_fit option flag in fitResult
+            this.set('model.fitResult.no_fit', true);
+
+            // Advance to Save tab
+            controller.send('selectTab', 4);
+        } // saveData
+
+
+
     }, // actions
 });

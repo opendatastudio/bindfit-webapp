@@ -66,6 +66,24 @@ export default Ember.Object.extend({
     },
 
     isPopulated: function() {
-        return (this.get("fitter") && this.get("params"));
-    }.property("fitter", "data_id", "params", "options")
+        return this.get("fitter");
+    }.property("fitter", "data_id", "params", "options"),
+
+    hasData: function() {
+        /***
+         * Returns true if data has been uploaded
+         */
+        return this.get("data_id");
+    }.property("fitter", "data_id"),
+
+    noFit: function() {
+        /***
+         * Returns true if no fit requested (save data only option)
+         */
+        if (this.get("fitter") === "data") {
+            return true;
+        } else {
+            return false;
+        }
+    }.property("fitter")
 });

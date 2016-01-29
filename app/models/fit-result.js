@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
+    no_fit: false,
+
     data: {
         x: null,
         y: null
@@ -97,14 +99,19 @@ export default Ember.Object.extend({
     },
 
     isPopulated: function() {
-        return this.get("time");
-    }.property("time"),
+        if (this.get("time") || this.get("no_fit")) {
+            return true;
+        } else {
+            return false;
+        }
+    }.property("time", "no_fit"),
 
     reset: function() {
         // Clear any previous calculated values (not metadata)
         var _this = this;
 
         var clear = {
+            no_fit: false,
             data: {x: null, y: null},
             labels: {data: {x: null, y: null}},
             fit:  {y: null, coeffs: null, molefrac: null, params: null},

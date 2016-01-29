@@ -56,7 +56,11 @@
 
             {{#if model.fitOptions.isPopulated}}
                 <br/>
-                <button class="btn btn-block" {{action "nextTab"}}>Next</button>
+                <div class="row">
+                    <div class="col-xs-offset-6 col-xs-6">
+                        <button class="btn btn-block" {{action "nextTab"}}>Next</button>
+                    </div>
+                </div>
             {{/if}}
 
         </div> <!-- .panel-body -->
@@ -73,43 +77,61 @@
                         <div class="col-xs-12">
                             {{data-file-upload onComplete="onUploadComplete" onRestart="onUploadRestart"}}
                         </div>
+                    </div>
 
-                    <div class="form-group">
-                    </div>
-                        {{#each optionsParamsLabelled as |param|}}
-                            <div class="col-xs-12">
-                                <div class="input-group">
-                                    <div class="input-group-addon">{{param.label}} guess</div>
-                                    {{input value=param.value type="number" class="form-control"}}
-                                    <div class="input-group-addon">{{param.units}}</div>
+                    {{#unless model.fitOptions.noFit}}
+                        <div class="form-group">
+                            {{#each optionsParamsLabelled as |param|}}
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">{{param.label}} guess</div>
+                                        {{input value=param.value type="number" class="form-control"}}
+                                        <div class="input-group-addon">{{param.units}}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        {{/each}}
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <div class="input-group col-xs-12">
-                                {{input checked=model.fitOptions.options.dilute type="checkbox"}} Correct for dilution (if applicable) 
-                            </div>
-                        </label>
-                    </div>
+                            {{/each}}
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <div class="input-group col-xs-12">
+                                    {{input checked=model.fitOptions.options.dilute type="checkbox"}} Correct for dilution (if applicable) 
+                                </div>
+                            </label>
+                        </div>
+                    {{/unless}}
                 </form>
 
                 <hr/>
 
-                {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" id="fit-button"}}
+                {{#unless model.fitOptions.noFit}}
+                    <!-- Display fit button -->
+                    {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" id="fit-button"}}
+                {{/unless}}
 
-                {{#if model.fitResult.isPopulated}}
-                    <br/>
-                    <div class="row">
+                <!-- Back button (always displayed) -->
+                <br/>
+                <div class="row">
                     <div class="col-xs-6">
                         <button class="btn btn-block" {{action "prevTab"}}>Back</button>
                     </div>
-                    <div class="col-xs-6">
-                        <button class="btn btn-block" {{action "nextTab"}}>Next</button>
-                    </div>
-                    </div>
-                {{/if}}
+                    {{#unless model.fitOptions.noFit}}
+                        <!-- Normal fit controls -->
+                        {{#if model.fitResult.isPopulated}}
+                            <!-- Standard next button -->
+                            <div class="col-xs-6">
+                                <button class="btn btn-block" {{action "nextTab"}}>Next</button>
+                            </div>
+                        {{/if}}
+                    {{else}}
+                        <!-- Save data controls -->
+                        {{#if model.fitOptions.hasData}}
+                            <!-- Save data only next button - advances to Save -->
+                            <div class="col-xs-6">
+                                <button class="btn btn-block" {{action "saveData"}}>Next</button>
+                            </div>
+                        {{/if}}
+                    {{/unless}}
+                </div>
             {{else}}
                 <div class="panel-body">
                     <p>Select a fitter to use in the "Choose Fitter" tab first</p>
@@ -124,7 +146,11 @@
         <div class="panel panel-default">
         <div class="panel-body">
         
-            {{#if model.fitResult.isPopulated}}
+            {{#if model.fitOptions.noFit}}
+                <div class="panel-body">
+                    <p>No fit requested, no results to display</p>
+                </div>
+            {{else if model.fitResult.isPopulated}}
                 {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
 
                 <br/>
@@ -138,7 +164,7 @@
                 </div>
             {{else}}
                 <div class="panel-body">
-                    <p>Fitted parameters will be displayed here once you've run a fitter in the Control tab.</p>
+                    <p>No results to display</p>
                 </div>
             {{/if}}
 
@@ -163,15 +189,15 @@
                     <!-- Back button -->
                     <br/>
                     <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-6">
                         <button class="btn btn-block" {{action "prevTab"}}>Back</button>
                     </div>
                     </div>
                 </div> <!-- Panel body -->
             {{else}}
-                    <div class="panel-body">
-                        <p>Run a fitter in the Control tab first.</p>
-                    </div>
+                <div class="panel-body">
+                    <p>Run a fitter in the Control tab first.</p>
+                </div>
             {{/if}}
 
         </div> <!-- .panel-body -->
