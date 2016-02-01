@@ -184,7 +184,7 @@ export default Ember.Controller.extend({
             });
         }, // runFitter
 
-        saveData: function(callback) {
+        saveData: function() {
             // Clear any previous fit results and exports
             // Retain options
             this.get('model.fitResult').reset();
