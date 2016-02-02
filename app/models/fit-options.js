@@ -80,10 +80,15 @@ export default Ember.Object.extend({
         /***
          * Returns true if no fit requested (save data only option)
          */
-        if (this.get("fitter") === "data") {
-            return true;
-        } else {
-            return false;
+        // Check fitter isn't null
+        if (this.get("fitter")) { 
+            if (this.get("fitter").indexOf("data") > -1) {
+                // Save data only
+                return true;
+            } else {
+                // Full fit
+                return false;
+            }
         }
     }.property("fitter")
 });

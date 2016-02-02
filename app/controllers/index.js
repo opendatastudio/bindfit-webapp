@@ -185,9 +185,7 @@ export default Ember.Controller.extend({
         }, // runFitter
 
         saveData: function() {
-            // Clear any previous fit results and exports
-            // Retain options
-            this.get('model.fitResult').reset();
+            // Clear any previous fit saves and exports
             this.get('model.fitExport').reset();
             this.get('model.fitSave').reset();
 
@@ -197,6 +195,13 @@ export default Ember.Controller.extend({
 
             // Set no_fit option flag in fitResult
             this.set('model.fitResult.no_fit', true);
+
+            // Set appropriate fitResult properties to save 
+            var fitter  = this.get('model.fitOptions.fitter');
+            var data_id = this.get('model.fitOptions.data_id');
+
+            this.set('model.fitResult.fitter',  fitter);
+            this.set('model.fitResult.data_id', data_id);
 
             // Advance to Save tab
             controller.send('selectTab', 4);

@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Object.extend({
     no_fit: false,
+    fitter: null,
+    data_id: null,
 
     data: {
         x: null,
@@ -112,6 +114,8 @@ export default Ember.Object.extend({
 
         var clear = {
             no_fit: false,
+            fitter: null,
+            data_id: null,
             data: {x: null, y: null},
             labels: {data: {x: null, y: null}},
             fit:  {y: null, coeffs: null, molefrac: null, params: null},
