@@ -22,9 +22,10 @@
 
     <ul class="nav nav-tabs">
         <li class={{if (eq activeTab 1) "nav active" "nav"}}><a href="#tab-select"  {{action "selectTab" 1}}>
-            Choose Fitter 
             {{#if activeFitter}}
-                ({{activeFitter}})
+                Fitter: {{activeFitter}}
+            {{else}}
+                Choose Fitter 
             {{/if}}
         </a></li>
         <li class={{if (eq activeTab 2) "nav active" "nav"}}><a href="#tab-control" {{action "selectTab" 2}}>Control</a></li>
@@ -42,6 +43,7 @@
                 <form class="form-horizontal">
                     <div class="form-group">
                         <h4>Search</h4>
+                        <p>Start typing for options or select a fitter directly below</p>
                         {{list-picker content=model.fitList
                                       action=(action "onFitterSelect")
                                       liveSearch=true
@@ -70,7 +72,6 @@
         <div class={{if (eq activeTab 2) "tab-pane fade in active" "tab-pane fade"}} id="tab-control">
         <div class="panel panel-default">
         <div class="panel-body">
-            
             {{#if model.fitOptions.isPopulated}}
                 <form class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
