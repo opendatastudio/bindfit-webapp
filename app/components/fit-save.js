@@ -18,6 +18,15 @@ export default Ember.Component.extend({
 
             console.log("actions.saveFit: request to send");
             console.log(request);
+            console.log("actions.saveFit: request no_fit flag");
+            console.log(request.no_fit);
+
+            // Workaround for no_fit == false not getting sent along with
+            // other values in the JSON
+            // TODO: why is this happening?
+            if (request.no_fit === false) {
+                request.no_fit = 0;
+            }
 
             // Send fitResult to backend for exporting
             Ember.$.ajax({

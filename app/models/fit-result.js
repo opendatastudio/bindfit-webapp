@@ -80,22 +80,24 @@ export default Ember.Object.extend({
 
         var paramsArray = [];
 
-        // Sort keys to display in order
-        var sortedKeys = Object.keys(params).sort();
+        if (params) {
+            // Sort keys to display in order
+            var sortedKeys = Object.keys(params).sort();
 
-        // Populate parameter aray
-        sortedKeys.forEach(function(key) {
-            if (params.hasOwnProperty(key)) {
-                paramsArray.push({
-                    key:    key,
-                    label:  labels[key].label,
-                    units:  labels[key].units,
-                    value:  params[key].value,
-                    init:   params[key].init,
-                    stderr: params[key].stderr,
-                });
-            }
-        });
+            // Populate parameter aray
+            sortedKeys.forEach(function(key) {
+                if (params.hasOwnProperty(key)) {
+                    paramsArray.push({
+                        key:    key,
+                        label:  labels[key].label,
+                        units:  labels[key].units,
+                        value:  params[key].value,
+                        init:   params[key].init,
+                        stderr: params[key].stderr,
+                    });
+                }
+            });
+        }
 
         return paramsArray;
     },
