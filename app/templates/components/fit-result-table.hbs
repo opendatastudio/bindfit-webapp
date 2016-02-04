@@ -11,7 +11,7 @@
                 <th scope="row">{{param.label}}</th>
                 <td>{{round param.value 2}} {{param.units}}</td>
                 {{#if param.stderr}}
-                    <td>&plusmn; {{round param.stderr 4}} {{param.units}}</td>
+                    <td>&plusmn; {{round param.stderr 4}} %</td>
                 {{else}}
                     <td>N/A</td>
                 {{/if}}
