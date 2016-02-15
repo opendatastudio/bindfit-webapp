@@ -8,7 +8,9 @@ export function formatSci(params/*, hash*/) {
 
     var number = params[0];
     var dp = params[1];
-    if (number < 0.05) {
+    if (number == 0) {
+        return number;
+    } else if (number < 0.05) {
         return number.toExponential(dp);
     } else {
         return number.toFixed(dp);

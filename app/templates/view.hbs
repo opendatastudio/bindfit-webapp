@@ -87,12 +87,12 @@
                     <tr>
                         <th scope="row">Experiment date</th>
                         <td>
-                            {{parse-date model.fitResult.meta.date}}
+                            {{moment-format model.fitResult.meta.date}}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Fit date</th>
-                        <td>{{parse-date model.fitResult.meta.timestamp}}</td>
+                        <td>{{moment-format model.fitResult.meta.timestamp}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Lab book reference</th>

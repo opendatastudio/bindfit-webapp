@@ -35,17 +35,18 @@ export default Ember.Object.extend({
     time: null,
     
     meta: {
-        author: "",
-        name: "",
-        date: null,
+        email:     "",
+        author:    "",
+        name:      "",
+        date:      null,
         timestamp: null,
-        ref: "",
-        host: "",
-        guest: "",
-        solvent: "",
-        temp: null,
+        ref:       "",
+        host:      "",
+        guest:     "",
+        solvent:   "",
+        temp:      null,
         temp_unit: "C", // Default temperature unit is Celsius
-        notes: "" 
+        notes:     "" 
     },
 
     geq: function() {
@@ -115,30 +116,31 @@ export default Ember.Object.extend({
         var _this = this;
 
         var clear = {
-            no_fit: false,
-            fitter: null,
+            no_fit:  false,
+            fitter:  null,
             data_id: null,
-            data: {x: null, y: null},
-            labels: {data: {x: null, y: null}},
-            fit:  {y: null, coeffs: null, molefrac: null, params: null},
-            qof: {residuals: null, 
-                  cov: null, cov_total: null, 
-                  rms: null, rms_total:null},
-            time: null,
+            data:    {x: null, y: null},
+            labels:  {data: {x: null, y: null}},
+            fit:     {y: null, coeffs: null, molefrac: null, params: null},
+            qof:     {residuals: null, 
+                      cov: null, cov_total: null, 
+                      rms: null, rms_total:null},
+            time:     null,
             // TODO: temp hack - assigning meta: _this.meta directly breaks for a 
             // reason I don't have time to investiage
             meta: {
-                author: _this.meta.author,
-                name: _this.meta.name,
-                date: _this.meta.date,
+                email:     _this.meta.email,
+                author:    _this.meta.author,
+                name:      _this.meta.name,
+                date:      _this.meta.date,
                 timestamp: _this.meta.timestamp,
-                ref: _this.meta.ref,
-                host: _this.meta.host,
-                guest: _this.meta.guest,
-                solvent: _this.meta.solvent,
-                temp: _this.meta.temp,
+                ref:       _this.meta.ref,
+                host:      _this.meta.host,
+                guest:     _this.meta.guest,
+                solvent:   _this.meta.solvent,
+                temp:      _this.meta.temp,
                 temp_unit: _this.meta.temp_unit,
-                notes: _this.meta.notes 
+                notes:     _this.meta.notes 
             },
         };
 

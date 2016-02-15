@@ -1,5 +1,17 @@
 <form class="form-horizontal" {{action "saveFit" on="enter"}}>
     <div class="form-group">
+        <label class="col-xs-3 control-label" for="bindfit-form-save-name">Email</label>
+        <div class="col-xs-9">
+            {{input id="bindfit-form-save-email" value=fit.meta.email type="text" class="form-control"}}
+        </div>
+        <div class="col-xs-offset-3 col-xs-9">
+            <p class="help-block">Optional: enter a permanent email address here to retrieve all your fits securely later.</p>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="form-group">
         <label class="col-xs-3 control-label" for="bindfit-form-save-name">Author(s)</label>
         <div class="col-xs-9">
             {{input id="bindfit-form-save-author" value=fit.meta.author type="text" class="form-control"}}
