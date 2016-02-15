@@ -34,7 +34,7 @@
                         {{#each paramsLabelled as |param|}}
                             <tr>
                                 <th scope="row">{{param.label}}</th>
-                                <td>{{round param.init 2}} {{param.units}}</td>
+                                <td>{{format-sci param.init 2}} {{param.units}}</td>
                             </tr>
                         {{/each}}
 
