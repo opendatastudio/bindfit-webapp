@@ -124,6 +124,11 @@ export default Ember.Controller.extend({
             console.log(this.get("model.fitResult"));
             console.log("actions.onUploadComplete: Updated fitOptions.data_id");
             console.log(this.get("model.fitOptions.data_id"));
+
+            if (this.get('model.fitOptions.noFit')) {
+                // If no fit requested, trigger save data action
+                this.send('saveData');
+            }
         },
 
         onUploadRestart: function() {
@@ -193,7 +198,7 @@ export default Ember.Controller.extend({
 
             console.log("actions.saveData: called");
 
-            // Set no_fit option flag in fitResult
+            // Set no_fit option flag in fitResult to be sent
             this.set('model.fitResult.no_fit', true);
 
             // Set appropriate fitResult properties to save 
