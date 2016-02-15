@@ -28,8 +28,9 @@ module.exports = function(environment) {
   // API URL definitions
   ENV.API = {
     fit:     ENV.API.root+"fit",
-    view:    ENV.API.root+"fit/",
     save:    ENV.API.root+"fit/save",
+    view:    ENV.API.root+"search/id/",
+    search:  ENV.API.root+"search",
     list:    ENV.API.root+"list",
     labels:  ENV.API.root+"labels",
     options: ENV.API.root+"options",
