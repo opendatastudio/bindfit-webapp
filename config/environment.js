@@ -31,6 +31,7 @@ module.exports = function(environment) {
     save:    ENV.API.root+"fit/save",
     view:    ENV.API.root+"search/id/",
     search:  ENV.API.root+"search",
+    email:   ENV.API.root+"search/email",
     list:    ENV.API.root+"list",
     labels:  ENV.API.root+"labels",
     options: ENV.API.root+"options",
@@ -45,6 +46,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.siteURL = "http://localhost:4200/bindfit/";
+    ENV.viewURL = ENV.siteURL+"view/";
   }
 
   if (environment === 'test') {
@@ -61,6 +63,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.siteURL = "http://app.supramolecular.org/bindfit/";
+    ENV.viewURL = ENV.siteURL+"view/";
   }
 
   return ENV;

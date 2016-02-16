@@ -7,8 +7,9 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-    this.route("edit", {path: "/edit/:id"});
-    this.route("view", {path: "/view/:id"});
+    this.route("search", {path: "/search/"});
+    this.route("edit",   {path: "/edit/:id"});
+    this.route("view",   {path: "/view/:id"});
 });
 
 export default Router;

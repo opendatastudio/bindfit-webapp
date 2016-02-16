@@ -1,0 +1,78 @@
+<div id="bindfit-search" class="container-fluid">
+<div class="row">
+
+    <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <!-- Disable form submit/page reload on enter press -->
+                    <form onsubmit="return false">
+                        <div class="form-group">
+                            <div class="col-xs-8">
+                                <label for="searchInput" class="sr-only">Search the fit database</label>
+                                <input type="text" class="form-control" id="search-input" placeholder="Search the fit database ...">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            {{async-button action="doSearch" 
+                                           default="Search" 
+                                           pending="Searching ..." 
+                                           fulfilled="Search again" 
+                                           rejected="Search failed" 
+                                           id="search-button"}}
+                        </div>
+                    </form>
+                </div>
+            </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+            
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>Retrieve all your fits securely via email:</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Disable form submit/page reload on enter press -->
+                    <form onsubmit="return false">
+                        <div class="form-group">
+                            <div class="col-xs-8">
+                                <label for="emailInput" class="sr-only">Retrieve your fits securely via email</label>
+                                {{input value=emailInput 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="email-input" 
+                                        placeholder="Enter email"}}
+                            </div>
+                            <div class="col-xs-4">
+                                {{async-button action="doEmailSearch" 
+                                               default="Retrieve fits" 
+                                               pending="Retrieving ..." 
+                                               fulfilled="Success!" 
+                                               rejected="Failed" 
+                                               id="email-button"}}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+
+
+    </div> <!-- #sidebar -->
+
+    <div id="main" class="col-xs-12 col-md-7 col-lg-8">
+        <div class="row">
+            <div class="col-xs-12">
+                Hello world.
+            </div> <!-- col -->
+        </div> <!-- row -->
+
+    </div> <!-- #main -->
+
+</div> <!-- global row -->
+</div> <!-- container -->
