@@ -1,76 +1,95 @@
-<div id="bindfit-search" class="container-fluid">
+<div id="bindfit-search" class="container">
 <div class="row">
 
-    <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
+    <div id="main" class="col-xs-12 col-md-8">
         <div class="panel panel-default">
             <div class="panel-body">
+
                 <div class="row">
                     <!-- Disable form submit/page reload on enter press -->
-                    <form onsubmit="return false">
-                        <div class="form-group">
-                            <div class="col-xs-8">
-                                <label for="searchInput" class="sr-only">Search the fit database</label>
-                                <input type="text" class="form-control" id="search-input" placeholder="Search the fit database ...">
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            {{async-button action="doSearch" 
-                                           default="Search" 
-                                           pending="Searching ..." 
-                                           fulfilled="Search again" 
-                                           rejected="Search failed" 
-                                           id="search-button"}}
-                        </div>
-                    </form>
-                </div>
-            </div> <!-- .panel-body -->
-        </div> <!-- .panel -->
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-            
-                <div class="row">
                     <div class="col-xs-12">
-                        <p>Retrieve all your fits securely via email:</p>
+                        <form onsubmit="return false">
+                            <div class="input-group">
+                                {{input value=simpleSearchInput
+                                        type="text" 
+                                        class="form-control" 
+                                        id="simple-search-input" 
+                                        placeholder="Search published fits"}}
+                            
+                                <span class="input-group-btn">
+                                    {{async-button action="doSimpleSearch" 
+                                                   default="Search" 
+                                                   pending="Searching ..." 
+                                                   fulfilled="Search again" 
+                                                   rejected="Search failed" 
+                                                   id="search-button"}}
+                                </span>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
+                <hr>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        {{#if model.searchResult.isPopulated}}
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-heading">
+                                    <big>{{model.searchResult.numMatches}} matches found</big>
+                                </li>
+                            </ul>
+                            <div class="list-group">
+                                {{#each model.searchResult.links as |link|}}
+                                    <a href="{{link.link}}" class="list-group-item">{{link.id}}</a>
+                                {{/each}}
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div> <!-- .panel-body -->
+        </div> <!-- .panel -->
+    </div> <!-- #main -->
+
+    <div id="sidebar" class="col-xs-12 col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+
                 <div class="row">
                     <!-- Disable form submit/page reload on enter press -->
-                    <form onsubmit="return false">
-                        <div class="form-group">
-                            <div class="col-xs-8">
-                                <label for="emailInput" class="sr-only">Retrieve your fits securely via email</label>
+                    <div class="col-xs-12">
+                        <form onsubmit="return false">
+                            <div class="input-group">
                                 {{input value=emailInput 
                                         type="text" 
                                         class="form-control" 
                                         id="email-input" 
                                         placeholder="Enter email"}}
-                            </div>
-                            <div class="col-xs-4">
-                                {{async-button action="doEmailSearch" 
+
+                                <span class="input-group-btn">
+                                    {{async-button action="doEmailSearch" 
                                                default="Retrieve fits" 
                                                pending="Retrieving ..." 
                                                fulfilled="Success!" 
                                                rejected="Failed" 
                                                id="email-button"}}
+                                </span>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>Retrieve your unpublished fits securely via email.</p>
+                    </div>
                 </div>
 
             </div> <!-- .panel-body -->
         </div> <!-- .panel -->
 
-
-    </div> <!-- #sidebar -->
-
-    <div id="main" class="col-xs-12 col-md-7 col-lg-8">
-        <div class="row">
-            <div class="col-xs-12">
-                Hello world.
-            </div> <!-- col -->
-        </div> <!-- row -->
 
     </div> <!-- #main -->
 
