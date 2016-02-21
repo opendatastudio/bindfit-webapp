@@ -6,7 +6,7 @@ export default Ember.Route.extend({
     model: function() {
         var model = {
             searchResult: SearchResult.create({})
-        }
+        };
         return model;
     }
 });

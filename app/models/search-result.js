@@ -7,7 +7,7 @@ export default Ember.Object.extend({
     links: function() {
         var matches = this.get("matches");
 
-        var links = []
+        var links = [];
         if (matches) {
             matches.forEach(function(match) {
                 links.push({
@@ -34,6 +34,6 @@ export default Ember.Object.extend({
 
     isPopulated: function() {
         var matches = this.get("matches");
-        return (matches !== null)
+        return (matches !== null);
     }.property("matches")
 });
