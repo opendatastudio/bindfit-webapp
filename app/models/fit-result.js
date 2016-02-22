@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-    no_fit: false,
     fitter: null,
+    no_fit: false,
     data_id: null,
+
+    time: null,
 
     data: {
         x: null,
@@ -31,9 +33,12 @@ export default Ember.Object.extend({
         rms: null,
         rms_total: null
     },
-
-    time: null,
     
+    // Fitter options applied
+    options: {
+        dilute: null,
+    },
+
     meta: {
         email:     "",
         author:    "",
@@ -46,7 +51,12 @@ export default Ember.Object.extend({
         solvent:   "",
         temp:      null,
         temp_unit: "C", // Default temperature unit is Celsius
-        notes:     "" 
+        notes:     "",
+
+        // Meta options
+        options: {
+            searchable: null,
+        }
     },
 
     geq: function() {
@@ -116,16 +126,17 @@ export default Ember.Object.extend({
         var _this = this;
 
         var clear = {
-            no_fit:  false,
             fitter:  null,
+            no_fit:  false,
+            time:     null,
             data_id: null,
+            options: {dilute: null},
             data:    {x: null, y: null},
             labels:  {data: {x: null, y: null}},
             fit:     {y: null, coeffs: null, molefrac: null, params: null},
             qof:     {residuals: null, 
                       cov: null, cov_total: null, 
                       rms: null, rms_total:null},
-            time:     null,
             // TODO: temp hack - assigning meta: _this.meta directly breaks for a 
             // reason I don't have time to investiage
             meta: {
@@ -140,7 +151,8 @@ export default Ember.Object.extend({
                 solvent:   _this.meta.solvent,
                 temp:      _this.meta.temp,
                 temp_unit: _this.meta.temp_unit,
-                notes:     _this.meta.notes 
+                notes:     _this.meta.notes,
+                options:   {searchable: _this.meta.options.searchable},
             },
         };
 

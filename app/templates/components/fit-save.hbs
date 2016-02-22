@@ -8,6 +8,18 @@
             <p class="help-block">Optional: enter a permanent email address here to retrieve all your fits securely later.</p>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-xs-3 control-label" for="bindfit-form-save-options-name">Options</label>
+        <div class="col-xs-9">
+            {{input id="bindfit-form-save-options-searchable" checked=fit.meta.options.searchable type="checkbox"}}
+            Make fit publicly searchable
+        </div>
+        <div class="col-xs-offset-3 col-xs-9">
+            <p class="help-block">
+                Warning: this is permanent.
+            </p>
+        </div>
+    </div>
 
     <hr/>
 
