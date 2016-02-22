@@ -74,8 +74,24 @@
         <div class="panel-body">
 
             <table class="table">
+                <!-- Metadata -->
                 <tbody>
-                    <!-- Metadata -->
+                    <tr>
+                        <th scope="row">Fit ID</th>
+                        <td>{{model.fitID}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Searchable</th>
+                        <td>
+                            {{#if model.fitResult.meta.options.searchable}}
+                                Yes
+                            {{else}}
+                                No
+                            {{/if}}
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
                     <tr>
                         <th scope="row">Author(s)</th>
                         <td>{{model.fitResult.meta.author}}</td>
@@ -125,10 +141,6 @@
                     <tr>
                         <th scope="row">Notes</th>
                         <td>{{model.fitResult.meta.notes}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Fit ID</th>
-                        <td>{{model.fitID}}</td>
                     </tr>
                 </tbody>
             </table>
