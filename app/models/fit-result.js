@@ -55,7 +55,7 @@ export default Ember.Object.extend({
 
         // Meta options
         options: {
-            searchable: null,
+            searchable: false, // Defaut to False
         }
     },
 
