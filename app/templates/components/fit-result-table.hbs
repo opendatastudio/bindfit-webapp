@@ -40,34 +40,36 @@
                 </tr>
         {{/each}}
 
-        <tr class="active">
-            <th scope="row">Coefficients</th>
-            <th>
-                {{fitLabels.fit.coeffs_calc.[0]}}
-            </th>
-            <th>
-                {{#if fitLabels.fit.coeffs_calc.[1]}}
-                    {{fitLabels.fit.coeffs_calc.[1]}}
-                {{/if}}
-            </th>
-            <th>
-                {{#if fitLabels.fit.coeffs_calc.[2]}}
-                    {{fitLabels.fit.coeffs_calc.[2]}}
-                {{/if}}
-            </th>
-        </tr>
-        {{#each fitResult.labels.data.y.row_labels as |label index|}}
-                <tr>
-                    <th>{{label}}</th>
-                    <td>{{format-sci (get-at-index fitResult.fit.coeffs_calc 0 index) 4}}</td>
-                    {{#if fitResult.fit.coeffs_calc.[1]}}
-                        <td>{{format-sci (get-at-index fitResult.fit.coeffs_calc 1 index) 4}}</td>
+        {{#if fitResult.fit.coeffs_calc}}
+            <tr class="active">
+                <th scope="row">Coefficients</th>
+                <th>
+                    {{fitLabels.fit.coeffs_calc.[0]}}
+                </th>
+                <th>
+                    {{#if fitLabels.fit.coeffs_calc.[1]}}
+                        {{fitLabels.fit.coeffs_calc.[1]}}
                     {{/if}}
-                    {{#if fitResult.fit.coeffs_calc.[2]}}
-                        <td>{{format-sci (get-at-index fitResult.fit.coeffs_calc 2 index) 4}}</td>
+                </th>
+                <th>
+                    {{#if fitLabels.fit.coeffs_calc.[2]}}
+                        {{fitLabels.fit.coeffs_calc.[2]}}
                     {{/if}}
-                </tr>
-        {{/each}}
+                </th>
+            </tr>
+            {{#each fitResult.labels.data.y.row_labels as |label index|}}
+                    <tr>
+                        <th>{{label}}</th>
+                        <td>{{format-sci (get-at-index fitResult.fit.coeffs_calc 0 index) 4}}</td>
+                        {{#if fitResult.fit.coeffs_calc.[1]}}
+                            <td>{{format-sci (get-at-index fitResult.fit.coeffs_calc 1 index) 4}}</td>
+                        {{/if}}
+                        {{#if fitResult.fit.coeffs_calc.[2]}}
+                            <td>{{format-sci (get-at-index fitResult.fit.coeffs_calc 2 index) 4}}</td>
+                        {{/if}}
+                    </tr>
+            {{/each}}
+        {{/if}}
 
         <tr>
             <th scope="row">Time to fit</th>

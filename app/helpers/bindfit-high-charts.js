@@ -13,6 +13,10 @@ export function genChartDataLinked(x,
     var data_x = x;
     var data_y = y1;
     var fit_y  = y2;
+    console.log("CHART HELPER");
+    console.log(data_x);
+    console.log(data_y);
+    console.log(fit_y);
     
     // Assume all data and fits match data.y[0] length
     // TODO if not throw error
