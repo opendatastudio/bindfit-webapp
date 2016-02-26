@@ -10,7 +10,7 @@ export function formatSci(params/*, hash*/) {
     var dp = params[1];
     if (number === 0) {
         return number;
-    } else if (number < 0.05) {
+    } else if (Math.abs(number) < 0.05) {
         return number.toExponential(dp);
     } else {
         return number.toFixed(dp);
