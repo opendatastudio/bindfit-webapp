@@ -15,8 +15,6 @@ export default Ember.Route.extend({
             var model = {
                 fitID:      params.id,
 
-                fitList:    Ember.$.getJSON(ENV.API.list),
-
                 fitLabels:  Ember.$.ajax({
                     url:  ENV.API.labels,
                     type: "POST",

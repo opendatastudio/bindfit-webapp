@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Object.extend({
     fitter: null,
+    fitter_name: null,
     no_fit: false,
     data_id: null,
 
@@ -127,6 +128,7 @@ export default Ember.Object.extend({
 
         var clear = {
             fitter:  null,
+            fitter_name: null,
             no_fit:  false,
             time:     null,
             data_id: null,
