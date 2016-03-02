@@ -50,9 +50,10 @@
                             <div class="list-group">
                                 {{#each model.searchResult.links as |link|}}
                                     <a href="{{link.link}}" class="list-group-item">
-                                        <strong>{{#if link.name}}{{link.name}}{{else}}No name{{/if}}</strong>, 
-                                        {{#if link.author}}{{link.author}}{{else}}No author{{/if}}
-                                        <span class="pull-right">
+                                        <strong class="text-primary">{{#if link.fitter_name}}{{link.fitter_name}}{{else}}No fitter{{/if}}</strong>&emsp;
+                                        <span class="text-secondary">{{#if link.name}}{{link.name}}{{else}}No name{{/if}}</span>&emsp;
+                                        <span class="text-muted">{{#if link.author}}{{link.author}}{{else}}No author{{/if}}</span>
+                                        <span class="pull-right text-info">
                                             {{#if link.timestamp}}{{moment-format link.timestamp "YYYY-MM-DD, hh:mma"}}{{else}}No timestamp{{/if}}
                                         </span>
                                     </a>
