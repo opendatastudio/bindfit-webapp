@@ -11,10 +11,11 @@ export default Ember.Object.extend({
         if (matches) {
             matches.forEach(function(match) {
                 links.push({
-                    id:     match.id,
-                    link:   ENV.viewURL+match.id,
-                    name:   match.name,
-                    author: match.author
+                    link:      ENV.viewURL+match.id,
+                    id:        match.id,
+                    name:      match.name,
+                    author:    match.author,
+                    timestamp: match.timestamp,
                 });
             });
         }

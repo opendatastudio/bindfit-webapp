@@ -36,12 +36,26 @@
                         {{#if model.searchResult.isPopulated}}
                             <ul class="list-group">
                                 <li class="list-group-item list-group-heading">
-                                    <big>{{model.searchResult.numMatches}} matches found</big>
+                                    <big>
+                                    {{#if (eq model.searchResult.numMatches 0)}}
+                                        No matches found
+                                    {{else if (eq model.searchResult.numMatches 1)}}
+                                        1 match found
+                                    {{else}}
+                                        {{model.searchResult.numMatches}} matches found
+                                    {{/if}}
+                                    </big>
                                 </li>
                             </ul>
                             <div class="list-group">
                                 {{#each model.searchResult.links as |link|}}
-                                    <a href="{{link.link}}" class="list-group-item">{{link.id}}</a>
+                                    <a href="{{link.link}}" class="list-group-item">
+                                        <strong>{{#if link.name}}{{link.name}}{{else}}No name{{/if}}</strong>, 
+                                        {{#if link.author}}{{link.author}}{{else}}No author{{/if}}
+                                        <span class="pull-right">
+                                            {{#if link.timestamp}}{{moment-format link.timestamp "YYYY-MM-DD, hh:mma"}}{{else}}No timestamp{{/if}}
+                                        </span>
+                                    </a>
                                 {{/each}}
                             </div>
                         {{/if}}
