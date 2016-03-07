@@ -5,7 +5,7 @@ module.exports = {
         store: {
             type: 'ssh',
             remoteDir: '/var/www/bindfit_client/',
-            host: '54.206.121.71',
+            host: '52.63.104.201',
             username: 'webadmin',
             privateKeyFile: process.env.SSH_KEY_FILE,
         },
