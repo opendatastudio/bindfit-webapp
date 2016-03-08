@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     chartDataFit: function() {
         var plot_limit = this.get("PLOT_LIMIT");
 
-        var geq = this.get("fitResult.geq");
+        var geq = this.get("fitResult.data.x_plot");
         var data = this.get("fitResult.data.y");
         var fit = this.get("fitResult.fit.y");
 
@@ -59,14 +59,14 @@ export default Ember.Component.extend({
                                                   // Observes only one prop in
                                                   // labels, assuming all props
                                                   // are updated simultaneously
-    }.property("fitResult.geq", "fitResult.data.y", "fitResult.fit.y"),
+    }.property("fitResult.data.x_plot", "fitResult.data.y", "fitResult.fit.y"),
 
     chartDataResiduals: function() {
         console.log("COMPONENT fit-charts chartDataResiduals: called");
         var plot_limit = this.get("PLOT_LIMIT");
 
         // plotlimit = this.get("PLOT_LIMIT"));
-        var geq = this.get("fitResult.geq");
+        var geq = this.get("fitResult.data.x_plot");
         var residuals = this.get("fitResult.qof.residuals");
 
         var labels = this.get("fitLabels");
@@ -90,7 +90,7 @@ export default Ember.Component.extend({
             // Empty plot (clears any previous residuals)
             return genChartData([], []);
         }
-    }.property("fitResult.geq", "fitResult.qof.residuals"),
+    }.property("fitResult.data.x_plot", "fitResult.qof.residuals"),
 
     chartOptionsFit: function() {
         console.log("chartOptionsFit: called");
@@ -113,7 +113,7 @@ export default Ember.Component.extend({
     chartDataMolefrac: function() {
         var plot_limit = this.get("PLOT_LIMIT");
 
-        var geq = this.get("fitResult.geq");
+        var geq = this.get("fitResult.data.x_plot");
         var molefrac = this.get("fitResult.fit.molefrac");
 
         var labels = this.get("fitLabels");
@@ -134,7 +134,7 @@ export default Ember.Component.extend({
                 2,
                 plot_limit);
         }
-    }.property("fitResult.geq", "fitResult.fit.molefrac"),
+    }.property("fitResult.data.x_plot", "fitResult.fit.molefrac"),
 
     chartOptionsMolefrac: function() {
         var labels = this.get("fitLabels");

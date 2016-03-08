@@ -9,8 +9,9 @@ export default Ember.Object.extend({
     time: null,
 
     data: {
-        x: null,
-        y: null
+        x_plot: null,
+        x:      null,
+        y:      null
     },
 
     labels: {
@@ -59,25 +60,6 @@ export default Ember.Object.extend({
             searchable: false, // Defaut to False
         }
     },
-
-    geq: function() {
-        var x = this.get("data.x");
-
-        // If data x values are populated
-        if (x) {
-            // Calculate G/H equivalent concentration
-            var geq  = [];
-            var h0 = x[0];
-            var g0 = x[1];
-            for (let i = 0; i < g0.length; i++) {
-                geq.push(g0[i]/h0[i]);
-            }
-
-            return geq;
-        } else {
-            return null;
-        }
-    }.property("data.x"),
 
     paramsLabelled: function(labels) {
         /***
@@ -133,7 +115,7 @@ export default Ember.Object.extend({
             time:     null,
             data_id: null,
             options: {dilute: null},
-            data:    {x: null, y: null},
+            data:    {x_plot: null, x: null, y: null},
             labels:  {data: {x: null, y: null}},
             fit:     {y: null, coeffs: null, molefrac: null, params: null},
             qof:     {residuals: null, 
