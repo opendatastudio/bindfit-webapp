@@ -76,7 +76,7 @@
                 <form class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            {{data-file-upload onComplete="onUploadComplete" onRestart="onUploadRestart"}}
+                            {{data-file-upload fitter=model.fitOptions.fitter onComplete="onUploadComplete" onRestart="onUploadRestart"}}
                         </div>
                     </div>
 

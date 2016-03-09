@@ -2,15 +2,18 @@ import Ember from 'ember';
 import EmberUploader from 'ember-uploader';
 
 export default EmberUploader.FileField.extend({
-    url: '',
+    url: "",
+
+    params: {},
 
     onComplete: 'onComplete',
     onProgress: 'onProgress',
 
     filesDidChange: function(files) {
         var _this = this;
-        var uploadUrl = this.get('url');
-        var uploadName = this.get('name');
+
+        var uploadUrl  = _this.get('url');
+        var uploadName = _this.get('name');
 
         var uploader = EmberUploader.Uploader.create({
             url: uploadUrl,
@@ -27,7 +30,7 @@ export default EmberUploader.FileField.extend({
         });
 
         if (!Ember.isEmpty(files)) {
-            uploader.upload(files[0]);
+            uploader.upload(files[0], _this.get('params'));
         }
     }
 });

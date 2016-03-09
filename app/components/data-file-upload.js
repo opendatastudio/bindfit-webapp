@@ -6,13 +6,24 @@ export default Ember.Component.extend({
     onComplete: "onComplete", // Called on upload completion
     onRestart:  "onRestart",  // Called when user re-uploads a new file
 
+    // Currently selected fitter key (used in uploadParams computed prop)
+    fitter: "",
+
     // file-upload component settings 
-    uploadURL:  ENV.API.upload,
-    uploadName: "input",
+    uploadURL:    ENV.API.upload,
+    uploadName:   "input",
 
     // Upload state trackers
     uploadPercentage: null,
     uploadComplete:   false,
+
+    uploadParams: function() {
+        var params = {
+            fitter: this.get('fitter')
+        };
+
+        return params;
+    }.property('fitter'),
 
     actions: {
         onUploadProgress: function(event) {
