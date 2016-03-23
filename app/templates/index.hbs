@@ -152,9 +152,16 @@
                     <p>No fit requested, no results to display</p>
                 </div>
             {{else if model.fitResult.isPopulated}}
+                <!-- Monte Carlo error calculation form -->
+                {{fit-calc-monte-carlo fit=model.fitResult}}
+
+                <br/>
+
+                <!-- Fit Result table -->
                 {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
 
                 <br/>
+
                 <div class="row">
                 <div class="col-xs-6">
                     <button class="btn btn-block" {{action "prevTab"}}>Back</button>

@@ -81,14 +81,21 @@ export default Ember.Object.extend({
             // Populate parameter aray
             sortedKeys.forEach(function(key) {
                 if (params.hasOwnProperty(key)) {
-                    paramsArray.push({
+                    let arr = {
                         key:    key,
                         label:  labels[key].label,
                         units:  labels[key].units,
                         value:  params[key].value,
                         init:   params[key].init,
-                        stderr: params[key].stderr,
-                    });
+                        stderr: params[key].stderr
+                    };
+
+                    // If Monte Carlo error available, add to array
+                    if (params[key].hasOwnProperty("mc")) {
+                        arr.mc = params[key].mc;
+                    }
+
+                    paramsArray.push(arr);
                 }
             });
         }

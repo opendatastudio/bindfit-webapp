@@ -29,6 +29,7 @@ module.exports = function(environment) {
   ENV.API = {
     fit:     ENV.API.root+"fit",
     save:    ENV.API.root+"fit/save",
+    mc:      ENV.API.root+"fit/extras/mc",
     view:    ENV.API.root+"search/id/",
     search:  ENV.API.root+"search",
     email:   ENV.API.root+"search/email",

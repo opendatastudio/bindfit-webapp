@@ -17,6 +17,14 @@
                 {{/if}}
                 <td>{{format-sci param.init 2}} {{param.units}}</td>
             </tr>
+            {{#if param.mc}}
+                <tr>
+                    <td>K: MC error</td>
+                    <td>{{format-sci param.mc.[0] 4}} %</td>
+                    <td>&plus; {{format-sci param.mc.[1] 4}} %</td>
+                    <td></td>
+                </tr>
+            {{/if}}
         {{/each}}
 
         <tr class="active">
