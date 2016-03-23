@@ -4,8 +4,8 @@ import ENV from 'bindfit-client/config/environment';
 export default Ember.Component.extend({
     // Monte Carlo calculation defaults
     nIter:      10,
-    xDataError: 0.01,
-    yDataError: 0.01,
+    xDataError: null,
+    yDataError: null,
 
     actions: {
         calcMonteCarlo: function(callback) {
