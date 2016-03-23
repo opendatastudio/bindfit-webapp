@@ -1,1 +1,28 @@
-{{async-button action="calcMonteCarlo" default="Calculate Monte Carlo error" pending="Running..." fulfilled="Recalculate Monte Carlo error" rejected="Error calculation failed" id="fit-calc-monte-carlo-button"}}
+<form class="form-horizontal" {{action "calcMonteCarlo" on="enter"}}>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <div class="input-group">
+                <div class="input-group-addon">Iterations</div>
+                {{input value=nIter type="number" class="form-control"}}
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="input-group">
+                <div class="input-group-addon">X data error</div>
+                {{input value=xDataError type="text" class="form-control"}}
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="input-group">
+                <div class="input-group-addon">Y data error</div>
+                {{input value=yDataError type="text" class="form-control"}}
+            </div>
+        </div>
+    </div>
+    {{async-button action="calcMonteCarlo" 
+                   default="Calculate Monte Carlo error" 
+                   pending="Running..." 
+                   fulfilled="Recalculate Monte Carlo error" 
+                   rejected="Error calculation failed" 
+                   id="fit-calc-monte-carlo-button"}}
+</form>

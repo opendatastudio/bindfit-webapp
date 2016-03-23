@@ -2,16 +2,28 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Component.extend({
+    // Monte Carlo calculation defaults
+    nIter:      10,
+    xDataError: 0.01,
+    yDataError: 0.01,
+
     actions: {
         calcMonteCarlo: function(callback) {
             var _this = this;
 
-            var request = _this.get("fit");
+            var xDataErrorArray = _this.get('xDataError').split(",").map(parseFloat);
 
-            console.log("actions.saveFit: request to send");
+            var request = {
+                options: {
+                             n_iter:      parseFloat(_this.get('nIter')),
+                             xdata_error: xDataErrorArray,
+                             ydata_error: parseFloat(_this.get('yDataError'))
+                         },
+                fit: _this.get('fit')
+            };
+
+            console.log("actions.calcMonteCarlo: request to send");
             console.log(request);
-            console.log("actions.saveFit: request no_fit flag");
-            console.log(request.no_fit);
 
             // Workaround for no_fit == false not getting sent along with
             // other values in the JSON
