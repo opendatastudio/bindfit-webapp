@@ -85,7 +85,13 @@
                             {{#each optionsParamsLabelled as |param|}}
                                 <div class="col-xs-12">
                                     <div class="input-group">
-                                        <div class="input-group-addon">{{param.label}} guess</div>
+                                        <!-- If more than one sub-param, guess/fit only the first one -->
+                                        <!-- TODO: Replace with isArray helper!!! -->
+                                        {{#if (is-array param.label)}}
+                                            <div class="input-group-addon">{{param.label.[0]}} guess</div>
+                                        {{else}}
+                                            <div class="input-group-addon">{{param.label}} guess</div>
+                                        {{/if}}
                                         {{input value=param.value type="number" class="form-control"}}
                                         <div class="input-group-addon">{{param.units}}</div>
                                     </div>

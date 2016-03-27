@@ -6,7 +6,7 @@ export function formatSci(params/*, hash*/) {
      * notation where appropriate.
      */
 
-    var number = params[0];
+    var number = parseFloat(params[0]);
     var dp = params[1];
     if (number === 0) {
         return number;

@@ -8,13 +8,47 @@
         </tr>
         {{#each paramsLabelled as |param|}}
             <tr>
-                <th scope="row">{{param.label}}</th>
-                <td>{{format-sci param.value 2}} {{param.units}}</td>
-                {{#if param.stderr}}
-                    <td>&plusmn; {{format-sci param.stderr 4}} %</td>
+                <!-- Parameter label -->
+                <!-- List on separate lines if more than one parameter label -->
+                {{#if (is-array param.label)}}
+                    <td>
+                    {{#each param.label as |label|}}
+                        {{label}}<br/>
+                    {{/each}}
+                    </td>
                 {{else}}
-                    <td>N/A</td>
+                    <th scope="row">{{param.label}}</th>
                 {{/if}}
+
+                <!-- Optimised value -->
+                <!-- List on separate lines if more than one parameter value -->
+                {{#if (is-array param.value)}}
+                    <td>
+                    {{#each param.value as |value|}}
+                        {{format-sci value 2}} {{param.units}}<br/>
+                    {{/each}}
+                    </td>
+                {{else}}
+                    <td>{{format-sci param.value 2}} {{param.units}}</td>
+                {{/if}}
+
+                <!-- Error -->
+                <!-- List on separate lines if more than one parameter error -->
+                {{#if (is-array param.stderr)}}
+                    <td>
+                    {{#each param.stderr as |stderr|}}
+                        &plusmn; {{format-sci stderr 4}} %<br/>
+                    {{/each}}
+                    </td>
+                {{else}}
+                    {{#if param.stderr}}
+                        <td>&plusmn; {{format-sci param.stderr 4}} %</td>
+                    {{else}}
+                        <td>N/A</td>
+                    {{/if}}
+                {{/if}}
+
+                <!-- Initial guess value -->
                 <td>{{format-sci param.init 2}} {{param.units}}</td>
             </tr>
             {{#if param.mc}}
