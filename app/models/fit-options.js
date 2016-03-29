@@ -7,6 +7,9 @@ export default Ember.Object.extend({
     labels: null,
     options: null,
 
+    flavourList:   null,
+    excludeParams: null,
+
     setParamsLabelled: function(list) {
         /***
          * Manually set params from paramsLabelled computed property changes
@@ -25,7 +28,23 @@ export default Ember.Object.extend({
          * Note: getter only! Binding to object properties in array doesn't 
          * work w/ input helper. See workaround setter in setParamsLabelled.
          */
-        var params = this.get("params");
+        var params        = this.get("params");
+        var excludeParams = this.get("excludeParams");
+
+        var paramsCut = {};
+
+        // Null check
+        if (excludeParams) {
+            // For each parameter
+            Object.keys(params).forEach(function(key) {
+                // If param key is not in excluded array, append to paramsCut
+                if (excludeParams.indexOf(key) === -1) {
+                    paramsCut[key] = params[key];
+                }
+            });
+        } else {
+            paramsCut = params;
+        }
 
         console.log("fitOptions.paramsLabelled: called");
         console.log("fitOptions.paramsLabelled: labels");
@@ -36,18 +55,18 @@ export default Ember.Object.extend({
         var paramsArray = [];
 
         // Sort keys to display in order
-        var sortedKeys = Object.keys(params).sort();
+        var sortedKeys = Object.keys(paramsCut).sort();
 
         // Populate parameter aray
         sortedKeys.forEach(function(key) {
-            if (params.hasOwnProperty(key)) {
+            if (paramsCut.hasOwnProperty(key)) {
                 // Ensure labels has been updated
                 if (labels.hasOwnProperty(key)) {
                     paramsArray.push({
                         key:   key,
                         label: labels[key].label,
                         units: labels[key].units,
-                        value: params[key]
+                        value: paramsCut[key]
                     });
                 }
             }
@@ -61,7 +80,10 @@ export default Ember.Object.extend({
             fitter: null,
             params: null,
             data_id: "",
-            options: null
+            options: null,
+
+            flavourList: null,
+            excludeParams: null
         });
     },
 

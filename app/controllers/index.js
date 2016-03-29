@@ -13,7 +13,9 @@ export default Ember.Controller.extend({
          */
         var labels = this.get("model.fitLabels.fit.params");
         return this.model.fitOptions.paramsLabelled(labels);
-    }.property("model.fitOptions.params", "model.fitLabels.fit.params"),
+    }.property("model.fitOptions.params", 
+               "model.fitOptions.excludeParams.@each", 
+               "model.fitLabels.fit.params"),
 
     watchOptionsParamsLabelled: function() {
         /***
@@ -96,8 +98,15 @@ export default Ember.Controller.extend({
                     // Carry over options.data_id to save any previously 
                     // uploaded data file
                     var data_id = controller.model.fitOptions.data_id;
+
+                    // Save list of available flavour options and remove from 
+                    // main options json to be sent
+                    var flavourList = hash.options.options.flavour;
+                    hash.options.options.flavour = "";
+
                     controller.model.fitOptions.setProperties(hash.options);
-                    controller.set("model.fitOptions.data_id", data_id);
+                    controller.set("model.fitOptions.data_id",       data_id);
+                    controller.set("model.fitOptions.flavourList", flavourList);
 
                     console.log("actions.onFitterSelect: RSVP succeeded");
                     console.log("actions.onFitterSelect: fitLables and fitOptions set");
@@ -109,6 +118,30 @@ export default Ember.Controller.extend({
                 });
             }
         }, // onFitterSelect
+
+        onOptionFlavourSelect: function(selection) {
+            // Set selected flavour key in options object to be sent
+            this.set("model.fitOptions.options.flavour", selection.key);
+
+            console.log("actions.onOptionFlavourSelect: set selected flavour");
+            console.log(this.get("model.fitOptions.options.flavour"));
+
+            // If this flavour has restricted parameters, set them to be
+            // excluded from displaying in fitOptions
+            if (selection.hasOwnProperty("exclude_params")) {
+                this.set("model.fitOptions.excludeParams",   
+                         selection.exclude_params);
+                
+                console.log("actions.onOptionFlavourSelect: set excluded params");
+                console.log(this.get("model.fitOptions.excludeParams"));
+            } else {
+                // Reset excluded params
+                this.set("model.fitOptions.excludeParams", null);
+
+                console.log("actions.onOptionFlavourSelect: reset excluded params");
+                console.log(this.get("model.fitOptions.excludeParams"));
+            }
+        }, //onOptionFlavourSelect
 
         onUploadComplete: function(response) {
             console.log("actions.onUploadComplete: called");
