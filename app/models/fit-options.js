@@ -1,14 +1,41 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
+    // Options to be sent
     fitter: null,
     data_id: "",
-    params: null,
+    params: function() {
+        // Computed property to return available unexcluded parameters
+
+        var paramsList    = this.get("paramsList");
+        var excludeParams = this.get("excludeParams");
+
+        var params = {};
+
+        // If paramsList is not null and there are parameters to exclude
+        if (paramsList && excludeParams) {
+            // For each parameter
+            Object.keys(paramsList).forEach(function(key) {
+                // If param key is not excluded, append to params to return
+                if (excludeParams.indexOf(key) === -1) {
+                    params[key] = paramsList[key];
+                }
+            });
+        } else {
+            params = paramsList;
+        }
+
+        return params;
+    }.property("paramsList", "excludeParams"),
     labels: null,
     options: null,
 
-    flavourList:   null,
-    excludeParams: null,
+    // Internal
+    paramsList:    null, // Stores list of all available parameters
+    excludeParams: null, // Stores list of parameters to exclude from display
+                         // and sending 
+                         // (updated in index.onOptionFlavourSelect)
+    flavourList:   null, // List of available flavours and their exclusions
 
     setParamsLabelled: function(list) {
         /***
@@ -18,7 +45,7 @@ export default Ember.Object.extend({
         var _this = this;
         
         list.forEach(function(param) {
-            _this.set("params."+param.key, parseFloat(param.value)); 
+            _this.set("paramsList."+param.key, parseFloat(param.value)); 
         });
     },
 
@@ -28,22 +55,12 @@ export default Ember.Object.extend({
          * Note: getter only! Binding to object properties in array doesn't 
          * work w/ input helper. See workaround setter in setParamsLabelled.
          */
-        var params        = this.get("params");
-        var excludeParams = this.get("excludeParams");
 
-        var paramsCut = {};
+        var params        = this.get("params");
 
         // Null check
-        if (excludeParams) {
-            // For each parameter
-            Object.keys(params).forEach(function(key) {
-                // If param key is not in excluded array, append to paramsCut
-                if (excludeParams.indexOf(key) === -1) {
-                    paramsCut[key] = params[key];
-                }
-            });
-        } else {
-            paramsCut = params;
+        if (!params) {
+            return [];
         }
 
         console.log("fitOptions.paramsLabelled: called");
@@ -55,18 +72,18 @@ export default Ember.Object.extend({
         var paramsArray = [];
 
         // Sort keys to display in order
-        var sortedKeys = Object.keys(paramsCut).sort();
+        var sortedKeys = Object.keys(params).sort();
 
         // Populate parameter aray
         sortedKeys.forEach(function(key) {
-            if (paramsCut.hasOwnProperty(key)) {
+            if (params.hasOwnProperty(key)) {
                 // Ensure labels has been updated
                 if (labels.hasOwnProperty(key)) {
                     paramsArray.push({
                         key:   key,
                         label: labels[key].label,
                         units: labels[key].units,
-                        value: paramsCut[key]
+                        value: params[key]
                     });
                 }
             }
@@ -78,12 +95,12 @@ export default Ember.Object.extend({
     reset: function() {
         this.setProperties({
             fitter: null,
-            params: null,
             data_id: "",
             options: null,
 
-            flavourList: null,
-            excludeParams: null
+            paramList:     null,
+            excludeParams: null,
+            flavourList:   null,
         });
     },
 

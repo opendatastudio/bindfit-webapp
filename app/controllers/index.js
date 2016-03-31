@@ -14,7 +14,6 @@ export default Ember.Controller.extend({
         var labels = this.get("model.fitLabels.fit.params");
         return this.model.fitOptions.paramsLabelled(labels);
     }.property("model.fitOptions.params", 
-               "model.fitOptions.excludeParams.@each", 
                "model.fitLabels.fit.params"),
 
     watchOptionsParamsLabelled: function() {
@@ -25,7 +24,7 @@ export default Ember.Controller.extend({
         var newParamsLabelled = this.get("optionsParamsLabelled");
         this.model.fitOptions.setParamsLabelled(newParamsLabelled);
         console.log("watchParamsLabelled: params changed:");
-        console.log(this.model.fitOptions.params);
+        console.log(this.get("model.fitOptions.params"));
     }.observes("optionsParamsLabelled.@each.value"),
 
     actions: {
@@ -104,9 +103,15 @@ export default Ember.Controller.extend({
                     var flavourList = hash.options.options.flavour;
                     hash.options.options.flavour = "";
 
+                    // Save list of available parameters and remove from 
+                    // main options json to be sent
+                    var paramsList  = hash.options.params;
+                    delete hash.options.params;
+
                     controller.model.fitOptions.setProperties(hash.options);
-                    controller.set("model.fitOptions.data_id",       data_id);
+                    controller.set("model.fitOptions.data_id",     data_id);
                     controller.set("model.fitOptions.flavourList", flavourList);
+                    controller.set("model.fitOptions.paramsList",  paramsList);
 
                     console.log("actions.onFitterSelect: RSVP succeeded");
                     console.log("actions.onFitterSelect: fitLables and fitOptions set");
@@ -127,7 +132,7 @@ export default Ember.Controller.extend({
             console.log(this.get("model.fitOptions.options.flavour"));
 
             // If this flavour has restricted parameters, set them to be
-            // excluded from displaying in fitOptions
+            // excluded from displaying and sending in fitOptions
             if (selection.hasOwnProperty("exclude_params")) {
                 this.set("model.fitOptions.excludeParams",   
                          selection.exclude_params);
