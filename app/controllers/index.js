@@ -12,17 +12,17 @@ export default Ember.Controller.extend({
          * observer watchOptionsParamsLabelled
          */
         var labels = this.get("model.fitLabels.fit.params");
-        return this.model.fitOptions.paramsLabelled(labels);
+        return this.model.fitOptions._paramsLabelled(labels);
     }.property("model.fitOptions.params", 
                "model.fitLabels.fit.params"),
 
     watchOptionsParamsLabelled: function() {
         /***
-         * Force Ember to manually call fitOptions.setParamsLabelled setter when
+         * Force Ember to manually call fitOptions._setParamsLabelled setter when
          * a user updates a parameter's value
          */
         var newParamsLabelled = this.get("optionsParamsLabelled");
-        this.model.fitOptions.setParamsLabelled(newParamsLabelled);
+        this.model.fitOptions._setParamsLabelled(newParamsLabelled);
         console.log("watchParamsLabelled: params changed:");
         console.log(this.get("model.fitOptions.params"));
     }.observes("optionsParamsLabelled.@each.value"),
@@ -108,13 +108,17 @@ export default Ember.Controller.extend({
                     var paramsList  = hash.options.params;
                     delete hash.options.params;
 
+                    console.log("Attempting setProperties");
+                    console.log(controller.get("model.fitOptions"));
                     controller.model.fitOptions.setProperties(hash.options);
-                    controller.set("model.fitOptions.data_id",     data_id);
-                    controller.set("model.fitOptions.flavourList", flavourList);
-                    controller.set("model.fitOptions.paramsList",  paramsList);
+                    controller.set("model.fitOptions.data_id",        data_id);
+                    controller.set("model.fitOptions._flavourList",  flavourList);
+                    controller.set("model.fitOptions._paramsList",   paramsList);
 
                     console.log("actions.onFitterSelect: RSVP succeeded");
-                    console.log("actions.onFitterSelect: fitLables and fitOptions set");
+                    console.log("actions.onFitterSelect: hash.options to be set via setProperties:");
+                    console.log(hash.options);
+                    console.log("actions.onFitterSelect: fitLabels and fitOptions set");
                     console.log(controller.get("model.fitLabels"));
                     console.log(controller.get("model.fitOptions"));
                     
@@ -134,17 +138,17 @@ export default Ember.Controller.extend({
             // If this flavour has restricted parameters, set them to be
             // excluded from displaying and sending in fitOptions
             if (selection.hasOwnProperty("exclude_params")) {
-                this.set("model.fitOptions.excludeParams",   
+                this.set("model.fitOptions._excludeParams",   
                          selection.exclude_params);
                 
                 console.log("actions.onOptionFlavourSelect: set excluded params");
-                console.log(this.get("model.fitOptions.excludeParams"));
+                console.log(this.get("model.fitOptions._excludeParams"));
             } else {
                 // Reset excluded params
-                this.set("model.fitOptions.excludeParams", null);
+                this.set("model.fitOptions._excludeParams", null);
 
                 console.log("actions.onOptionFlavourSelect: reset excluded params");
-                console.log(this.get("model.fitOptions.excludeParams"));
+                console.log(this.get("model.fitOptions._excludeParams"));
             }
         }, //onOptionFlavourSelect
 
@@ -196,7 +200,7 @@ export default Ember.Controller.extend({
                 Ember.$.ajax({
                     url:  ENV.API.fit,
                     type: "POST",
-                    data: JSON.stringify(controller.get("model.fitOptions")),
+                    data: controller.get("model.fitOptions")._toJSON(),
                     contentType: "application/json; charset=utf-8",
                     dataType:    "json"
                 })

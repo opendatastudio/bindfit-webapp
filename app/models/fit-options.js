@@ -1,43 +1,51 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-    // Options to be sent
+    // JSON of options to be sent
     fitter: null,
     data_id: "",
     params: function() {
         // Computed property to return available unexcluded parameters
-
-        var paramsList    = this.get("paramsList");
-        var excludeParams = this.get("excludeParams");
+        
+        var paramsList    = this.get("_paramsList");
+        var excludeParams = this.get("_excludeParams");
 
         var params = {};
+
+        console.log("fitOptions.params: called");
+        console.log("fitOptions.params: current _paramsList");
+        console.log(paramsList);
+        console.log("fitOptions.params: current _excludeParams");
+        console.log(excludeParams);
 
         // If paramsList is not null and there are parameters to exclude
         if (paramsList && excludeParams) {
             // For each parameter
-            Object.keys(paramsList).forEach(function(key) {
+            for (var key in paramsList) {
                 // If param key is not excluded, append to params to return
                 if (excludeParams.indexOf(key) === -1) {
                     params[key] = paramsList[key];
                 }
-            });
+            };
         } else {
             params = paramsList;
         }
 
         return params;
-    }.property("paramsList", "excludeParams"),
+    }.property("_paramsList", "_excludeParams"),
     labels: null,
     options: null,
 
+
+
     // Internal
-    paramsList:    null, // Stores list of all available parameters
-    excludeParams: null, // Stores list of parameters to exclude from display
+    _paramsList:    null, // Stores list of all available parameters
+    _excludeParams: null, // Stores list of parameters to exclude from display
                          // and sending 
                          // (updated in index.onOptionFlavourSelect)
-    flavourList:   null, // List of available flavours and their exclusions
+    _flavourList:   null, // List of available flavours and their exclusions
 
-    setParamsLabelled: function(list) {
+    _setParamsLabelled: function(list) {
         /***
          * Manually set params from paramsLabelled computed property changes
          * Called by watchParamsLabelled observer in index controller
@@ -45,11 +53,11 @@ export default Ember.Object.extend({
         var _this = this;
         
         list.forEach(function(param) {
-            _this.set("paramsList."+param.key, parseFloat(param.value)); 
+            _this.set("_paramsList."+param.key, parseFloat(param.value)); 
         });
     },
 
-    paramsLabelled: function(labels) {
+    _paramsLabelled: function(labels) {
         /***
          * Array of labelled parameters for display in template.
          * Note: getter only! Binding to object properties in array doesn't 
@@ -92,7 +100,7 @@ export default Ember.Object.extend({
         return paramsArray;
     },
 
-    reset: function() {
+    _reset: function() {
         this.setProperties({
             fitter: null,
             data_id: "",
@@ -100,27 +108,31 @@ export default Ember.Object.extend({
 
             paramList:     null,
             excludeParams: null,
-            flavourList:   null,
+            flavourList:   null
         });
     },
 
-    isPopulated: function() {
+    _isPopulated: function() {
+        console.log("fitOptions.isPopulated: called");
+        console.log(this);
         return this.get("fitter");
     }.property("fitter", "data_id", "params", "options"),
 
-    hasData: function() {
+    _hasData: function() {
         /***
          * Returns true if data has been uploaded
          */
         return this.get("data_id");
     }.property("fitter", "data_id"),
 
-    noFit: function() {
+    _noFit: function() {
         /***
          * Returns true if no fit requested (save data only option)
          */
+
         // Check fitter isn't null
         if (this.get("fitter")) { 
+            // If fitter name contains "data"
             if (this.get("fitter").indexOf("data") > -1) {
                 // Save data only
                 return true;
@@ -129,5 +141,27 @@ export default Ember.Object.extend({
                 return false;
             }
         }
-    }.property("fitter")
+    }.property("fitter"),
+
+    _toJSON: function() {
+        console.log("fitOptions._toJSON: called");
+
+        var _this = this;
+
+        var json = {};
+        for (var key in _this) {
+            if (_this.hasOwnProperty(key)) {
+                // If property is not internal (key starts with underscore), 
+                // append to json to return
+                if (key.lastIndexOf("_", 0) !== 0) {
+                    json[key] = _this.get(key);
+                }
+            }
+        }
+
+        console.log("fitOptions._toJSON: JSON to send");
+        console.log(json);
+
+        return JSON.stringify(json);
+    }
 });
