@@ -8,24 +8,23 @@ export default Ember.Controller.extend({
 
     optionsParamsLabelled: function() {
         /***
-         * Array of labelled parameters for display in template, bound by
-         * observer watchOptionsParamsLabelled
+         * Array of labelled parameters for display in template, updated
+         * by setOptionsParamsLabelled on each input change
          */
         var labels = this.get("model.fitLabels.fit.params");
         return this.model.fitOptions._paramsLabelled(labels);
     }.property("model.fitOptions.params", 
                "model.fitLabels.fit.params"),
 
-    watchOptionsParamsLabelled: function() {
+    setOptionsParamsLabelled: function() {
         /***
-         * Force Ember to manually call fitOptions._setParamsLabelled setter when
-         * a user updates a parameter's value
+         * Force Ember to manually call fitOptions._setParamsLabelled setter
          */
         var newParamsLabelled = this.get("optionsParamsLabelled");
         this.model.fitOptions._setParamsLabelled(newParamsLabelled);
         console.log("watchParamsLabelled: params changed:");
         console.log(this.get("model.fitOptions.params"));
-    }.observes("optionsParamsLabelled.@each.value"),
+    },
 
     actions: {
         selectTab: function(selection) {
@@ -127,6 +126,11 @@ export default Ember.Controller.extend({
                 });
             }
         }, // onFitterSelect
+
+        onOptionsParamsChange: function() {
+            // Update parameters
+            this.setOptionsParamsLabelled();
+        }, // onOptionsParamsChange
 
         onOptionFlavourSelect: function(selection) {
             // Set selected flavour key in options object to be sent

@@ -53,7 +53,8 @@ export default Ember.Object.extend({
         var _this = this;
         
         list.forEach(function(param) {
-            _this.set("_paramsList."+param.key, parseFloat(param.value)); 
+            _this.set("_paramsList."+param.key+".init",   parseFloat(param.value)); 
+            _this.set("_paramsList."+param.key+".bounds", param.bounds); 
         });
     },
 
@@ -88,10 +89,11 @@ export default Ember.Object.extend({
                 // Ensure labels has been updated
                 if (labels.hasOwnProperty(key)) {
                     paramsArray.push({
-                        key:   key,
-                        label: labels[key].label,
-                        units: labels[key].units,
-                        value: params[key]
+                        key:    key,
+                        label:  labels[key].label,
+                        units:  labels[key].units,
+                        value:  params[key].init,
+                        bounds: params[key].bounds
                     });
                 }
             }
