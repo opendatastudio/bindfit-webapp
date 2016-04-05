@@ -26,7 +26,7 @@ export default Ember.Object.extend({
                 if (excludeParams.indexOf(key) === -1) {
                     params[key] = paramsList[key];
                 }
-            };
+            }
         } else {
             params = paramsList;
         }

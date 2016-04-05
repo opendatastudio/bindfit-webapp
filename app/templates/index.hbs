@@ -94,8 +94,7 @@
                                         {{input value=param.value 
                                                 type="number" 
                                                 class="form-control"
-                                                action="onOptionsParamsChange"
-                                                on="key-up"}}
+                                                key-up="onOptionsParamsChange"}}
                                         <span class="input-group-addon">{{param.units}}</span>
                                     </div>
                                     <div class="input-group">
@@ -103,14 +102,12 @@
                                         {{input value=param.bounds.min 
                                                 type="number" 
                                                 class="form-control"
-                                                action="onOptionsParamsChange"
-                                                on="key-up"}}
+                                                key-up="onOptionsParamsChange"}}
                                         <span class="input-group-addon">Max</span>
                                         {{input value=param.bounds.max 
                                                 type="number" 
                                                 class="form-control"
-                                                action="onOptionsParamsChange"
-                                                on="key-up"}}
+                                                key-up="onOptionsParamsChange"}}
                                     </div>
                                 </div>
                             {{/each}}
