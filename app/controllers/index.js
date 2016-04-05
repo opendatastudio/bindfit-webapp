@@ -28,6 +28,11 @@ export default Ember.Controller.extend({
 
     actions: {
         selectTab: function(selection) {
+            console.log("HERE'S SOME RANDOM");
+            console.log("TEXT");
+            console.log("DOES IT GET DEPLOYED");
+            console.log("???");
+            
             var controller = this;
             console.log("actions.selectTab: called");
             controller.set('activeTab', selection);
