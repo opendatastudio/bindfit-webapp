@@ -123,6 +123,13 @@
                                                     optionLabelPath="content.name"
                                                     optionValuePath="content.key"}}
                                 </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Method</span>
+                                    {{select-picker content=model.fitOptions._methodList
+                                                    action=(action "onOptionsMethodSelect")
+                                                    optionLabelPath="content.name"
+                                                    optionValuePath="content.name"}}
+                                </div>
 
                                 <br/>
 

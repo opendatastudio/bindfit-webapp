@@ -102,6 +102,11 @@ export default Ember.Controller.extend({
                     var flavourList = hash.options.options.flavour;
                     hash.options.options.flavour = "";
 
+                    // Save list of available method options and remove from 
+                    // main options json to be sent
+                    var methodList = hash.options.options.method;
+                    hash.options.options.method = "";
+
                     // Save list of available parameters and remove from 
                     // main options json to be sent
                     var paramsList  = hash.options.params;
@@ -110,9 +115,10 @@ export default Ember.Controller.extend({
                     console.log("Attempting setProperties");
                     console.log(controller.get("model.fitOptions"));
                     controller.model.fitOptions.setProperties(hash.options);
-                    controller.set("model.fitOptions.data_id",        data_id);
-                    controller.set("model.fitOptions._flavourList",  flavourList);
-                    controller.set("model.fitOptions._paramsList",   paramsList);
+                    controller.set("model.fitOptions.data_id",      data_id);
+                    controller.set("model.fitOptions._flavourList", flavourList);
+                    controller.set("model.fitOptions._methodList",  methodList);
+                    controller.set("model.fitOptions._paramsList",  paramsList);
 
                     console.log("actions.onFitterSelect: RSVP succeeded");
                     console.log("actions.onFitterSelect: hash.options to be set via setProperties:");
@@ -154,7 +160,15 @@ export default Ember.Controller.extend({
                 console.log("actions.onOptionFlavourSelect: reset excluded params");
                 console.log(this.get("model.fitOptions._excludeParams"));
             }
-        }, //onOptionFlavourSelect
+        }, // onOptionFlavourSelect
+
+        onOptionsMethodSelect: function(selection) {
+            // Set selected method key in options object to be sent
+            this.set("model.fitOptions.options.method", selection.name);
+
+            console.log("actions.onOptionsMethodSelect: set selected method");
+            console.log(this.get("model.fitOptions.options.method"));
+        }, // onOptionsMethodSelect
 
         onUploadComplete: function(response) {
             console.log("actions.onUploadComplete: called");

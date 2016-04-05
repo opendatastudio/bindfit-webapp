@@ -44,6 +44,7 @@ export default Ember.Object.extend({
                          // and sending 
                          // (updated in index.onOptionFlavourSelect)
     _flavourList:   null, // List of available flavours and their exclusions
+    _methodList:    null, // List of available fitter methods
 
     _setParamsLabelled: function(list) {
         /***
