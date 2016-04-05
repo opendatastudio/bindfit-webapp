@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
          */
         var newParamsLabelled = this.get("optionsParamsLabelled");
         this.model.fitOptions._setParamsLabelled(newParamsLabelled);
-        console.log("watchParamsLabelled: params changed:");
+        console.log("setOptionsParamsLabelled: params changed:");
         console.log(this.get("model.fitOptions.params"));
     },
 
@@ -119,6 +119,9 @@ export default Ember.Controller.extend({
                     controller.set("model.fitOptions._flavourList", flavourList);
                     controller.set("model.fitOptions._methodList",  methodList);
                     controller.set("model.fitOptions._paramsList",  paramsList);
+
+                    // Initialise labelled parameter array
+                    controller.setOptionsParamsLabelled();
 
                     console.log("actions.onFitterSelect: RSVP succeeded");
                     console.log("actions.onFitterSelect: hash.options to be set via setProperties:");
