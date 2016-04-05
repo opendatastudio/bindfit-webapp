@@ -24,15 +24,14 @@ export default Ember.Controller.extend({
         this.model.fitOptions._setParamsLabelled(newParamsLabelled);
         console.log("setOptionsParamsLabelled: params changed:");
         console.log(this.get("model.fitOptions.params"));
+        console.log("setOptionsParamsLabelled: fitOptions:");
+        console.log(this.get("model.fitOptions"));
+        console.log("setOptionsParamsLabelled: fitOptions._toJSON:");
+        console.log(this.get("model.fitOptions")._toJSON());
     },
 
     actions: {
         selectTab: function(selection) {
-            console.log("HERE'S SOME RANDOM");
-            console.log("TEXT");
-            console.log("DOES IT GET DEPLOYED");
-            console.log("???");
-            
             var controller = this;
             console.log("actions.selectTab: called");
             controller.set('activeTab', selection);

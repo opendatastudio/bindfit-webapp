@@ -152,8 +152,12 @@ export default Ember.Object.extend({
         var _this = this;
 
         var json = {};
+        console.log("fitOptions._toJSON: iterating over fitOptions");
         for (var key in _this) {
+            console.log("key: "+key);
             if (_this.hasOwnProperty(key)) {
+                console.log("hasOwnProp: "+key);
+                console.log("");
                 // If property is not internal (key starts with underscore), 
                 // append to json to return
                 if (key.lastIndexOf("_", 0) !== 0) {
@@ -161,6 +165,7 @@ export default Ember.Object.extend({
                 }
             }
         }
+        console.log("fitOptions._toJSON: end iter");
 
         console.log("fitOptions._toJSON: JSON to send");
         console.log(json);
