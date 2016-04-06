@@ -33,12 +33,15 @@ export default Ember.Object.extend({
 
         return params;
     }.property("_paramsList", "_excludeParams"),
-    labels: null,
     options: null,
+    labels: null,
 
 
 
     // Internal
+    // Keys to be parsed and stringified by _toJSON
+    _jsonKeys:      ["fitter", "data_id", "params", "options", "labels"],
+
     _paramsList:    null, // Stores list of all available parameters
     _excludeParams: null, // Stores list of parameters to exclude from display
                          // and sending 
@@ -150,23 +153,12 @@ export default Ember.Object.extend({
         console.log("fitOptions._toJSON: called");
 
         var _this = this;
-
+        
         var json = {};
-        console.log("fitOptions._toJSON: iterating over fitOptions");
-        for (var key in _this) {
-            console.log("key: "+key);
-            if (_this.hasOwnProperty(key)) {
-                console.log("hasOwnProp: "+key);
-                console.log("");
-                // If property is not internal (key starts with underscore), 
-                // append to json to return
-                if (key.lastIndexOf("_", 0) !== 0) {
-                    json[key] = _this.get(key);
-                }
-            }
-        }
-        console.log("fitOptions._toJSON: end iter");
-
+        _this.get("_jsonKeys").forEach(function(key) {
+            json[key] = _this.get(key);
+        });
+        
         console.log("fitOptions._toJSON: JSON to send");
         console.log(json);
 
