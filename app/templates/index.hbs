@@ -116,20 +116,24 @@
                             <div class="col-xs-12">
                                 <label>Fit options</label>
                                 <!-- Selectors -->
-                                <div class="input-group">
-                                    <span class="input-group-addon">Flavour</span>
-                                    {{select-picker content=model.fitOptions._flavourList
-                                                    action=(action "onOptionFlavourSelect")
-                                                    optionLabelPath="content.name"
-                                                    optionValuePath="content.key"}}
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon">Method</span>
-                                    {{select-picker content=model.fitOptions._methodList
-                                                    action=(action "onOptionsMethodSelect")
-                                                    optionLabelPath="content.name"
-                                                    optionValuePath="content.name"}}
-                                </div>
+                                {{#if model.fitOptions._flavourList}}
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Flavour</span>
+                                        {{select-picker content=model.fitOptions._flavourList
+                                                        action=(action "onOptionFlavourSelect")
+                                                        optionLabelPath="content.name"
+                                                        optionValuePath="content.key"}}
+                                    </div>
+                                {{/if}}
+                                {{#if model.fitOptions._methodList}}
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Method</span>
+                                        {{select-picker content=model.fitOptions._methodList
+                                                        action=(action "onOptionsMethodSelect")
+                                                        optionLabelPath="content.name"
+                                                        optionValuePath="content.name"}}
+                                    </div>
+                                {{/if}}
 
                                 <br/>
 

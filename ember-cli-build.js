@@ -5,9 +5,9 @@ var Funnel = require('broccoli-funnel');
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
-    minifyJS: {
-      enabled: true
-    },
+    // minifyJS: {
+    //   enabled: true
+    // },
     fingerprint: {
       prepend: 'http://supramolecular.org.s3.amazonaws.com/'
     },
