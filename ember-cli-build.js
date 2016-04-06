@@ -6,7 +6,7 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
     minifyJS: {
-      enabled: false
+      enabled: true
     },
     fingerprint: {
       prepend: 'http://supramolecular.org.s3.amazonaws.com/'
