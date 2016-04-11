@@ -87,7 +87,8 @@ export default Ember.Object.extend({
                         units:  labels[key].units,
                         value:  params[key].value,
                         init:   params[key].init,
-                        stderr: params[key].stderr
+                        stderr: params[key].stderr,
+                        bounds: params[key].bounds
                     };
 
                     // If Monte Carlo error available, add to array

@@ -1,7 +1,7 @@
 <table class="table">
     <tbody>
         <tr class="active">
-            <th scope="row">Parameter</th>
+            <th scope="row">Parameter (bounds)</th>
             <th>Optimised</th>
             <th>Error</th>
             <th>Initial</th>
@@ -17,7 +17,24 @@
                     {{/each}}
                     </td>
                 {{else}}
-                    <th scope="row">{{param.label}}</th>
+                    <td>
+                    <strong>{{param.label}}</strong> 
+                    ({{#if (eq param.bounds.min 0)}}
+                         0
+                    {{else if param.bounds.min}}
+                        {{param.bounds.min}}
+                    {{else}}
+                        -&infin;
+                    {{/if}}
+                    &rarr;
+                    {{#if (eq param.bounds.max 0)}}
+                         0
+                    {{else if param.bounds.max}}
+                        {{param.bounds.max}}
+                    {{else}}
+                        &infin;
+                    {{/if}})
+                    </td>
                 {{/if}}
 
                 <!-- Optimised value -->

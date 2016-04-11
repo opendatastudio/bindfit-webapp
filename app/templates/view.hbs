@@ -38,6 +38,10 @@
                             </tr>
                         {{/each}}
 
+                        <tr class="active">
+                            <th scope="row">Options</th>
+                            <th></th>
+                        </tr>
                         <tr>
                             <th scope="row">Dilution correction</th>
                             <td>
@@ -45,6 +49,36 @@
                                     Yes
                                 {{else}}
                                     No 
+                                {{/if}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Subtract initial values</th>
+                            <td>
+                                {{#if model.fitResult.options.normalise}}
+                                    Yes
+                                {{else}}
+                                    No 
+                                {{/if}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Fit method</th>
+                            <td>
+                                {{#if model.fitResult.options.method}}
+                                    {{model.fitResult.options.method}}
+                                {{else}}
+                                    Default
+                                {{/if}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Fit flavour</th>
+                            <td>
+                                {{#if model.fitResult.options.flavour}}
+                                    {{model.fitResult.options.flavour}}
+                                {{else}}
+                                    None
                                 {{/if}}
                             </td>
                         </tr>
