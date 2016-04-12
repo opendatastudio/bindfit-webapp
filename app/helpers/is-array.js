@@ -4,7 +4,11 @@ export function isArray(params/*, hash*/) {
     /***
      * Checked if passed argument is array
      */
-    return params[0].constructor === Array;
+    if (params[0]) {
+        return params[0].constructor === Array;
+    } else {
+        return false;
+    }
 }
 
 export default Ember.Helper.helper(isArray);
