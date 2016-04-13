@@ -9,14 +9,35 @@
         {{#each paramsLabelled as |param|}}
             <tr>
                 <!-- Parameter label -->
-                <!-- List on separate lines if more than one parameter label -->
                 {{#if (is-array param.label)}}
+                    <!-- Array means sub-parameters - list on separate lines -->
                     <td>
-                    {{#each param.label as |label|}}
-                        {{label}}<br/>
+                    {{#each param.label as |label index|}}
+                        {{#if (eq index 0)}}
+                            <!-- Display first label in bold, with bounds -->
+                            <strong>{{label}}</strong>
+                            ({{#if (eq param.bounds.min 0)}}
+                                 0
+                            {{else if param.bounds.min}}
+                                {{param.bounds.min}}
+                            {{else}}
+                                -&infin;
+                            {{/if}}
+                            &rarr;
+                            {{#if (eq param.bounds.max 0)}}
+                                 0
+                            {{else if param.bounds.max}}
+                                {{param.bounds.max}}
+                            {{else}}
+                                &infin;
+                            {{/if}})<br/>
+                        {{else}}
+                            ({{label}})<br/>
+                        {{/if}}
                     {{/each}}
                     </td>
                 {{else}}
+                    <!-- Single parameter -->
                     <td>
                     <strong>{{param.label}}</strong> 
                     ({{#if (eq param.bounds.min 0)}}

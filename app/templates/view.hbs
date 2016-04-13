@@ -33,7 +33,12 @@
                         </tr>
                         {{#each paramsLabelled as |param|}}
                             <tr>
-                                <th scope="row">{{param.label}}</th>
+                                {{#if (is-array param.label)}}
+                                    <!-- Sub-params - display only first for guess -->
+                                    <th scope="row">{{param.label.[0]}}</th>
+                                {{else}}
+                                    <th scope="row">{{param.label}}</th>
+                                {{/if}}
                                 <td>{{format-sci param.init 2}} {{param.units}}</td>
                             </tr>
                         {{/each}}
