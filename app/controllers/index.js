@@ -34,6 +34,7 @@ export default Ember.Controller.extend({
         selectTab: function(selection) {
             var controller = this;
             console.log("actions.selectTab: called");
+            console.log("hello world from james");
             controller.set('activeTab', selection);
         },
 
