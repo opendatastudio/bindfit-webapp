@@ -1,0 +1,10 @@
+@media print and (orientation: landscape) {
+    /* landscape styles */
+}
+
+@media print and (orientation: portrait) {
+    /* portrait styles */
+    h4 {
+      color: red !important;
+    }
+}
