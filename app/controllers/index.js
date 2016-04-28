@@ -30,6 +30,14 @@ export default Ember.Controller.extend({
         console.log(this.get("model.fitOptions")._toJSON());
     },
 
+    initBootstrapTooltip: function() {
+      // TODO
+      // technical debt; this is horribly expensive
+      Ember.$('body').tooltip({
+        selector: '[data-toggle=tooltip]'
+      });
+    }.on("init"),
+
     actions: {
         selectTab: function(selection) {
             var controller = this;

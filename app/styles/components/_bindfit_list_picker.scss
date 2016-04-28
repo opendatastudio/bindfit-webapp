@@ -1,0 +1,17 @@
+.bindfit-list-picker {
+  h4[role=presentation] {
+    display: inline-block;
+  }
+
+  .glyphicon {
+    padding-left: 0.1em;
+  }
+
+  .tooltip {
+    font-size: 1.2em;
+
+    .tooltip-inner {
+      padding: 0.5em 1em;
+    }
+  }
+}
