@@ -7,6 +7,8 @@ import FitOptions from "../models/fit-options";
 import FitExport  from "../models/fit-export";
 import FitSave    from "../models/fit-save";
 
+import getFitterSelection from '../helpers/get-fitter-selection';
+
 export default Ember.Route.extend({
     controllerName: "index",
 
@@ -15,9 +17,9 @@ export default Ember.Route.extend({
         this.render("index", {controller: controller});
     },
 
-    model: function(params) {
+    model: function(urlParams) {
         // Retrieve specified fit data from backend
-        return Ember.$.getJSON(ENV.API.view+params.id).then(function(response) {
+        return Ember.$.getJSON(ENV.API.view+urlParams.id).then(function(response) {
             // Populate full model for retrieved fit
             // (labels must be retrieved separately)
 
@@ -44,6 +46,9 @@ export default Ember.Route.extend({
             };
 
             var model = {
+                fitID:      urlParams.id,
+                fitEditKey: urlParams.key,
+
                 fitList:    Ember.$.getJSON(ENV.API.list),
 
                 // Parse fit settings into fitOptions object for re-fitting
@@ -61,8 +66,6 @@ export default Ember.Route.extend({
                     .then(function(data) {
                         return FitLabels.create(data);
                     }),
-
-                fitID:      params.id,
                 
                 fitExport:  FitExport.create({}),
                 fitSave:    FitSave.create({})
@@ -76,6 +79,16 @@ export default Ember.Route.extend({
         console.log("setupController: model.fitResult, Options");
         console.log(model.fitResult);
         console.log(model.fitOptions);
+
+        var selection = getFitterSelection(model.fitOptions.fitter, 
+                                           model.fitList);
+
+        // Populate model
+        // TODO: instead of doing this, do null checks in onFitterSelect resets?
+        controller.set('model', model);
+        // Select appropriate fitter
+        controller.send('onFitterSelect', selection);
+        // Reopulate model (to avoid onFitterSelect resets)
         controller.set('model', model);
     }
 });

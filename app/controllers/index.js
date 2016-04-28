@@ -2,8 +2,14 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Controller.extend({
+    // Bind optional query parameter for fit edit key
+    queryParams: ["key"],
+    key: null,
+
+    // Currently selected fitter
     activeFitter: null,
 
+    // Currently selected tab
     activeTab: 1,
 
     optionsParamsLabelled: function() {
