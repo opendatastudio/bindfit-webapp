@@ -11,6 +11,14 @@ module.exports = function(defaults) {
     fingerprint: {
       prepend: 'http://supramolecular.org.s3.amazonaws.com/'
     },
+    outputPaths: {
+        app: {
+          css: {
+            'app': '/assets/bindfit-client.css',
+            'print': '/assets/print.css'
+          }
+        }
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -31,7 +39,7 @@ module.exports = function(defaults) {
   // http://www.ember-cli.com/managing-dependencies/#using-broccoli-funnel
   var extraAssets = new Funnel('app/assets', {
      srcDir: '/',
-     include: ['**/site.css'],
+     include: ['**/site.css', '**/print.css'],
      destDir: '/assets'
   });
   
