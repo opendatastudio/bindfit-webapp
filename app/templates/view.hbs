@@ -194,11 +194,12 @@
 
             {{fit-export fit=model.fitResult output=model.fitExport}}
             <br/>
-            {{#unless model.fitResult.no_fit}}
+            <!-- {{#unless model.fitResult.no_fit}}
                 {{#link-to "edit" model.fitID class="btn btn-info btn-block"}}Edit fit{{/link-to}}
             {{else}}
                 {{#link-to "edit" model.fitID class="btn btn-info btn-block"}}Fit data{{/link-to}}
-            {{/unless}}
+            {{/unless}} -->
+            {{fit-edit fitID=model.fitID}}
 
         </div> <!-- .panel-body -->
         </div> <!-- .panel -->
