@@ -66,10 +66,14 @@ export default Ember.Controller.extend({
             controller.set('activeTab', tab);
         },
 
-        onFitterSelect: function(selection) {
+        onFitterSelect: function(selection, fitResult) {
             /*** 
              * On fitter select, populate fitOptions and fitLabels models
-             * based on selection
+             * based on selection.
+             *
+             * If fitOptions provided as an argument, this function sets the 
+             * current application state to match the passed fitOptions object.
+             * Used by edit route to initialise fitter with existing fit.
              */
 
             console.log("actions.onFitterSelect: called");
@@ -79,10 +83,11 @@ export default Ember.Controller.extend({
             var controller = this;
 
             // Clear any previous fit results, exports and saves
-            controller.get('model.fitResult').reset();
-            controller.get('model.fitExport').reset();
+            // if (lemon) document.write("foo gave me a bar");
+            if (controller.get('model.fitResult')) {controller.get('model.fitResult').reset();}
+            if (controller.get('model.fitExport')) {controller.get('model.fitExport').reset();}
             //controller.get('model.fitOptions').reset();
-            controller.get('model.fitSave').reset();
+            if (controller.get('model.fitSave')) {controller.get('model.fitSave').reset();}
 
             // If a fitter is selected (not undefined)
             // Pre-populate fitOptions and fitLabels for this selection
@@ -110,25 +115,44 @@ export default Ember.Controller.extend({
 
                 Ember.RSVP.hash(promises).then(function(hash) {
                     controller.model.fitLabels.setProperties(hash.labels);
+                    var data_id     = null;
+                    var flavourList = null;
+                    var methodList  = null;
+                    var paramsList  = null;
 
-                    // Carry over options.data_id to save any previously 
-                    // uploaded data file
-                    var data_id = controller.model.fitOptions.data_id;
+                    // Save lists of available options
+                    flavourList = hash.options.options.flavour;
+                    methodList  = hash.options.options.method;
+                    paramsList  = hash.options.params;
 
-                    // Save list of available flavour options and remove from 
-                    // main options json to be sent
-                    var flavourList = hash.options.options.flavour;
-                    hash.options.options.flavour = "";
+                    if (fitResult === undefined) {
+                        // Carry over options.data_id to save any previously 
+                        // uploaded data file
+                        data_id = controller.model.fitOptions.data_id;
 
-                    // Save list of available method options and remove from 
-                    // main options json to be sent
-                    var methodList = hash.options.options.method;
-                    hash.options.options.method = "";
+                        // Reset selected options
+                        hash.options.options.flavour = "";
+                        hash.options.options.method = "";
+                        delete hash.options.params; // Computed from paramsList
+                    } else {
+                        console.log("actions.onFitterSelect: FITRESULT GIVEN");
+                        console.log(fitResult);
 
-                    // Save list of available parameters and remove from 
-                    // main options json to be sent
-                    var paramsList  = hash.options.params;
-                    delete hash.options.params;
+                        data_id = fitResult.data_id;
+
+                        // Overwrite selections with retrieved options
+                        hash.options.fitter  = fitResult.fitter;
+                        hash.options.options = fitResult.options;
+                        delete hash.options.params;
+
+                        // Extend pre-set options in paramsList with
+                        // retrieved param values 
+                        console.log("paramsList before extend");
+                        console.log(paramsList);
+                        paramsList = Ember.$.extend(hash.options.params, fitResult.fit.params);
+                        console.log("paramsList after extend");
+                        console.log(paramsList);
+                    }
 
                     console.log("Attempting setProperties");
                     console.log(controller.get("model.fitOptions"));
