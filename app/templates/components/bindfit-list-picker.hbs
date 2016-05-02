@@ -44,7 +44,6 @@
     {{/if}}
     <div role="group" class="btn-group-vertical btn-block list-picker-items-container">
       {{#each group.items as |item|}}
-        {{log item}}
         <button role="presentation"
                 {{action "selectItem" item}}
                 class="btn btn-default {{if item.selected 'active'}}">
