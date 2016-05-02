@@ -53,9 +53,6 @@ export default Ember.Route.extend({
     },
     
     setupController: function(controller, model) {
-        console.log("edit.setupController: model.fitResult");
-        console.log(model.fitResult);
-
         var selection = getFitterSelection(model.fitResult.fitter, 
                                            model.fitList);
 

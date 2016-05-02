@@ -243,7 +243,10 @@
             {{#if model.fitResult.isPopulated}}
                 <div class="panel-body">
                     <!-- Save form -->
-                    {{fit-save fit=model.fitResult output=model.fitSave}}
+                    {{fit-save fit=model.fitResult 
+                               fitID=model.fitID
+                               fitEditKey=model.fitEditKey 
+                               output=model.fitSave}}
 
                     <hr/>
 

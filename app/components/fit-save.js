@@ -16,6 +16,13 @@ export default Ember.Component.extend({
 
             var request = _this.get("fit");
 
+            console.log("actions.saveFit: FIT ID, FIT EDIT KEY");
+            console.log(_this.get("fitID"));
+            console.log(_this.get("fitEditKey"));
+
+            request.fit_id       = _this.get("fitID");
+            request.fit_edit_key = _this.get("fitEditKey");
+
             console.log("actions.saveFit: request to send");
             console.log(request);
             console.log("actions.saveFit: request no_fit flag");
@@ -25,7 +32,7 @@ export default Ember.Component.extend({
             // other values in the JSON
             // TODO: why is this happening?
             if (request.no_fit === false) {
-                request.no_fit = 0;
+                request.set('no_fit', 0);
             }
 
             // Send fitResult to backend for exporting
