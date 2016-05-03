@@ -5,7 +5,7 @@
             {{input id="bindfit-form-save-email" value=fit.meta.email type="text" class="form-control"}}
         </div>
         <div class="col-xs-offset-3 col-xs-9">
-            <p class="help-block">Optional: enter a permanent email address here to retrieve all your fits securely later.</p>
+            <p class="help-block">A valid email address is required to edit existing fits and retrieve unpublished fits.</p>
         </div>
     </div>
     <div class="form-group">
@@ -16,7 +16,7 @@
         </div>
         <div class="col-xs-offset-3 col-xs-9">
             <p class="help-block">
-                Warning: this is permanent.
+                If checked, your fit will show in public searches.
             </p>
         </div>
     </div>
@@ -91,5 +91,9 @@
     <a href={{output.url}} target="_blank" class="btn btn-info btn-block">Link to saved fit</a>
     {{input id="bindfit-save-output-url" value=output.url type="text" class="form-control"}}
 {{else}}
-    <button class="btn btn-default btn-block" {{action "saveFit"}}>Save</button>
+    {{#if fitEditKey}}
+        <button class="btn btn-default btn-block" {{action "saveFit"}}>Save edits</button>
+    {{else}}
+        <button class="btn btn-default btn-block" {{action "saveFit"}}>Save</button>
+    {{/if}}
 {{/if}}
