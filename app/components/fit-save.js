@@ -11,7 +11,7 @@ export default Ember.Component.extend({
             console.log(this.get("fit.meta.temp_unit"));
         },
 
-        saveFit: function() {
+        saveFit: function(callback) {
             var _this = this;
 
             var request = _this.get("fit");
@@ -35,15 +35,25 @@ export default Ember.Component.extend({
                 request.set('no_fit', 0);
             }
 
+            
             // Send fitResult to backend for exporting
-            Ember.$.ajax({
-                url: ENV.API.save,
-                type: "POST",
-                data: JSON.stringify(request),
-                contentType: "application/json; charset=utf-8",
-                dataType:    "json"
-            })
-            .done(function(data) {
+            var promise = new Ember.RSVP.Promise(function(resolve, reject) {
+                Ember.$.ajax({
+                    url: ENV.API.save,
+                    type: "POST",
+                    data: JSON.stringify(request),
+                    contentType: "application/json; charset=utf-8",
+                    dataType:    "json"
+                })
+                .done(resolve)
+                .fail(reject);
+            });
+
+            // For async button
+            callback(promise)
+
+            promise.then(
+            function(data) {
                 console.log("actions.saveFit: $.ajax: save success");
                 console.log(data);
 
@@ -55,8 +65,8 @@ export default Ember.Component.extend({
                 console.log(url);
                 url.select();
                 url.focus();
-            })
-            .fail(function(error) {
+            },
+            function(error) {
                 console.log("actions.saveFit: $.ajax: save fail");
                 console.log(error);
             });
