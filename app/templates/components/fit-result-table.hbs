@@ -1,15 +1,18 @@
 <section class="fit-results">
 <h1>Fit results</h1>
-<table class="table">
-    <tbody>
+
+<table class="table" id="fitParams">
+      <thead>
         <tr class="active">
             <th scope="row">Parameter (bounds)</th>
             <th>Optimised</th>
             <th>Error</th>
             <th>Initial</th>
         </tr>
+      </thead>
+      <tbody>
         {{#each paramsLabelled as |param|}}
-            <tr>
+            <tr> <!-- TODO note for James put id here for better print over multiple pages-->
                 <!-- Parameter label -->
                 {{#if (is-array param.label)}}
                     <!-- Array means sub-parameters - list on separate lines -->
@@ -100,19 +103,26 @@
                 </tr>
             {{/if}}
         {{/each}}
-
+        </tbody>
+        </table>
+        <table class="table" id="fitResult">
+        <thead>
         <tr class="active">
             <th scope="row">Fit</th>
             <th>RMS</th>
             <th>Covariance</th>
             <th></th>
         </tr>
+        </thead>
+        <tfoot>
         <tr class="active">
             <th scope="row">Total</th>
             <th>{{format-sci fitResult.qof.rms_total 4}}</th>
             <th>{{format-sci fitResult.qof.cov_total 4}}</th>
             <th></th>
         </tr>
+        </tfoot>
+        <tbody>
         {{#each fitResult.labels.data.y.row_labels as |label index|}}
                 <tr>
                     <th>{{label}}</th>
@@ -121,8 +131,12 @@
                     <th></th>
                 </tr>
         {{/each}}
-
+        </tbody>
+        </table>
+        
         {{#if fitResult.fit.coeffs}}
+        <table class="table" id="resultCoefficients">
+          <thead>
             <tr class="active">
                 <th scope="row">Coefficients</th>
                 <th>
@@ -139,6 +153,8 @@
                     {{/if}}
                 </th>
             </tr>
+          </thead>
+          <tbody>
             {{#each fitResult.labels.data.y.row_labels as |label index|}}
                     <tr>
                         <th>{{label}}</th>
@@ -151,15 +167,16 @@
                         {{/if}}
                     </tr>
             {{/each}}
-        {{/if}}
+        </tbody>
+        </table>
+        {{/if}} <!--fitResult.fit.coeffs-->
+      <dl class="fitMetaData">
+        <dt>Time to fit</dt>
+        <dd>{{format-sci fitResult.time 4}} s</dd>
+      </dl>
 
-        <tr>
-            <th scope="row">Time to fit</th>
-            <td>{{format-sci fitResult.time 4}} s</td>
-        </tr>
-    </tbody>
-</table>
-<div class="table_block">
+<!--TODO this class name is nonsense, please fix-->
+<div class="table_block"> 
 {{pagination-pager count=countPages current=currentPage change='pageChanged' size='lg'}}
 </div>
 </section>
