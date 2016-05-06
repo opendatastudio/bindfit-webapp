@@ -24,8 +24,12 @@ export default Ember.Object.extend({
     fit:  {
         y: null,
         coeffs: null,
+        coeffs_raw: null,
         molefrac: null,
-        params: null
+        molefrac_raw: null,
+        params: null,
+        n_y: null,
+        n_params: null
     },
 
     qof: {
@@ -33,7 +37,8 @@ export default Ember.Object.extend({
         cov: null,
         cov_total: null,
         rms: null,
-        rms_total: null
+        rms_total: null,
+        ssr: null
     },
     
     // Fitter options applied
@@ -125,10 +130,15 @@ export default Ember.Object.extend({
             options: {dilute: null},
             data:    {x_plot: null, x: null, y: null},
             labels:  {data: {x: null, y: null}},
-            fit:     {y: null, coeffs: null, molefrac: null, params: null},
+            fit:     {y: null, 
+                      coeffs: null, coeffs_raw: null, 
+                      molefrac: null, molefrac_raw: null, 
+                      params: null,
+                      n_y: null, n_params: null},
             qof:     {residuals: null, 
                       cov: null, cov_total: null, 
-                      rms: null, rms_total:null},
+                      rms: null, rms_total:null,
+                      ssr: null},
             // TODO: temp hack - assigning meta: _this.meta directly breaks for a 
             // reason I don't have time to investiage
             meta: {
