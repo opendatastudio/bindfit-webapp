@@ -50,7 +50,7 @@ export default Ember.Component.extend({
             });
 
             // For async button
-            callback(promise)
+            callback(promise);
 
             promise.then(
             function(data) {
