@@ -2,6 +2,8 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Component.extend({
+    error: null,
+
     tempUnits: ["C", "K", "F"],
     
     actions: {
@@ -13,6 +15,9 @@ export default Ember.Component.extend({
 
         saveFit: function(callback) {
             var _this = this;
+
+            // Clear any previous errors
+            _this.set("error", null);
 
             var request = _this.get("fit");
 
@@ -69,6 +74,7 @@ export default Ember.Component.extend({
             function(error) {
                 console.log("actions.saveFit: $.ajax: save fail");
                 console.log(error);
+                _this.set("error", error.responseJSON);
             });
         }, // saveFit
 
