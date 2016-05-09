@@ -116,10 +116,6 @@ export default Ember.Mixin.create({
           const label = Ember.get(item, labelPath);
           const value = Ember.get(item, valuePath);
           const group = groupPath ? Ember.get(item, groupPath) : null;
-          
-          console.log("hello from bindfit-select-picker mixin");
-          console.log("this get content fucker");
-          console.log(item);
 
           if (searchMatcher(group) || searchMatcher(label)) {
             return Ember.Object.create({
@@ -147,13 +143,9 @@ export default Ember.Mixin.create({
   nestedGroupContentList: Ember.computed(
     'contentList.[].group',
     function() {
-      console.log("what am i doing with my life");
       const contentList = this.get('contentList');
       const groups = _uniq(_mapBy(contentList, 'group'));
       const group_descs = _uniq(_mapBy(contentList, 'groupDesc'));
-      console.log("we've been here before: ");
-      console.log(group_descs);
-      console.log(groups);
       const results = Ember.A();
       groups.forEach(function(group) {
         results.pushObject(Ember.Object.create({
@@ -162,7 +154,6 @@ export default Ember.Mixin.create({
           items: _filterBy(contentList, 'group', group)
         }));
       });
-      console.log("fukc the world");
       return results;
     }
   ),

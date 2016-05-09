@@ -16,11 +16,15 @@ export default EmberHighChartsComponent.extend({
     contentDidChange: observer('content.@each.isLoaded', function() {
         // If no content or chart, return
         if (!(get(this, 'content') && get(this, 'chart'))) {
+            this.debug("either no content or no chart");
             return;
         }
 
         let chart  = get(this, 'chart');
         let noData = chart.get('noData');
+        
+        
+        this.debug("chart data: " + chart);
 
         if (noData != null) {
             noData.remove();

@@ -1,10 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
+    
     fitter: null,
     fitter_name: null,
     no_fit: false,
     data_id: null,
+
 
     time: null,
 
@@ -60,13 +62,33 @@ export default Ember.Object.extend({
             searchable: false, // Defaut to False
         }
     },
+    
+    
+    page: 0,
+    
+    _jsonKeys:      ["data", "fit", "qof", "labels"],
+
+    // JW function for paging data
+    // shiiiiit this is going to be bad
+    paged: function() {
+        console.log("fit-result model fetching paged");
+     
+        
+        var _this = this;
+        
+        var fitPaged = _this._toObject();
+
+        fitPaged.paramsLabelled = _this.get("paramsLabelled");
+        return fitPaged; 
+
+    }.property("fit.y", "paramsLabelled"),
 
     paramsLabelled: function(labels) {
         /***
          * Array of labelled parameters for display in template.
          */
         var params = this.get("fit.params");
-        
+
         console.log("MODEL fitResult.paramsLabelled: called");
         console.log("MODEL fitResult.paramsLabelled: params, labels");
         console.log(params);
@@ -149,5 +171,21 @@ export default Ember.Object.extend({
         };
 
         this.setProperties(clear);
+    },
+
+    _toObject: function() {
+        console.log("fitResult._toJSON: called");
+
+        var _this = this;
+        
+        var json = {};
+        _this.get("_jsonKeys").forEach(function(key) {
+            json[key] = _this.get(key);
+        });
+        
+        console.log("fitOptions._toJSON: JSON to send");
+        console.log(json);
+
+        return json;
     }
 });

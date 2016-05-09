@@ -117,24 +117,24 @@
         <tfoot>
         <tr class="active">
             <th scope="row">Total</th>
-            <th>{{format-sci fitResult.qof.rms_total 4}}</th>
-            <th>{{format-sci fitResult.qof.cov_total 4}}</th>
+            <th>{{format-sci pagedFitResult.qof.rms_total 4}}</th>
+            <th>{{format-sci pagedFitResult.qof.cov_total 4}}</th>
             <th></th>
         </tr>
         </tfoot>
         <tbody>
-        {{#each fitResult.labels.data.y.row_labels as |label index|}}
+        {{#each pagedFitResult.labels.data.y.row_labels as |label index|}}
                 <tr>
                     <th>{{label}}</th>
-                    <td>{{format-sci (get-index fitResult.qof.rms index) 4}}</td>
-                    <td>{{format-sci (get-index fitResult.qof.cov index) 4}}</td>
+                    <td>{{format-sci (get-index pagedFitResult.qof.rms index) 4}}</td>
+                    <td>{{format-sci (get-index pagedFitResult.qof.cov index) 4}}</td>
                     <th></th>
                 </tr>
         {{/each}}
         </tbody>
         </table>
         
-        {{#if fitResult.fit.coeffs}}
+        {{#if pagedFitResult.fit.coeffs}}
         <table class="table" id="resultCoefficients">
           <thead>
             <tr class="active">
@@ -155,28 +155,24 @@
             </tr>
           </thead>
           <tbody>
-            {{#each fitResult.labels.data.y.row_labels as |label index|}}
+            {{#each pagedFitResult.labels.data.y.row_labels as |label index|}}
                     <tr>
                         <th>{{label}}</th>
-                        <td>{{format-sci (get-at-index fitResult.fit.coeffs 0 index) 4}}</td>
-                        {{#if fitResult.fit.coeffs.[1]}}
-                            <td>{{format-sci (get-at-index fitResult.fit.coeffs 1 index) 4}}</td>
+                        <td>{{format-sci (get-at-index pagedFitResult.fit.coeffs 0 index) 4}}</td>
+                        {{#if pagedFitResult.fit.coeffs.[1]}}
+                            <td>{{format-sci (get-at-index pagedFitResult.fit.coeffs 1 index) 4}}</td>
                         {{/if}}
-                        {{#if fitResult.fit.coeffs.[2]}}
-                            <td>{{format-sci (get-at-index fitResult.fit.coeffs 2 index) 4}}</td>
+                        {{#if pagedFitResult.fit.coeffs.[2]}}
+                            <td>{{format-sci (get-at-index pagedFitResult.fit.coeffs 2 index) 4}}</td>
                         {{/if}}
                     </tr>
             {{/each}}
         </tbody>
         </table>
-        {{/if}} <!--fitResult.fit.coeffs-->
-      <dl class="fitMetaData">
-        <dt>Time to fit</dt>
-        <dd>{{format-sci fitResult.time 4}} s</dd>
-      </dl>
+        {{/if}} <!--pagedFitResult.fit.coeffs-->
+    <dl class="fitMetaData">
+      <dt>Time to fit</dt>
+      <dd>{{format-sci pagedFitResult.time 4}} s</dd>
+    </dl>
 
-<!--TODO this class name is nonsense, please fix-->
-<div class="table_block"> 
-{{pagination-pager count=countPages current=currentPage change='pageChanged' size='lg'}}
-</div>
 </section>

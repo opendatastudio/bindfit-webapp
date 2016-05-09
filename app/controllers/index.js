@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
+
+
 export default Ember.Controller.extend({
     // Bind optional query parameter for fit edit key
     queryParams: ["key"],
@@ -11,6 +13,11 @@ export default Ember.Controller.extend({
 
     // Currently selected tab
     activeTab: 1,
+
+    // Pagination
+    NUMBER_ROWS_PAGE: 5,
+    currentPage: 1,
+    countPages: 0, // set onUploadComplete
 
     optionsParamsLabelled: function() {
         /***
@@ -205,6 +212,18 @@ export default Ember.Controller.extend({
             console.log(this.get("model.fitResult"));
             console.log("actions.onUploadComplete: Updated fitOptions.data_id");
             console.log(this.get("model.fitOptions.data_id"));
+
+
+            var numberFits = this.get("model.fitResult.data.y").length;
+            this.debug("numberFits: " + numberFits);
+
+
+            var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
+            var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
+
+            this.debug("numberPages: " + numberPages);
+
+            this.set("countPages", numberPages);
 
             if (this.get('model.fitOptions.noFit')) {
                 // If no fit requested, trigger save data action
