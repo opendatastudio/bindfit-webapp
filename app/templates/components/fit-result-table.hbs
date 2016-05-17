@@ -1,3 +1,5 @@
+
+
 <section class="fit-results">
 <h1>Fit results</h1>
 
@@ -133,7 +135,7 @@
         {{/each}}
         </tbody>
         </table>
-        
+
         {{#if pagedFitResult.fit.coeffs}}
         <table class="table" id="resultCoefficients">
           <thead>
@@ -170,9 +172,26 @@
         </tbody>
         </table>
         {{/if}} <!--pagedFitResult.fit.coeffs-->
-    <dl class="fitMetaData">
-      <dt>Time to fit</dt>
-      <dd>{{format-sci pagedFitResult.time 4}} s</dd>
-    </dl>
+</section>
 
+{{fit-paginator currentPage=currentPage 
+                  countPages=countPages
+                  n=NUMBER_ROWS_PAGE}}
+
+
+<section class="fit-details">
+  <h1>Fit details</h1>
+  <dl class="fitMetaData">
+    <dt>Time to fit</dt>
+    <dd>{{format-sci pagedFitResult.time 4}} s</dd>
+    
+    <dt>SSR</dt>
+    <dd>{{format-sci pagedFitResult.qof.ssr 4}}</dd>
+    
+    <dt>Fitted datapoints</dt>
+    <dd>{{pagedFitResult.fit.n_y}}</dd>
+
+    <dt>Fitted params</dt>
+    <dd>{{pagedFitResult.fit.n_params}}</dd>
+  </dl>
 </section>

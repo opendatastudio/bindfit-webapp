@@ -219,12 +219,6 @@
                                    currentPage=currentPage
                                    countPages=countPages
                                    n=NUMBER_ROWS_PAGE}}
-               
-                {{fit-paginator currentPage=currentPage 
-                                countPages=countPages
-                                n=NUMBER_ROWS_PAGE}}
-               
-
                 <br/>
 
                 <div class="row">
@@ -252,7 +246,10 @@
             {{#if model.fitResult.isPopulated}}
                 <div class="panel-body">
                     <!-- Save form -->
-                    {{fit-save fit=model.fitResult output=model.fitSave}}
+                    {{fit-save fit=model.fitResult 
+                               fitID=model.fitID
+                               fitEditKey=model.fitEditKey 
+                               output=model.fitSave}}
 
                     <hr/>
 

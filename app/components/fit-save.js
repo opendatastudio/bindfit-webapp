@@ -2,6 +2,8 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Component.extend({
+    error: null,
+
     tempUnits: ["C", "K", "F"],
     
     actions: {
@@ -11,10 +13,20 @@ export default Ember.Component.extend({
             console.log(this.get("fit.meta.temp_unit"));
         },
 
-        saveFit: function() {
+        saveFit: function(callback) {
             var _this = this;
 
+            // Clear any previous errors
+            _this.set("error", null);
+
             var request = _this.get("fit");
+
+            console.log("actions.saveFit: FIT ID, FIT EDIT KEY");
+            console.log(_this.get("fitID"));
+            console.log(_this.get("fitEditKey"));
+
+            request.fit_id       = _this.get("fitID");
+            request.fit_edit_key = _this.get("fitEditKey");
 
             console.log("actions.saveFit: request to send");
             console.log(request);
@@ -25,18 +37,28 @@ export default Ember.Component.extend({
             // other values in the JSON
             // TODO: why is this happening?
             if (request.no_fit === false) {
-                request.no_fit = 0;
+                request.set('no_fit', 0);
             }
 
+            
             // Send fitResult to backend for exporting
-            Ember.$.ajax({
-                url: ENV.API.save,
-                type: "POST",
-                data: JSON.stringify(request),
-                contentType: "application/json; charset=utf-8",
-                dataType:    "json"
-            })
-            .done(function(data) {
+            var promise = new Ember.RSVP.Promise(function(resolve, reject) {
+                Ember.$.ajax({
+                    url: ENV.API.save,
+                    type: "POST",
+                    data: JSON.stringify(request),
+                    contentType: "application/json; charset=utf-8",
+                    dataType:    "json"
+                })
+                .done(resolve)
+                .fail(reject);
+            });
+
+            // For async button
+            callback(promise);
+
+            promise.then(
+            function(data) {
                 console.log("actions.saveFit: $.ajax: save success");
                 console.log(data);
 
@@ -48,10 +70,11 @@ export default Ember.Component.extend({
                 console.log(url);
                 url.select();
                 url.focus();
-            })
-            .fail(function(error) {
+            },
+            function(error) {
                 console.log("actions.saveFit: $.ajax: save fail");
                 console.log(error);
+                _this.set("error", error.responseJSON);
             });
         }, // saveFit
 

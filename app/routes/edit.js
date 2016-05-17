@@ -20,30 +20,8 @@ export default Ember.Route.extend({
     model: function(urlParams) {
         // Retrieve specified fit data from backend
         return Ember.$.getJSON(ENV.API.view+urlParams.id).then(function(response) {
-            // Populate full model for retrieved fit
+            // Initialise full model for retrieved fit
             // (labels must be retrieved separately)
-
-            // Parse fit result parameters into fitOptions hash for further
-            // fitting
-
-            // Create intial parameter hash
-            var params = response.fit.params;
-            var paramsInit = {};
-            
-            var keys = Object.keys(params);
-            keys.forEach(function(key) {
-                if (params.hasOwnProperty(key)) {
-                    paramsInit[key] = params[key].init;
-                }
-            });
-
-            // Build fitOptions object
-            var fitOptions = {
-                fitter:  response.fitter,
-                data_id: response.data_id,
-                params:  paramsInit,
-                options: response.options
-            };
 
             var model = {
                 fitID:      urlParams.id,
@@ -51,9 +29,8 @@ export default Ember.Route.extend({
 
                 fitList:    Ember.$.getJSON(ENV.API.list),
 
-                // Parse fit settings into fitOptions object for re-fitting
-                // if required
-                fitOptions: FitOptions.create(fitOptions),
+                fitOptions: FitOptions.create({}), // To be populated in
+                                                   // setupController
                 fitResult:  FitResult.create(response),
 
                 fitLabels:  Ember.$.ajax({
@@ -76,19 +53,14 @@ export default Ember.Route.extend({
     },
     
     setupController: function(controller, model) {
-        console.log("setupController: model.fitResult, Options");
-        console.log(model.fitResult);
-        console.log(model.fitOptions);
-
-        var selection = getFitterSelection(model.fitOptions.fitter, 
+        var selection = getFitterSelection(model.fitResult.fitter, 
                                            model.fitList);
 
-        // Populate model
-        // TODO: instead of doing this, do null checks in onFitterSelect resets?
-        controller.set('model', model);
         // Select appropriate fitter
-        controller.send('onFitterSelect', selection);
-        // Reopulate model (to avoid onFitterSelect resets)
+        controller.send('onFitterSelect', selection, model.fitResult);
+        // Repopulate model (to avoid onFitterSelect resets)
+        // TODO: instead of doing this, don't reset in first place if
+        // fitResult provided to onFitterSelect?
         controller.set('model', model);
     }
 });

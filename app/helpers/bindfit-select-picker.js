@@ -145,7 +145,6 @@ export default Ember.Mixin.create({
     function() {
       const contentList = this.get('contentList');
       const groups = _uniq(_mapBy(contentList, 'group'));
-      const group_descs = _uniq(_mapBy(contentList, 'groupDesc'));
       const results = Ember.A();
       groups.forEach(function(group) {
         results.pushObject(Ember.Object.create({

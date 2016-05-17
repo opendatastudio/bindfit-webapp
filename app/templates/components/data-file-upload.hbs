@@ -3,5 +3,6 @@
     {{#if uploadPercentage}}
         ({{uploadPercentage}}%)
     {{/if}} 
-    {{file-upload url=uploadURL params=uploadParams name=uploadName onComplete="onUploadComplete" onProgress="onUploadProgress"}}
+    {{file-upload 
+          url=uploadURL params=uploadParams name=uploadName onComplete="onUploadComplete" onProgress="onUploadProgress"}}
 </span>

@@ -40,15 +40,18 @@ export default Ember.Component.extend({
         rms: fitResult.qof.rms.slice(startIndex,endIndex),
         cov_total: fitResult.qof.cov_total,
         rms_total: fitResult.qof.rms_total,
+        ssr: fitResult.qof.ssr,
       },
       fit: {
         coeffs: {
           0: fitResult.fit.coeffs[0].slice(startIndex,endIndex), 
           1: fitResult.fit.coeffs[1].slice(startIndex,endIndex),
-        }
+        },
+        n_y: fitResult.fit.n_y,
+        n_params: fitResult.fit.n_params,
       },
         time: fitResult.time,
-      }
+      };
 
       //    2: fitResult.fit.coeffs[2].slice(startIndex,endIndex),
 
