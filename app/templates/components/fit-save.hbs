@@ -88,8 +88,10 @@
 
 <!-- Button or link displayed depending on whether save is available -->
 {{#if output.isPopulated}}
-    <a href={{output.url}} target="_blank" class="btn btn-info btn-block">Link to saved fit</a>
-    {{input id="bindfit-save-output-url" value=output.url type="text" class="form-control"}}
+    <div class="btn-group-vertical btn-block">
+        <a href={{output.url}} target="_blank" class="btn btn-default btn-block">Link to saved fit</a>
+        {{input id="bindfit-save-output-url" value=output.url type="text" class="form-control"}}
+    </div>
 {{else}}
     {{#if fitEditKey}}
         {{async-button action="saveFit"
@@ -108,7 +110,7 @@
     {{/if}}
 {{/if}}
 {{#if error}}
-    <div class="alert alert-warning alert-dismissable" role="alert">
+    <div class="alert alert-default alert-dismissable" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         {{error.detail}}
     </div>

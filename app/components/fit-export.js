@@ -3,7 +3,7 @@ import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Component.extend({
     actions: {
-        exportFit: function() {
+        exportFit: function(callback) {
             var _this = this;
 
             var request = _this.get("fit");
@@ -12,19 +12,28 @@ export default Ember.Component.extend({
             console.log(request);
 
             // Send input data to backend for exporting
-            Ember.$.ajax({
-                url: ENV.API.export,
-                type: "POST",
-                data: JSON.stringify(request),
-                contentType: "application/json; charset=utf-8",
-                dataType:    "json"
+            var promise = new Ember.RSVP.Promise(function(resolve, reject) {
+                Ember.$.ajax({
+                    url: ENV.API.export,
+                    type: "POST",
+                    data: JSON.stringify(request),
+                    contentType: "application/json; charset=utf-8",
+                    dataType:    "json"
+                })
+                .done(resolve)
+                .fail(reject);
             })
-            .done(function(data) {
+
+            // For async button
+            callback(promise);
+
+            promise.then(
+            function(data) {
                 // Set exported URL
                 _this.get('output').setProperties(data);
-            })
-            .fail(function(error) {
-                console.log("actions.exportFit: $.ajax: bindfit call failed");
+            },
+            function(error) {
+                console.log("actions.exportFit: $.ajax: export failed");
                 console.log(error);
             });
         }, // exportFit
