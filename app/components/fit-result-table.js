@@ -13,7 +13,6 @@ export default Ember.Component.extend({
 
     var fitResult = _this.get("fitResult");
     var currentPage = _this.get("currentPage");
-    var countPages = _this.get("countPages");
     var n = _this.get("n");
 
     this.debug("currentPage: " + currentPage);
