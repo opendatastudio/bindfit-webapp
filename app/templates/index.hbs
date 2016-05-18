@@ -143,7 +143,8 @@
                 <!-- Fit Result table -->
                 {{fit-paginator currentPage=currentPage 
                                   countPages=countPages
-                                  n=NUMBER_ROWS_PAGE}}
+                                  n=NUMBER_ROWS_PAGE
+                                  }}
 
                 {{fit-result-table fitResult=model.fitResult 
                                    fitLabels=model.fitLabels 
@@ -213,10 +214,11 @@
     <div id="main" class="col-xs-12 col-md-7 col-lg-8">
         <div class="row">
             <div class="col-xs-12">
-                {{fit-charts fitResult=model.fitResult 
+                {{fit-charts fitResult=pagedFitResults
                              fitLabels=model.fitLabels 
                              currentPage=model.currentPage
-                             countPages=model.countPages}}
+                             countPages=model.countPages
+                             }}
             </div> <!-- col -->
         </div> <!-- row -->
 

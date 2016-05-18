@@ -19,3 +19,12 @@
   }
 }
 
+
+#tab-molefrac {
+  #chart-molefrac {
+    height: calc(100vh - 100px);
+  }
+  .highcharts-wrapper {
+      height: 100%;
+  }
+}

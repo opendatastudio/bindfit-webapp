@@ -76,19 +76,6 @@
     }
 }
 
-// Chart group sizes
-// TODO move this to a mixin later
-
-#chart-molefrac {
-    div:nth-of-type(1) {
-        height:400px;
-    } // First div: fit chart
-
-    .highcharts-wrapper {
-        height: 100%;
-    }
-}
-
 // Better bootstrap-style file input
 .btn-file {
     position: relative;

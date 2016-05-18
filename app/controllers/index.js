@@ -17,6 +17,13 @@ export default Ember.Controller.extend(Ember.Evented, {
     currentPage: 1,
     countPages: 0, // set onUploadComplete
 
+    pagedFitResults: function() {
+        var currentPage = this.get("currentPage");
+
+        return this.get("model.fitResult");
+    }.property("fitResult", "currentPage", "countPages"),
+
+
     optionsParamsLabelled: function() {
         /***
          * Array of labelled parameters for display in template, updated
