@@ -2,11 +2,73 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Controller.extend({
+    advanced: false,
+
     // Default input values
     simpleSearchInput: "",
     emailInput: "",
 
     actions: {
+        toggleAdvanced: function() {
+            var advanced = this.get('advanced');
+            this.set('advanced', !advanced);
+        },
+       
+        onFitterSelect: function(selection) {
+            /*** 
+             * On fitter select, populate fitOptions and fitLabels models
+             * based on selection.
+             */
+
+            var controller = this;
+
+            // If a fitter is selected (not undefined)
+            // Pre-populate fitOptions and fitLabels for this selection
+            if (selection !== undefined) {
+                var request = {"fitter": selection.key};
+
+                var promises = {
+                    labels: Ember.$.ajax({
+                        url:  ENV.API.labels,
+                        type: "POST",
+                        data: JSON.stringify(request),
+                        contentType: "application/json; charset=utf-8",
+                        dataType:    "json"}),
+                    options: Ember.$.ajax({
+                        url:  ENV.API.options,
+                        type: "POST",
+                        data: JSON.stringify(request),
+                        contentType: "application/json; charset=utf-8",
+                        dataType:    "json"})
+                };
+
+                Ember.RSVP.hash(promises).then(function(hash) {
+                    controller.model.fitLabels.setProperties(hash.labels);
+                    var flavourList = null;
+                    var methodList  = null;
+                    var paramsList  = null;
+
+                    // Save lists of available options
+                    flavourList = hash.options.options.flavour;
+                    methodList  = hash.options.options.method;
+                    paramsList  = hash.options.params;
+
+                    // Reset selected options
+                    hash.options.options.flavour = "";
+                    hash.options.options.method = "";
+                    delete hash.options.params; // Computed from paramsList
+
+                    controller.model.fitOptions.setProperties(hash.options);
+                    controller.set("model.fitOptions._flavourList", flavourList);
+                    controller.set("model.fitOptions._methodList",  methodList);
+                    controller.set("model.fitOptions._paramsList",  paramsList);
+
+                    // Initialise labelled parameter array in fit options form
+                    controller.trigger('fitterSelect');
+                });
+            }
+        },
+
         doSimpleSearch: function(callback) {
             var controller = this;
 

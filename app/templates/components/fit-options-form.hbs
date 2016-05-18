@@ -3,17 +3,19 @@
         <div class="col-xs-12">
             <!-- If more than one sub-param, guess/fit only the first one -->
             {{#if (is-array param.label)}}
-                <label>{{param.label.[0]}} guess</label>
+                <label>{{param.label.[0]}}{{#unless search}} guess{{/unless}}</label>
             {{else}}
-                <label>{{param.label}} guess</label>
+                <label>{{param.label}}{{#unless search}} guess{{/unless}}</label>
             {{/if}}
-            <div class="input-group">
-                {{input value=param.value 
-                        type="number" 
-                        class="form-control"
-                        key-up="onOptionsParamsChange"}}
-                <span class="input-group-addon">{{param.units}}</span>
-            </div>
+            {{#unless search}}
+                <div class="input-group">
+                    {{input value=param.value 
+                            type="number" 
+                            class="form-control"
+                            key-up="onOptionsParamsChange"}}
+                    <span class="input-group-addon">{{param.units}}</span>
+                </div>
+            {{/unless}}
             <div class="input-group">
                 <span class="input-group-addon">Min</span>
                 {{input value=param.bounds.min 

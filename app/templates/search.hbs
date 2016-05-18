@@ -15,7 +15,6 @@
                                         class="form-control" 
                                         id="simple-search-input" 
                                         placeholder="Search published fits"}}
-                            
                                 <span class="input-group-btn">
                                     {{async-button action="doSimpleSearch" 
                                                    default="Search" 
@@ -25,7 +24,34 @@
                                                    id="search-button"}}
                                 </span>
                             </div>
+
+                            <p class="text-right">
+                                <a href="#" {{action "toggleAdvanced"}}>
+                                    {{#if advanced}}
+                                        Simple search
+                                    {{else}}
+                                        Advanced search
+                                    {{/if}}
+                                </a>
+                            </p>
                         </form>
+                        {{#if advanced}}
+                            <br />
+                            {{select-picker content=model.fitList
+                                          action=(action "onFitterSelect")
+                                          liveSearch=true
+                                          optionGroupPath="group"
+                                          optionLabelPath="content.name"
+                                          optionValuePath="content.key"}}
+
+                            {{#if model.fitOptions._isPopulated}}
+                                {{#unless model.fitOptions._noFit}}
+                                    {{fit-options-form fitOptions=model.fitOptions
+                                                       fitLabels =model.fitLabels
+                                                       search    =true}}
+                                {{/unless}}
+                            {{/if}}
+                        {{/if}}
                     </div>
                 </div>
 
