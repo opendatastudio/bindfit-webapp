@@ -4,3 +4,14 @@
     font-size: 18px;
   }
 }
+
+
+.fit-details {
+  @include clearfix;
+  .fitMetaData {
+    dt, dd {
+      float: left;
+      width: 50%;
+    }
+  }
+}
