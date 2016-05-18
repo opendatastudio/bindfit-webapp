@@ -15,7 +15,6 @@
     "bootstrap": "~3.3.4",
     "bootstrap-sass": "~3.3.5",
     "ember-uploader": "0.3.9",
-    "bootstrap-datepicker": "~1.4.1",
-    "visionmedia-debug": "2.2"
+    "bootstrap-datepicker": "~1.4.1"
   }
 }

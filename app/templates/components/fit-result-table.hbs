@@ -1,20 +1,13 @@
-
-
-<section class="fit-results">
-<h1>Fit results</h1>
-
-<table class="table" id="fitParams">
-      <thead>
+<table class="table">
+    <tbody>
         <tr class="active">
             <th scope="row">Parameter (bounds)</th>
             <th>Optimised</th>
             <th>Error</th>
             <th>Initial</th>
         </tr>
-      </thead>
-      <tbody>
         {{#each paramsLabelled as |param|}}
-            <tr> <!-- TODO note for James put id here for better print over multiple pages-->
+            <tr>
                 <!-- Parameter label -->
                 {{#if (is-array param.label)}}
                     <!-- Array means sub-parameters - list on separate lines -->
@@ -105,40 +98,52 @@
                 </tr>
             {{/if}}
         {{/each}}
-        </tbody>
-        </table>
-        <table class="table" id="fitResult">
-        <thead>
+
+        <tr class="active">
+            <th scope="row">Details</th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">Time to fit</th>
+            <td>{{format-sci fitResult.time 4}} s</td>
+        </tr>
+        <tr>
+            <th scope="row">SSR</th>
+            <td>{{format-sci fitResult.qof.ssr 4}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fitted datapoints</th>
+            <td>{{fitResult.fit.n_y}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Fitted params</th>
+            <td>{{fitResult.fit.n_params}}</td>
+        </tr>
+
         <tr class="active">
             <th scope="row">Fit</th>
             <th>RMS</th>
             <th>Covariance</th>
             <th></th>
         </tr>
-        </thead>
-        <tfoot>
         <tr class="active">
             <th scope="row">Total</th>
-            <th>{{format-sci pagedFitResult.qof.rms_total 4}}</th>
-            <th>{{format-sci pagedFitResult.qof.cov_total 4}}</th>
+            <th>{{format-sci fitResult.qof.rms_total 4}}</th>
+            <th>{{format-sci fitResult.qof.cov_total 4}}</th>
             <th></th>
         </tr>
-        </tfoot>
-        <tbody>
-        {{#each pagedFitResult.labels.data.y.row_labels as |label index|}}
+        {{#each fitResult.labels.data.y.row_labels as |label index|}}
                 <tr>
                     <th>{{label}}</th>
-                    <td>{{format-sci (get-index pagedFitResult.qof.rms index) 4}}</td>
-                    <td>{{format-sci (get-index pagedFitResult.qof.cov index) 4}}</td>
+                    <td>{{format-sci (get-index fitResult.qof.rms index) 4}}</td>
+                    <td>{{format-sci (get-index fitResult.qof.cov index) 4}}</td>
                     <th></th>
                 </tr>
         {{/each}}
-        </tbody>
-        </table>
 
-        {{#if pagedFitResult.fit.coeffs}}
-        <table class="table" id="resultCoefficients">
-          <thead>
+        {{#if fitResult.fit.coeffs}}
             <tr class="active">
                 <th scope="row">Coefficients</th>
                 <th>
@@ -155,43 +160,19 @@
                     {{/if}}
                 </th>
             </tr>
-          </thead>
-          <tbody>
-            {{#each pagedFitResult.labels.data.y.row_labels as |label index|}}
+            {{#each fitResult.labels.data.y.row_labels as |label index|}}
                     <tr>
                         <th>{{label}}</th>
-                        <td>{{format-sci (get-at-index pagedFitResult.fit.coeffs 0 index) 4}}</td>
-                        {{#if pagedFitResult.fit.coeffs.[1]}}
-                            <td>{{format-sci (get-at-index pagedFitResult.fit.coeffs 1 index) 4}}</td>
+                        <td>{{format-sci (get-at-index fitResult.fit.coeffs 0 index) 4}}</td>
+                        {{#if fitResult.fit.coeffs.[1]}}
+                            <td>{{format-sci (get-at-index fitResult.fit.coeffs 1 index) 4}}</td>
                         {{/if}}
-                        {{#if pagedFitResult.fit.coeffs.[2]}}
-                            <td>{{format-sci (get-at-index pagedFitResult.fit.coeffs 2 index) 4}}</td>
+                        {{#if fitResult.fit.coeffs.[2]}}
+                            <td>{{format-sci (get-at-index fitResult.fit.coeffs 2 index) 4}}</td>
                         {{/if}}
                     </tr>
             {{/each}}
-        </tbody>
-        </table>
-        {{/if}} <!--pagedFitResult.fit.coeffs-->
-</section>
+        {{/if}}
 
-{{fit-paginator currentPage=currentPage 
-                  countPages=countPages
-                  n=NUMBER_ROWS_PAGE}}
-
-
-<section class="fit-details">
-  <h1>Fit details</h1>
-  <dl class="fitMetaData">
-    <dt>Time to fit</dt>
-    <dd>{{format-sci pagedFitResult.time 4}} s</dd>
-    
-    <dt>SSR</dt>
-    <dd>{{format-sci pagedFitResult.qof.ssr 4}}</dd>
-    
-    <dt>Fitted datapoints</dt>
-    <dd>{{pagedFitResult.fit.n_y}}</dd>
-
-    <dt>Fitted params</dt>
-    <dd>{{pagedFitResult.fit.n_params}}</dd>
-  </dl>
-</section>
+    </tbody>
+</table>

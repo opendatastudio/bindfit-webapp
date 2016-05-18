@@ -153,6 +153,7 @@ export default Ember.Mixin.create({
           items: _filterBy(contentList, 'group', group)
         }));
       });
+      
       return results;
     }
   ),

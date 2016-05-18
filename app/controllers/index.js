@@ -12,35 +12,6 @@ export default Ember.Controller.extend(Ember.Evented, {
     // Currently selected tab
     activeTab: 1,
 
-    // Pagination
-    NUMBER_ROWS_PAGE: 5,
-    currentPage: 1,
-    countPages: 0, // set onUploadComplete
-
-    optionsParamsLabelled: function() {
-        /***
-         * Array of labelled parameters for display in template, updated
-         * by setOptionsParamsLabelled on each input change
-         */
-        var labels = this.get("model.fitLabels.fit.params");
-        return this.model.fitOptions._paramsLabelled(labels);
-    }.property("model.fitOptions.params", 
-               "model.fitLabels.fit.params"),
-
-    setOptionsParamsLabelled: function() {
-        /***
-         * Force Ember to manually call fitOptions._setParamsLabelled setter
-         */
-        var newParamsLabelled = this.get("optionsParamsLabelled");
-        this.model.fitOptions._setParamsLabelled(newParamsLabelled);
-        console.log("setOptionsParamsLabelled: params changed:");
-        console.log(this.get("model.fitOptions.params"));
-        console.log("setOptionsParamsLabelled: fitOptions:");
-        console.log(this.get("model.fitOptions"));
-        console.log("setOptionsParamsLabelled: fitOptions._toJSON:");
-        console.log(this.get("model.fitOptions")._toJSON());
-    },
-
     initBootstrapTooltip: function() {
       // TODO
       // technical debt; this is horribly expensive
@@ -197,18 +168,6 @@ export default Ember.Controller.extend(Ember.Evented, {
             console.log(this.get("model.fitResult"));
             console.log("actions.onUploadComplete: Updated fitOptions.data_id");
             console.log(this.get("model.fitOptions.data_id"));
-
-
-            var numberFits = this.get("model.fitResult.data.y").length;
-            this.debug("numberFits: " + numberFits);
-
-
-            var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
-            var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
-
-            this.debug("numberPages: " + numberPages);
-
-            this.set("countPages", numberPages);
 
             if (this.get('model.fitOptions.noFit')) {
                 // If no fit requested, trigger save data action

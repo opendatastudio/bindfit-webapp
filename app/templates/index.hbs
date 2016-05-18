@@ -141,11 +141,8 @@
                 <!-- <br/> -->
 
                 <!-- Fit Result table -->
-                {{fit-result-table fitResult=model.fitResult 
-                                   fitLabels=model.fitLabels 
-                                   currentPage=currentPage
-                                   countPages=countPages
-                                   n=NUMBER_ROWS_PAGE}}
+                {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
+
                 <br/>
 
                 <div class="row">
@@ -209,10 +206,7 @@
     <div id="main" class="col-xs-12 col-md-7 col-lg-8">
         <div class="row">
             <div class="col-xs-12">
-                {{fit-charts fitResult=model.fitResult 
-                             fitLabels=model.fitLabels 
-                             currentPage=model.currentPage
-                             countPages=model.countPages}}
+                {{fit-charts fitResult=model.fitResult fitLabels=model.fitLabels}}
             </div> <!-- col -->
         </div> <!-- row -->
 
