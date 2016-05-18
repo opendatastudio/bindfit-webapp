@@ -10,6 +10,7 @@ export default Ember.Controller.extend({
 
     actions: {
         toggleAdvanced: function() {
+            // Toggle advanced flag
             var advanced = this.get('advanced');
             this.set('advanced', !advanced);
         },
@@ -69,12 +70,24 @@ export default Ember.Controller.extend({
             }
         },
 
-        doSimpleSearch: function(callback) {
+        doSearch: function(callback) {
             var controller = this;
 
-            var request = {
-                "query": controller.get("simpleSearchInput")
-            };
+            if (controller.get('advanced')) {
+                // Advanced search
+                console.log("Advanced search clicked");
+
+                var request = {
+                    "query": controller.get('model.fitOptions')._toJSON(true)
+                };
+
+                request.query.text = controller.get("simpleSearchInput")
+            } else {
+                // Simple search
+                var request = {
+                    "query": controller.get("simpleSearchInput")
+                };
+            }
 
             console.log("actions.doSimpleSearch: request to send");
             console.log(request);

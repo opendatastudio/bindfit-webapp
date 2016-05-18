@@ -149,7 +149,7 @@ export default Ember.Object.extend({
         }
     }.property("fitter"),
 
-    _toJSON: function() {
+    _toJSON: function(noStringify) {
         console.log("fitOptions._toJSON: called");
 
         var _this = this;
@@ -162,6 +162,10 @@ export default Ember.Object.extend({
         console.log("fitOptions._toJSON: JSON to send");
         console.log(json);
 
-        return JSON.stringify(json);
+        if (noStringify) {
+            return json;
+        } else {
+            return JSON.stringify(json);
+        }
     }
 });
