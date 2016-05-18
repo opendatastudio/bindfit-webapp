@@ -4,6 +4,15 @@ export default Ember.Component.extend({
     fitOptions: null,
     fitLabels: null,
 
+    didInsertElement: function() {
+        this.get('controller').on('fitterSelect', $.proxy(this.initForm, this));
+    },
+
+    initForm: function() {
+        // Initialise param labels
+        this.setOptionsParamsLabelled();
+    },
+
     optionsParamsLabelled: function() {
         /***
          * Array of labelled parameters for display in template, updated
