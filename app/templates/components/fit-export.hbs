@@ -1,5 +1,11 @@
-{{#if output.isPopulated}}
-    <a href={{output.export_url}} class="btn btn-info btn-block">Download</a>
-{{else}}
-    <button class="btn btn-default btn-block" {{action "exportFit"}}>Export</button>
-{{/if}}
+<div class="btn-group-vertical btn-block">
+    {{async-button action="exportFit"
+        default="Export"
+        pending="Exporting ..."
+        fulfilled="Export again"
+        rejected="Failed"
+        id="export-button"}}
+    {{#if output.isPopulated}}
+        <a href={{output.export_url}} class="btn btn-default btn-block">Download</a>
+    {{/if}}
+</div>
