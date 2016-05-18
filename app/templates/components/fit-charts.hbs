@@ -8,11 +8,19 @@
 <div class="tab-content">
 
     <div class="tab-pane fade in active" id="tab-fit">
-        <div id="chart-fit">
+        <div id="chart-fit" {{bind-attr class="dataOption"}}>
+            <div class="chartDataFit">
+            {{#if chartDataFit}}
             {{bindfit-high-charts content=chartDataFit chartOptions=chartOptionsFit theme=chartTheme}}
+            {{else}}
+            No data to display.
+            {{/if}}
+            </div>
+            <div class="chartDataResiduals">
             {{#if chartDataResiduals}}
               {{bindfit-high-charts content=chartDataResiduals chartOptions=chartOptionsFit theme=chartTheme}}
             {{/if}}
+            </div>
         </div> <!-- Chart panel -->
     </div> <!-- #tab-fit -->
 

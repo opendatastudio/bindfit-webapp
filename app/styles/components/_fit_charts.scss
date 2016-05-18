@@ -1,0 +1,22 @@
+
+#chart-fit {
+    .highcharts-wrapper {
+        height: 100%;
+    }
+}
+
+#chart-fit.resultsData {
+  .chartDataFit {
+    height:calc(100vh - 150px); // 150px magic number is the height from top
+  }
+}
+
+#chart-fit.resultsDataResiduals {
+  .chartDataFit {
+    height:calc(70vh); // 150px magic number is the height from top
+  }
+
+  .chartDataResiduals {
+    height:calc(30vh);
+  }
+}

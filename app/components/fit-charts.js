@@ -7,10 +7,12 @@ import {defaultChartTheme,
 export default Ember.Component.extend({
     // Limit number of fits to plot
     // TEMP TODO: move this to a constants file
-    PLOT_LIMIT: 8,
+    PLOT_LIMIT: 5,
 
     // Highcharts theme
     chartTheme: defaultChartTheme,
+
+    dataOption: "nodata",
 
     // Highcharts data munging
     // Wrapper anon functions used to get "this" reference to controller model 
@@ -22,6 +24,9 @@ export default Ember.Component.extend({
         var geq = this.get("fitResult.data.x_plot");
         var data = this.get("fitResult.data.y");
         var fit = this.get("fitResult.fit.y");
+
+        
+        if(data) this.set("dataOption", "resultsData");
 
         var labels = this.get("fitLabels");
         var user_labels = this.get("fitResult.labels");
@@ -68,6 +73,9 @@ export default Ember.Component.extend({
         // plotlimit = this.get("PLOT_LIMIT"));
         var geq = this.get("fitResult.data.x_plot");
         var residuals = this.get("fitResult.qof.residuals");
+        
+        if(residuals) this.set("dataOption", "resultsDataResiduals");
+
 
         var labels = this.get("fitLabels");
         var user_labels = this.get("fitResult.labels");
