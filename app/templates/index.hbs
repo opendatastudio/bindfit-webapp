@@ -141,6 +141,10 @@
                 <!-- <br/> -->
 
                 <!-- Fit Result table -->
+                {{fit-paginator currentPage=currentPage 
+                                  countPages=countPages
+                                  n=NUMBER_ROWS_PAGE}}
+
                 {{fit-result-table fitResult=model.fitResult 
                                    fitLabels=model.fitLabels 
                                    currentPage=currentPage

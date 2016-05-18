@@ -1,12 +1,10 @@
-{{pagination-pager count=countPages current=currentPage change='pageChanged'}}
-
 {{#pagination-pager
       count=countPages
       current=currentPage
       pager=true
-      pagerPrevious='<span class="glyphicon glyphicon-play gly-flip-horizontal"></span>'
+      pagerPrevious='<span class="glyphicon glyphicon-play previous-icon"></span>'
       pagerNext='<span class="glyphicon glyphicon-play"></span>'
       pagerFirst='<span class="glyphicon glyphicon-step-backward"></span>'
       pagerLast='<span class="glyphicon glyphicon-step-forward"></span>'}}
-    Page {{current}} of {{count}}
+    Page {{currentPage}} of {{countPages}}
 {{/pagination-pager}}

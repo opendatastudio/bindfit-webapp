@@ -1,6 +1,15 @@
-.fit-results, .fit-details {
+.fit-results {
   // TODO make this more general
-  h1 {
+  h2 {
     font-size: 18px;
+  }
+
+  .fitMetaData {
+    @include clearfix;
+    width: 80%; // TODO fix on mobile???
+    dd,dt {
+      float: left;
+      width: 50%;
+    }
   }
 }
