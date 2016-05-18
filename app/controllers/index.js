@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Ember.Evented, {
     // Bind optional query parameter for fit edit key
     queryParams: ["key"],
     key: null,
@@ -11,30 +11,6 @@ export default Ember.Controller.extend({
 
     // Currently selected tab
     activeTab: 1,
-
-    optionsParamsLabelled: function() {
-        /***
-         * Array of labelled parameters for display in template, updated
-         * by setOptionsParamsLabelled on each input change
-         */
-        var labels = this.get("model.fitLabels.fit.params");
-        return this.model.fitOptions._paramsLabelled(labels);
-    }.property("model.fitOptions.params", 
-               "model.fitLabels.fit.params"),
-
-    setOptionsParamsLabelled: function() {
-        /***
-         * Force Ember to manually call fitOptions._setParamsLabelled setter
-         */
-        var newParamsLabelled = this.get("optionsParamsLabelled");
-        this.model.fitOptions._setParamsLabelled(newParamsLabelled);
-        console.log("setOptionsParamsLabelled: params changed:");
-        console.log(this.get("model.fitOptions.params"));
-        console.log("setOptionsParamsLabelled: fitOptions:");
-        console.log(this.get("model.fitOptions"));
-        console.log("setOptionsParamsLabelled: fitOptions._toJSON:");
-        console.log(this.get("model.fitOptions")._toJSON());
-    },
 
     initBootstrapTooltip: function() {
       // TODO
@@ -163,7 +139,7 @@ export default Ember.Controller.extend({
                     controller.set("model.fitOptions._paramsList",  paramsList);
 
                     // Initialise labelled parameter array
-                    controller.setOptionsParamsLabelled();
+                    controller.trigger('fitterSelect');
 
                     console.log("actions.onFitterSelect: RSVP succeeded");
                     console.log("actions.onFitterSelect: hash.options to be set via setProperties:");
@@ -177,43 +153,6 @@ export default Ember.Controller.extend({
                 });
             }
         }, // onFitterSelect
-
-        onOptionsParamsChange: function() {
-            // Update parameters
-            this.setOptionsParamsLabelled();
-        }, // onOptionsParamsChange
-
-        onOptionFlavourSelect: function(selection) {
-            // Set selected flavour key in options object to be sent
-            this.set("model.fitOptions.options.flavour", selection.key);
-
-            console.log("actions.onOptionFlavourSelect: set selected flavour");
-            console.log(this.get("model.fitOptions.options.flavour"));
-
-            // If this flavour has restricted parameters, set them to be
-            // excluded from displaying and sending in fitOptions
-            if (selection.hasOwnProperty("exclude_params")) {
-                this.set("model.fitOptions._excludeParams",   
-                         selection.exclude_params);
-                
-                console.log("actions.onOptionFlavourSelect: set excluded params");
-                console.log(this.get("model.fitOptions._excludeParams"));
-            } else {
-                // Reset excluded params
-                this.set("model.fitOptions._excludeParams", null);
-
-                console.log("actions.onOptionFlavourSelect: reset excluded params");
-                console.log(this.get("model.fitOptions._excludeParams"));
-            }
-        }, // onOptionFlavourSelect
-
-        onOptionsMethodSelect: function(selection) {
-            // Set selected method key in options object to be sent
-            this.set("model.fitOptions.options.method", selection.name);
-
-            console.log("actions.onOptionsMethodSelect: set selected method");
-            console.log(this.get("model.fitOptions.options.method"));
-        }, // onOptionsMethodSelect
 
         onUploadComplete: function(response) {
             console.log("actions.onUploadComplete: called");
@@ -316,8 +255,5 @@ export default Ember.Controller.extend({
             // Advance to Save tab
             controller.send('selectTab', 4);
         } // saveData
-
-
-
     }, // actions
 });
