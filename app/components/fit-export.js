@@ -22,7 +22,7 @@ export default Ember.Component.extend({
                 })
                 .done(resolve)
                 .fail(reject);
-            })
+            });
 
             // For async button
             callback(promise);

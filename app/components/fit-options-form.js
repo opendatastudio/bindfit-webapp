@@ -5,7 +5,7 @@ export default Ember.Component.extend({
     fitLabels: null,
 
     didInsertElement: function() {
-        this.get('controller').on('fitterSelect', $.proxy(this.initForm, this));
+        this.get('controller').on('fitterSelect', Ember.$.proxy(this.initForm, this));
     },
 
     initForm: function() {
