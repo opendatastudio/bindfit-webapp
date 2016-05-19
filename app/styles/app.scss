@@ -6,6 +6,7 @@
 @import "components/bindfit_list_picker";
 @import "components/fit_results";
 @import "components/fit_charts";
+@import "components/navbar";
 @import "utils/visually_hidden";
 @import "panes/fit_results";
 
@@ -14,43 +15,6 @@
 // Global app styles
 
 // Navbar tweaks
-#title-container {
-    padding-top: $navbar-height;
-}
-
-.navbar-form {
-    padding-top: $navbar-height/5;
-}
-
-.navbar-brand {
-    font-family: $brand-font-family;
-    font-size: $brand-font-size;
-    text-transform: lowercase;
-    padding: 0px 20px 0px 10px;
-
-    line-height: $navbar-height;
-    margin-top: ($navbar-height - 28px)/2;
-    margin-bottom: ($navbar-height - 28px)/2;
-    a, a:hover {
-        font-family: inherit;
-        font-size: inherit;
-        font-weight: inherit;
-        text-transform: inherit;
-        text-decoration: inherit;
-        padding: inherit;
-        line-height: inherit;
-        margin: inherit;
-        color: inherit;
-    }
-}
-
-.navbar-nav {
-    text-transform: uppercase;
-    font-family: $headline-font-family;
-    li > a {
-        line-height: $navbar-height;
-    }
-}
 
 .list-picker-clear-filter {
     font-size: 10px;
@@ -115,3 +79,5 @@
 .async-button.rejected {
     @extend .btn-warning;
 }
+
+// vim: set ts=4:  
