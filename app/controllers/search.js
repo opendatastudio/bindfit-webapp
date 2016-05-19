@@ -87,3 +87,4 @@ export default Ember.Controller.extend({
         },
     }
 });
+// vim: set ts=4:

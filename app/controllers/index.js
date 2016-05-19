@@ -16,12 +16,73 @@ export default Ember.Controller.extend(Ember.Evented, {
     NUMBER_ROWS_PAGE: 5,
     currentPage: 1,
     countPages: 0, // set onUploadComplete
+    
 
+    // TODO generalise for everything, really
     pagedFitResults: function() {
-        var currentPage = this.get("currentPage");
+        var _this = this; 
+        var currentPage = _this.get("currentPage");
+        var fitResult = _this.get("model.fitResult");
 
-        return this.get("model.fitResult");
-    }.property("fitResult", "currentPage", "countPages"),
+        this.debug("fitResult", fitResult);
+        var countPages = _this.get("countPages");
+        var n = _this.get("NUMBER_ROWS_PAGE");
+
+        var startIndex = (currentPage-1)*n; 
+        var endIndex = startIndex + n; // +1 ?? 
+       
+        if (!fitResult.labels.data.y) { 
+            return fitResult;
+        }
+
+       /* var paged = {*/
+            //data: fitResult.data,
+            //labels: fitResult.labels,
+            //fit: fitResult.fit,
+            //qof: fitResult.qof
+       /* };*/
+
+        /*var paged = JSON.parse(JSON.stringify(fitResult)); */
+
+        //this.debug("ok!", fitResult);
+        //this.debug("wuuuut", paged);
+
+        //paged["labels"]["data"]["y"]["row_labels"] = 
+            //fitResult.labels.data.y.row_labels.slice(startIndex,endIndex);
+        
+        /*this.debug("hi world", paged);*/
+
+        /*var paged = {*/
+          //labels: {
+            //data: {
+              //y: {
+                //row_labels: fitResult.labels.data.y.row_labels.slice(startIndex,endIndex)
+              //}
+            //}
+          //},
+          //qof: {
+            //cov: fitResult.qof.cov.slice(startIndex,endIndex),
+            //rms: fitResult.qof.rms.slice(startIndex,endIndex),
+            //cov_total: fitResult.qof.cov_total,
+            //rms_total: fitResult.qof.rms_total,
+            //ssr: fitResult.qof.ssr,
+          //},
+          //fit: {
+            //coeffs: {
+              //0: fitResult.fit.coeffs[0].slice(startIndex,endIndex), 
+              //1: fitResult.fit.coeffs[1].slice(startIndex,endIndex),
+            //},
+            //n_y: fitResult.fit.n_y,
+            //n_params: fitResult.fit.n_params,
+          //},
+            //time: fitResult.time,
+          /*};*/
+
+
+        //this.debug("paged: ", paged);
+
+        return fitResult;
+    }.property("model.fitResult", "currentPage", "countPages"),
 
 
     optionsParamsLabelled: function() {
@@ -305,3 +366,5 @@ export default Ember.Controller.extend(Ember.Evented, {
         } // saveData
     }, // actions
 });
+
+// vim: set ts=4:

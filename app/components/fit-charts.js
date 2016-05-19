@@ -25,8 +25,9 @@ export default Ember.Component.extend({
         var data = this.get("fitResult.data.y");
         var fit = this.get("fitResult.fit.y");
 
-        
-        if(data) this.set("dataOption", "resultsData");
+        if(data) {
+          this.set("dataOption", "resultsData");
+        }
 
         var labels = this.get("fitLabels");
         var user_labels = this.get("fitResult.labels");
@@ -74,7 +75,9 @@ export default Ember.Component.extend({
         var geq = this.get("fitResult.data.x_plot");
         var residuals = this.get("fitResult.qof.residuals");
         
-        if(residuals) this.set("dataOption", "resultsDataResiduals");
+        if(residuals) {
+          this.set("dataOption", "resultsDataResiduals");
+        }
 
 
         var labels = this.get("fitLabels");

@@ -14,17 +14,23 @@ export default EmberHighChartsComponent.extend({
     classNames: ["contains-chart"],
 
     contentDidChange: observer('content.@each.isLoaded', function() {
-        // If no content or chart, return
-        if (!(get(this, 'content') && get(this, 'chart'))) {
+        var content = this.get("content");
+        this.debug("content", content);
+        Ember.run.debounce(this, this.debouncedContentDidChange, 20);
+    }),
+
+    debouncedContentDidChange: function() {
+        var content = this.get("content");
+        var chart = this.get("chart");
+
+        // TODO i'm not sure anyone could tell me why this is the case???
+        // seems like trying to address an edge case???
+        if (!(content && chart)) {
             this.debug("either no content or no chart");
             return;
         }
 
-        let chart  = get(this, 'chart');
         let noData = chart.get('noData');
-        
-        
-        this.debug("chart data: " + chart);
 
         if (noData != null) {
             noData.remove();
@@ -35,6 +41,8 @@ export default EmberHighChartsComponent.extend({
         while( chart.series.length > 0 ) {
             chart.series[0].remove( false );
         }
+        
+        // holy shitballs this is expensive!!! 
         chart.redraw();
         // End hack
 
@@ -45,9 +53,13 @@ export default EmberHighChartsComponent.extend({
                 return chart.addSeries(series);
             }
         });
-    }),
+    },
 
     chartAxesDidChange: observer('chartOptions.xAxis', 'chartOptions.yAxis', function() {
+        Ember.run.debounce(this, this.debouncedChartAxisDidChange, 20);
+    }),
+
+    debouncedChartAxisDidChange: function() {
         /***
          * Handles updating xAxis/yAxis options programmatically if
          * chartOptions is changed.
@@ -68,7 +80,7 @@ export default EmberHighChartsComponent.extend({
         x.update(xNew);
         y.update(yNew);
         return;
-    }),
+    },
 
     // Hacky jQuery setup function for synchronised charts, called afterRender
     // Overrides default Highcharts mousmove/touchmove methods
@@ -108,3 +120,5 @@ export default EmberHighChartsComponent.extend({
         });
     }),
 });
+
+// vim: set ts=4:
