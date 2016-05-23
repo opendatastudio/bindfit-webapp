@@ -78,6 +78,7 @@ export default Ember.Component.extend({
         this.debug("residuals: ", residuals);
 
         if(residuals) {
+            this.debug("hi world???");
             this.set("dataOption", "resultsDataResiduals");
         }
 
@@ -103,7 +104,7 @@ export default Ember.Component.extend({
             // Empty plot (clears any previous residuals)
             return genChartData([], []);
         }
-    }.property("fitResult.data.x_plot", "fitResult.qof.residuals"),
+    }.property("fitResult.data.x_plot", "fitResult.qof.residuals", "fitResult.data.y"),
 
     chartOptionsFit: function() {
         console.log("chartOptionsFit: called");
