@@ -77,6 +77,11 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             {{data-file-upload fitter=model.fitOptions.fitter onComplete="onUploadComplete" onRestart="onUploadRestart"}}
+                         
+                          {{fit-paginator currentPage=currentPage 
+                                            countPages=countPages
+                                            n=NUMBER_ROWS_PAGE
+                                            }}
                         </div>
                     </div>
 
