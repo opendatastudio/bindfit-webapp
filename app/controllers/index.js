@@ -35,20 +35,20 @@ export default Ember.Controller.extend(Ember.Evented, {
             return fitResult;
         }
 
-       /* var paged = {*/
+        /*var paged = {*/
             //data: fitResult.data,
             //labels: fitResult.labels,
             //fit: fitResult.fit,
             //qof: fitResult.qof
-       /* };*/
+        /*};*/
 
-        /*var paged = JSON.parse(JSON.stringify(fitResult)); */
+        var paged = JSON.parse(JSON.stringify(fitResult)); 
 
         //this.debug("ok!", fitResult);
         //this.debug("wuuuut", paged);
 
-        //paged["labels"]["data"]["y"]["row_labels"] = 
-            //fitResult.labels.data.y.row_labels.slice(startIndex,endIndex);
+        paged["labels"]["data"]["y"]["row_labels"] = 
+            fitResult.labels.data.y.row_labels.slice(startIndex,endIndex);
         
         /*this.debug("hi world", paged);*/
 
@@ -81,7 +81,7 @@ export default Ember.Controller.extend(Ember.Evented, {
 
         //this.debug("paged: ", paged);
 
-        return fitResult;
+        return paged;
     }.property("model.fitResult", "currentPage", "countPages"),
 
 
