@@ -63,12 +63,9 @@ export default Ember.Controller.extend(Ember.Evented, {
               fitResult.qof.residuals.slice(startIndex, endIndex);
         }
 
-        if (fitResult.fit.coeffs) {
-            paged["fit"]["coeffs"][0] = 
-                fitResult.fit.coeffs[0].slice(startIndex,endIndex);
-            
-            paged["fit"]["coeffs"][1] = 
-                fitResult.fit.coeffs[1].slice(startIndex,endIndex);
+        if (fitResult.fit.y) {
+            paged["fit"]["y"] = 
+                fitResult.fit.y.slice(startIndex,endIndex);
         }
         /*this.debug("hi world", paged);*/
 
