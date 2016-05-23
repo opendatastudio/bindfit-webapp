@@ -19,6 +19,9 @@ export default Ember.Component.extend({
     // values, I'm lazy
     // TODO: figure out how to access current controller values from top-level?
     chartDataFit: function() {
+        
+        this.debug("chartDataFit: hi world???");
+
         var plot_limit = this.get("PLOT_LIMIT");
 
         var geq = this.get("fitResult.data.x_plot");
@@ -77,8 +80,8 @@ export default Ember.Component.extend({
         
         this.debug("residuals: ", residuals);
 
+        this.debug("chartDataResiduals: hi world???");
         if(residuals) {
-            this.debug("hi world???");
             this.set("dataOption", "resultsDataResiduals");
         }
 
@@ -104,7 +107,7 @@ export default Ember.Component.extend({
             // Empty plot (clears any previous residuals)
             return genChartData([], []);
         }
-    }.property("fitResult.data.x_plot", "fitResult.qof.residuals", "fitResult.data.y"),
+    }.property("fitResult.qof.residuals", "fitResult.fit.y.@each"),
 
     chartOptionsFit: function() {
         console.log("chartOptionsFit: called");

@@ -16,10 +16,11 @@ export default Ember.Controller.extend(Ember.Evented, {
     NUMBER_ROWS_PAGE: 5,
     currentPage: 1,
     countPages: 0, // set onUploadComplete
-    
+    // so. where to begin?     
 
     // TODO generalise for everything, really
     pagedFitResults: function() {
+        this.debug("pagedFitResults: helloWorld");
         var _this = this; 
         var currentPage = _this.get("currentPage");
         var fitResult = _this.get("model.fitResult");
@@ -59,7 +60,7 @@ export default Ember.Controller.extend(Ember.Evented, {
         }
 
         return paged;
-    }.property("model.fitResult", "currentPage", "countPages"),
+    }.property("model.fitResult.fit.y", "currentPage", "countPages"),
 
 
     optionsParamsLabelled: function() {
@@ -244,16 +245,17 @@ export default Ember.Controller.extend(Ember.Evented, {
             console.log(this.get("model.fitOptions.data_id"));
 
 
+            // move elsewhere
+            // hi, this is wrong!
             var numberFits = this.get("model.fitResult.data.y").length;
-            this.debug("numberFits: " + numberFits);
-
 
             var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
             var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
 
-            this.debug("numberPages: " + numberPages);
-
+            // TODO hi this is extremely wrong
             this.set("countPages", numberPages);
+            // end move elsewhere
+
 
             if (this.get('model.fitOptions.noFit')) {
                 // If no fit requested, trigger save data action
