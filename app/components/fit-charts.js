@@ -75,8 +75,10 @@ export default Ember.Component.extend({
         var geq = this.get("fitResult.data.x_plot");
         var residuals = this.get("fitResult.qof.residuals");
         
+        this.debug("residuals: ", residuals);
+
         if(residuals) {
-          this.set("dataOption", "resultsDataResiduals");
+            this.set("dataOption", "resultsDataResiduals");
         }
 
 
@@ -159,3 +161,5 @@ export default Ember.Component.extend({
     }.property("fitLabels.data.x.axis_label",
                "fitLabels.data.x.axis_label"),
 });
+
+// vim: set ts=4:

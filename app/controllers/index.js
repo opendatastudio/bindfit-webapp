@@ -30,7 +30,9 @@ export default Ember.Controller.extend(Ember.Evented, {
 
         var startIndex = (currentPage-1)*n; 
         var endIndex = startIndex + n; // +1 ?? 
-       
+      
+        
+
         if (!fitResult.labels.data.y) { 
             return fitResult;
         }
@@ -49,7 +51,25 @@ export default Ember.Controller.extend(Ember.Evented, {
 
         paged["labels"]["data"]["y"]["row_labels"] = 
             fitResult.labels.data.y.row_labels.slice(startIndex,endIndex);
+       
+        paged["data"]["y"] = 
+            fitResult.data.y.slice(startIndex,endIndex);
         
+        paged["data"]["x"] = 
+            fitResult.data.x.slice(startIndex,endIndex);
+       
+        if (fitResult.qof.residuals) {
+            paged["qof"]["residuals"]= 
+              fitResult.qof.residuals.slice(startIndex, endIndex);
+        }
+
+        if (fitResult.fit.coeffs) {
+            paged["fit"]["coeffs"][0] = 
+                fitResult.fit.coeffs[0].slice(startIndex,endIndex);
+            
+            paged["fit"]["coeffs"][1] = 
+                fitResult.fit.coeffs[1].slice(startIndex,endIndex);
+        }
         /*this.debug("hi world", paged);*/
 
         /*var paged = {*/
