@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Ember.Evented, {
     advanced: false,
 
     // Default input values
@@ -73,18 +73,20 @@ export default Ember.Controller.extend({
         doSearch: function(callback) {
             var controller = this;
 
+            var request = null;
+
             if (controller.get('advanced')) {
                 // Advanced search
                 console.log("Advanced search clicked");
 
-                var request = {
+                request = {
                     "query": controller.get('model.fitOptions')._toJSON(true)
                 };
 
-                request.query.text = controller.get("simpleSearchInput")
+                request.query.text = controller.get("simpleSearchInput");
             } else {
                 // Simple search
-                var request = {
+                request = {
                     "query": controller.get("simpleSearchInput")
                 };
             }
