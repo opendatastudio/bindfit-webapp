@@ -7,21 +7,30 @@ import {defaultChartTheme,
 export default Ember.Component.extend({
     // Limit number of fits to plot
     // TEMP TODO: move this to a constants file
-    PLOT_LIMIT: 8,
+    PLOT_LIMIT: 5,
 
     // Highcharts theme
     chartTheme: defaultChartTheme,
+
+    dataOption: "nodata",
 
     // Highcharts data munging
     // Wrapper anon functions used to get "this" reference to controller model 
     // values, I'm lazy
     // TODO: figure out how to access current controller values from top-level?
     chartDataFit: function() {
+        
+        this.debug("chartDataFit: hi world???");
+
         var plot_limit = this.get("PLOT_LIMIT");
 
         var geq = this.get("fitResult.data.x_plot");
         var data = this.get("fitResult.data.y");
         var fit = this.get("fitResult.fit.y");
+
+        if(data) {
+          this.set("dataOption", "resultsData");
+        }
 
         var labels = this.get("fitLabels");
         var user_labels = this.get("fitResult.labels");
@@ -68,6 +77,14 @@ export default Ember.Component.extend({
         // plotlimit = this.get("PLOT_LIMIT"));
         var geq = this.get("fitResult.data.x_plot");
         var residuals = this.get("fitResult.qof.residuals");
+        
+        this.debug("residuals: ", residuals);
+
+        this.debug("chartDataResiduals: hi world???");
+        if(residuals) {
+            this.set("dataOption", "resultsDataResiduals");
+        }
+
 
         var labels = this.get("fitLabels");
         var user_labels = this.get("fitResult.labels");
@@ -90,7 +107,7 @@ export default Ember.Component.extend({
             // Empty plot (clears any previous residuals)
             return genChartData([], []);
         }
-    }.property("fitResult.data.x_plot", "fitResult.qof.residuals"),
+    }.property("fitResult.qof.residuals", "fitResult.fit.y.@each"),
 
     chartOptionsFit: function() {
         console.log("chartOptionsFit: called");
@@ -148,3 +165,5 @@ export default Ember.Component.extend({
     }.property("fitLabels.data.x.axis_label",
                "fitLabels.data.x.axis_label"),
 });
+
+// vim: set ts=4:

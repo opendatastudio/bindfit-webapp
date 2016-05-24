@@ -1,0 +1,28 @@
+.fit-paginator {
+  // TODO make more general as a util???
+  .previous-icon {
+    // insert compass here
+    transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+  }
+
+  .ember-view.pager {
+    margin: 0;
+    padding: 4px 0;
+    background-color: #f5f5f5; 
+    border-bottom: solid 2px $primary;
+    ul {
+      margin: 0;
+    }
+
+    .page-inner {
+      margin: 0 10px;
+    }
+
+    a {
+      border-radius: $border-radius-base;
+    }
+  }
+}

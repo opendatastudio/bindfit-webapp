@@ -1,0 +1,13 @@
+<div class="fit-paginator">
+{{#pagination-pager
+      count=countPages
+      current=currentPage
+      change='pageChanged'
+      pager=true
+      pagerPrevious='<span class="glyphicon glyphicon-play previous-icon"></span>'
+      pagerNext='<span class="glyphicon glyphicon-play"></span>'
+      pagerFirst='<span class="glyphicon glyphicon-step-backward"></span>'
+      pagerLast='<span class="glyphicon glyphicon-step-forward"></span>'}}
+    Page {{currentPage}} of {{countPages}}
+{{/pagination-pager}}
+</div>

@@ -164,3 +164,4 @@ export default Ember.Controller.extend(Ember.Evented, {
         },
     }
 });
+// vim: set ts=4:

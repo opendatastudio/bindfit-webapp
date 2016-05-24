@@ -100,8 +100,16 @@
             <div class="tab-pane fade" id="tab-results">
             <div class="panel panel-default">
             <div class="panel-body">
+                {{fit-paginator currentPage=currentPage 
+                                  countPages=countPages
+                                  n=NUMBER_ROWS_PAGE
+                                  }}
 
-                {{fit-result-table fitResult=model.fitResult fitLabels=model.fitLabels}}
+                {{fit-result-table fitResult=model.fitResult 
+                                   fitLabels=model.fitLabels 
+                                   currentPage=currentPage
+                                   countPages=countPages
+                                   n=NUMBER_ROWS_PAGE}}
 
             </div> <!-- .panel-body -->
             </div> <!-- .panel -->
@@ -215,7 +223,7 @@
 
         <div class="row">
             <div class="col-xs-12">
-                {{fit-charts fitResult=model.fitResult fitLabels=model.fitLabels}}
+                {{fit-charts fitResult=pagedFitResults fitLabels=model.fitLabels}}
             </div> <!-- col -->
         </div> <!-- row -->
 

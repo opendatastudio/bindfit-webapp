@@ -2,50 +2,19 @@
 @import "bootstrap";
 
 // components
+// TODO install sass globbing?
+@import "utils/visually_hidden";
 @import "components/bindfit_list_picker";
+@import "components/fit_results";
+@import "components/fit_charts";
+@import "components/navbar";
+@import "components/fit_paginator";
 
 @import "index";
 
 // Global app styles
 
 // Navbar tweaks
-#title-container {
-    padding-top: $navbar-height;
-}
-
-.navbar-form {
-    padding-top: $navbar-height/5;
-}
-
-.navbar-brand {
-    font-family: $brand-font-family;
-    font-size: $brand-font-size;
-    text-transform: lowercase;
-    padding: 0px 20px 0px 10px;
-
-    line-height: $navbar-height;
-    margin-top: ($navbar-height - 28px)/2;
-    margin-bottom: ($navbar-height - 28px)/2;
-    a, a:hover {
-        font-family: inherit;
-        font-size: inherit;
-        font-weight: inherit;
-        text-transform: inherit;
-        text-decoration: inherit;
-        padding: inherit;
-        line-height: inherit;
-        margin: inherit;
-        color: inherit;
-    }
-}
-
-.navbar-nav {
-    text-transform: uppercase;
-    font-family: $headline-font-family;
-    li > a {
-        line-height: $navbar-height;
-    }
-}
 
 .list-picker-clear-filter {
     font-size: 10px;
@@ -68,32 +37,6 @@
             border-top: none;
             border-radius: 0px 0px $border-radius-base $border-radius-base;
         }
-    }
-}
-
-// Chart group sizes
-// TODO move this to a mixin later
-#chart-fit {
-    div:nth-of-type(1) {
-        height:400px;
-    } // First div: fit chart
-
-    div:nth-of-type(2) {
-        height: 250px;
-    } // Second div: residuals chart
-
-    .highcharts-wrapper {
-        height: 100%;
-    }
-}
-
-#chart-molefrac {
-    div:nth-of-type(1) {
-        height:400px;
-    } // First div: fit chart
-
-    .highcharts-wrapper {
-        height: 100%;
     }
 }
 
@@ -136,3 +79,5 @@
 .async-button.rejected {
     @extend .btn-warning;
 }
+
+// vim: set ts=4:  
