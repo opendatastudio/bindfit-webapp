@@ -45,9 +45,13 @@ export default Ember.Component.extend({
 
         onOptionsFlavourSelect: function(selection) {
             // Set selected flavour key in options object to be sent
+            console.log("actions.onOptionsFlavourSelect: flavour selected");
+            console.log(selection);
+            
             this.set("fitOptions.options.flavour", selection.key);
 
             console.log("actions.onOptionsFlavourSelect: set selected flavour");
+            console.log(this.get("fitOptions.options._flavourSelection"));
             console.log(this.get("fitOptions.options.flavour"));
 
             // If this flavour has restricted parameters, set them to be

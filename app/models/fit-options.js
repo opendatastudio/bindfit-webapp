@@ -1,9 +1,13 @@
 import Ember from 'ember';
 
+import objectListFilter from '../helpers/object-list-filter';
+
 export default Ember.Object.extend({
     // JSON of options to be sent
     fitter: null,
+
     data_id: "",
+
     params: function() {
         // Computed property to return available unexcluded parameters
         
@@ -33,21 +37,102 @@ export default Ember.Object.extend({
 
         return params;
     }.property("_paramsList", "_excludeParams"),
-    options: null,
+
+    options: Ember.Object.extend({
+        // Internal
+        _flavourList:      null, // List of available flavours and their exclusions
+        _flavourSelection: null,
+
+        _methodList:       null, // List of available fitter methods
+        _methodSelection:  null,
+
+        flavour: function(key, value) {
+            var _this = this;
+
+            // Setter
+            if (arguments.length > 1) {
+                if (_this.get('_flavourList')) {
+                    // Set _flavourSelection to selected flavour's full 
+                    // selection object
+                    let selection = objectListFilter(_this.get('_flavourList'), 
+                                                     "key", 
+                                                     value);
+                    _this.set('_flavourSelection', selection);
+                } else {
+                    // No flavours listed, set to empty
+                    _this.set('_flavourSelection', null);
+                }
+
+                console.log(_this.get('_flavourSelection'));
+            }
+
+            // Getter
+            var flavour = this.get('_flavourSelection.key');
+
+            if (!flavour) {
+                // Default flavour value when none selected or no
+                // flavours available
+                flavour = "";
+            }
+
+            return flavour;
+        }.property('_flavourSelection'),
+
+        method: function(key, value) {
+            var _this = this;
+
+            // Setter
+            if (arguments.length > 1) {
+                if (_this.get('_methodList')) {
+                    // Set _methodSelection to selected method's full 
+                    // selection object
+                    let selection = objectListFilter(_this.get('_methodList'), 
+                                                     "name", 
+                                                     value);
+                    _this.set('_methodSelection', selection);
+                } else {
+                    // No methods listed, set to empty
+                    _this.set('_methodSelection', null);
+                }
+
+                console.log(_this.get('_methodSelection'));
+            }
+
+            // Getter
+            var method = this.get('_methodSelection.name');
+
+            if (!method) {
+                // Default method value when none selected or no
+                // methods available
+                method = "";
+            }
+
+            return method;
+        }.property('_methodSelection'),
+
+        normalise: null,
+        dilute: null
+    }).create(),
+
     labels: null,
 
 
 
     // Internal
     // Keys to be parsed and stringified by _toJSON
-    _jsonKeys:      ["fitter", "data_id", "params", "options", "labels"],
+    _jsonKeys:      ["fitter", 
+                     "data_id", 
+                     "params", 
+                     {"options": ["flavour", 
+                                  "method", 
+                                  "normalise", 
+                                  "dilute"]}, 
+                     "labels"],
 
     _paramsList:    null, // Stores list of all available parameters
     _excludeParams: null, // Stores list of parameters to exclude from display
                          // and sending 
-                         // (updated in index.onOptionFlavourSelect)
-    _flavourList:   null, // List of available flavours and their exclusions
-    _methodList:    null, // List of available fitter methods
+                         // (updated in fit-options-form.onOptionFlavourSelect)
 
     _setParamsLabelled: function(list) {
         /***
@@ -156,7 +241,21 @@ export default Ember.Object.extend({
         
         var json = {};
         _this.get("_jsonKeys").forEach(function(key) {
-            json[key] = _this.get(key);
+            if (typeof key === 'object') {
+                // Hack to deal with nested Ember object for options
+                Object.keys(key).forEach(function (k) {
+                    console.log("KEY (OBJ): "+key);
+                    json[k] = {};
+                    key[k].forEach(function (subk) {
+                        console.log("SUBKEY: "+subk);
+                        json[k][subk] = _this.get(k+"."+subk);
+                        console.log("subkey written: "+_this.get(k+"."+subk));
+                    });
+                });
+            } else {
+                console.log("KEY: "+key);
+                json[key] = _this.get(key);
+            }
         });
         
         console.log("fitOptions._toJSON: JSON to send");

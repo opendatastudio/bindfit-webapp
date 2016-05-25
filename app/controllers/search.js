@@ -54,15 +54,27 @@ export default Ember.Controller.extend(Ember.Evented, {
                     methodList  = hash.options.options.method;
                     paramsList  = hash.options.params;
 
-                    // Reset selected options
+                    // Reset default selected options
                     hash.options.options.flavour = "";
                     hash.options.options.method = "";
                     delete hash.options.params; // Computed from paramsList
 
-                    controller.model.fitOptions.setProperties(hash.options);
-                    controller.set("model.fitOptions._flavourList", flavourList);
-                    controller.set("model.fitOptions._methodList",  methodList);
+                    // Populate selection lists
+                    controller.set("model.fitOptions.options._flavourList", flavourList);
+                    controller.set("model.fitOptions.options._methodList",  methodList);
                     controller.set("model.fitOptions._paramsList",  paramsList);
+
+                    // Set options manually as nested object to avoid 
+                    // overwriting computed props
+                    controller.model.fitOptions.set('options.flavour', hash.options.options.flavour);
+                    controller.model.fitOptions.set('options.method', hash.options.options.method);
+                    controller.model.fitOptions.set('options.normalise', hash.options.options.normalise);
+                    controller.model.fitOptions.set('options.dilute', hash.options.options.dilute);
+
+                    delete hash.options.options;
+
+                    // Set rest of properties in bulk
+                    controller.model.fitOptions.setProperties(hash.options);
 
                     // Initialise labelled parameter array in fit options form
                     controller.trigger('fitterSelect');

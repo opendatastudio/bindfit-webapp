@@ -35,19 +35,21 @@
     <div class="col-xs-12">
         <label>Fit options</label>
         <!-- Selectors -->
-        {{#if fitOptions._flavourList}}
+        {{#if fitOptions.options._flavourList}}
             <div class="input-group">
                 <span class="input-group-addon">Flavour</span>
-                {{select-picker content=fitOptions._flavourList
+                {{select-picker content=fitOptions.options._flavourList
+                                selection=fitOptions.options._flavourSelection
                                 action=(action "onOptionsFlavourSelect")
                                 optionLabelPath="content.name"
                                 optionValuePath="content.key"}}
             </div>
         {{/if}}
-        {{#if fitOptions._methodList}}
+        {{#if fitOptions.options._methodList}}
             <div class="input-group">
                 <span class="input-group-addon">Method</span>
-                {{select-picker content=fitOptions._methodList
+                {{select-picker content=fitOptions.options._methodList
+                                selection=fitOptions.options._methodSelection
                                 action=(action "onOptionsMethodSelect")
                                 optionLabelPath="content.name"
                                 optionValuePath="content.name"}}

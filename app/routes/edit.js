@@ -7,7 +7,7 @@ import FitOptions from "../models/fit-options";
 import FitExport  from "../models/fit-export";
 import FitSave    from "../models/fit-save";
 
-import getFitterSelection from '../helpers/get-fitter-selection';
+import objectListFilter from '../helpers/object-list-filter';
 
 export default Ember.Route.extend({
     controllerName: "index",
@@ -53,8 +53,9 @@ export default Ember.Route.extend({
     },
     
     setupController: function(controller, model) {
-        var selection = getFitterSelection(model.fitResult.fitter, 
-                                           model.fitList);
+        var selection = objectListFilter(model.fitList, 
+                                         "key", 
+                                         model.fitResult.fitter);
 
         // Select appropriate fitter
         controller.send('onFitterSelect', selection, model.fitResult);

@@ -181,9 +181,9 @@ export default Ember.Controller.extend(Ember.Evented, {
                         // uploaded data file
                         data_id = controller.model.fitOptions.data_id;
 
-                        // Reset selected options
+                        // Select default options
                         hash.options.options.flavour = "";
-                        hash.options.options.method = "";
+                        hash.options.options.method = 'Nelder-Mead';
                         delete hash.options.params; // Computed from paramsList
                     } else {
                         console.log("actions.onFitterSelect: FITRESULT GIVEN");
@@ -205,15 +205,30 @@ export default Ember.Controller.extend(Ember.Evented, {
                         console.log(paramsList);
                     }
 
-                    console.log("Attempting setProperties");
+                    console.log("Setting retrieved properties");
                     console.log(controller.get("model.fitOptions"));
-                    controller.model.fitOptions.setProperties(hash.options);
-                    controller.set("model.fitOptions.data_id",      data_id);
-                    controller.set("model.fitOptions._flavourList", flavourList);
-                    controller.set("model.fitOptions._methodList",  methodList);
+
+                    // Populate selection lists
+                    controller.set("model.fitOptions.options._flavourList", flavourList);
+                    controller.set("model.fitOptions.options._methodList",  methodList);
                     controller.set("model.fitOptions._paramsList",  paramsList);
 
-                    // Initialise labelled parameter array
+                    // Set options manually as nested object to avoid 
+                    // overwriting computed props
+                    controller.model.fitOptions.set('options.flavour', hash.options.options.flavour);
+                    controller.model.fitOptions.set('options.method', hash.options.options.method);
+                    controller.model.fitOptions.set('options.normalise', hash.options.options.normalise);
+                    controller.model.fitOptions.set('options.dilute', hash.options.options.dilute);
+
+                    delete hash.options.options;
+
+                    // Set rest of properties in bulk
+                    controller.model.fitOptions.setProperties(hash.options);
+
+                    // Set any previously uploaded files
+                    controller.set("model.fitOptions.data_id",      data_id);
+
+                    // Trigger options form init 
                     controller.trigger('fitterSelect');
 
                     console.log("actions.onFitterSelect: RSVP succeeded");
