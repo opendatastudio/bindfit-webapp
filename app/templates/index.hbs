@@ -96,6 +96,12 @@
                 {{#unless model.fitOptions._noFit}}
                     <!-- Display fit button -->
                     {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" id="fit-button"}}
+                    {{#if errorFit}}
+                        <div class="alert alert-default alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            {{errorFit.detail}}
+                        </div>
+                    {{/if}}
                 {{/unless}}
 
                 <!-- Back button (always displayed) -->

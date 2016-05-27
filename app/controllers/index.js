@@ -2,6 +2,9 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Controller.extend(Ember.Evented, {
+    // Error details
+    errorFit: null, 
+
     // Bind optional query parameter for fit edit key
     queryParams: ["key"],
     key: null,
@@ -289,13 +292,16 @@ export default Ember.Controller.extend(Ember.Evented, {
         },
 
         runFitter: function(callback) {
+            var controller = this;
+
+            // Clear any previous errors
+            controller.set('errorFit', null);
+
             // Clear any previous fit results and exports
             // Retain options
-            this.get('model.fitResult').reset();
-            this.get('model.fitExport').reset();
-            this.get('model.fitSave').reset();
-
-            var controller = this;
+            controller.get('model.fitResult').reset();
+            controller.get('model.fitExport').reset();
+            controller.get('model.fitSave').reset();
 
             console.log("actions.runFitter: called");
             console.log("actions.runFitter: current fitOptions TO SEND");
@@ -333,6 +339,7 @@ export default Ember.Controller.extend(Ember.Evented, {
             function(error) {
                 console.log("actions.runFitter: $.ajax: bindfit call failed");
                 console.log(error);
+                controller.set('errorFit', error.responseJSON);
             });
         }, // runFitter
 
