@@ -44,11 +44,12 @@
                                           optionLabelPath="content.name"
                                           optionValuePath="content.key"}}
 
-                            {{#if model.fitOptions._isPopulated}}
-                                {{#unless model.fitOptions._noFit}}
-                                    {{fit-options-form fitOptions=model.fitOptions
-                                                       fitLabels =model.fitLabels
-                                                       search    =true}}
+                            {{#if model.searchOptions._isPopulated}}
+                                {{#unless model.searchOptions._noFit}}
+                                    {{search-options-form 
+                                          searchOptions=model.searchOptions
+                                          fitLabels =model.fitLabels
+                                          search    =true}}
                                 {{/unless}}
                             {{/if}}
                         {{/if}}

@@ -17,14 +17,14 @@ export default Ember.Controller.extend(Ember.Evented, {
        
         onFitterSelect: function(selection) {
             /*** 
-             * On fitter select, populate fitOptions and fitLabels models
+             * On fitter select, populate searchOptions and fitLabels models
              * based on selection.
              */
 
             var controller = this;
 
             // If a fitter is selected (not undefined)
-            // Pre-populate fitOptions and fitLabels for this selection
+            // Pre-populate searchOptions and fitLabels for this selection
             if (selection !== undefined) {
                 var request = {"fitter": selection.key};
 
@@ -36,7 +36,7 @@ export default Ember.Controller.extend(Ember.Evented, {
                         contentType: "application/json; charset=utf-8",
                         dataType:    "json"}),
                     options: Ember.$.ajax({
-                        url:  ENV.API.options,
+                        url:  ENV.API.searchOptions,
                         type: "POST",
                         data: JSON.stringify(request),
                         contentType: "application/json; charset=utf-8",
@@ -60,21 +60,21 @@ export default Ember.Controller.extend(Ember.Evented, {
                     delete hash.options.params; // Computed from paramsList
 
                     // Populate selection lists
-                    controller.set("model.fitOptions.options._flavourList", flavourList);
-                    controller.set("model.fitOptions.options._methodList",  methodList);
-                    controller.set("model.fitOptions._paramsList",  paramsList);
+                    controller.set("model.searchOptions.options._flavourList", flavourList);
+                    controller.set("model.searchOptions.options._methodList",  methodList);
+                    controller.set("model.searchOptions._paramsList",  paramsList);
 
                     // Set options manually as nested object to avoid 
                     // overwriting computed props
-                    controller.model.fitOptions.set('options.flavour', hash.options.options.flavour);
-                    controller.model.fitOptions.set('options.method', hash.options.options.method);
-                    controller.model.fitOptions.set('options.normalise', hash.options.options.normalise);
-                    controller.model.fitOptions.set('options.dilute', hash.options.options.dilute);
+                    controller.model.searchOptions.set('options.flavour', hash.options.options.flavour);
+                    controller.model.searchOptions.set('options.method', hash.options.options.method);
+                    controller.model.searchOptions.set('options.normalise', hash.options.options.normalise);
+                    controller.model.searchOptions.set('options.dilute', hash.options.options.dilute);
 
                     delete hash.options.options;
 
                     // Set rest of properties in bulk
-                    controller.model.fitOptions.setProperties(hash.options);
+                    controller.model.searchOptions.setProperties(hash.options);
 
                     // Initialise labelled parameter array in fit options form
                     controller.trigger('fitterSelect');
@@ -92,7 +92,7 @@ export default Ember.Controller.extend(Ember.Evented, {
                 console.log("Advanced search clicked");
 
                 request = {
-                    "query": controller.get('model.fitOptions')._toJSON(true)
+                    "query": controller.get('model.searchOptions')._toJSON(true)
                 };
 
                 request.query.text = controller.get("simpleSearchInput");

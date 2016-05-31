@@ -27,18 +27,19 @@ module.exports = function(environment) {
 
   // API URL definitions
   ENV.API = {
-    fit:     ENV.API.root+"fit",
-    save:    ENV.API.root+"fit/save",
-    mc:      ENV.API.root+"fit/extras/mc",
-    edit:    ENV.API.root+"edit",
-    view:    ENV.API.root+"search/id/",
-    search:  ENV.API.root+"search",
-    email:   ENV.API.root+"search/email",
-    list:    ENV.API.root+"list",
-    labels:  ENV.API.root+"labels",
-    options: ENV.API.root+"options",
-    export:  ENV.API.root+"export",
-    upload:  ENV.API.root+"upload"
+    fit:           ENV.API.root+"fit",
+    save:          ENV.API.root+"fit/save",
+    mc:            ENV.API.root+"fit/extras/mc",
+    edit:          ENV.API.root+"edit",
+    view:          ENV.API.root+"search/id/",
+    search:        ENV.API.root+"search",
+    searchOptions: ENV.API.root+"search/options",
+    email:         ENV.API.root+"search/email",
+    list:          ENV.API.root+"list",
+    labels:        ENV.API.root+"labels",
+    options:       ENV.API.root+"options",
+    export:        ENV.API.root+"export",
+    upload:        ENV.API.root+"upload"
   };
 
   if (environment === 'development') {

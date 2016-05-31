@@ -1,0 +1,79 @@
+<div class="form-group">
+    {{#each optionsParamsLabelled as |param|}}
+        <div class="col-xs-12">
+            <!-- If more than one sub-param, guess/fit only the first one -->
+            {{#if (is-array param.label)}}
+                <label>{{param.label.[0]}}{{#unless search}} guess{{/unless}}</label>
+            {{else}}
+                <label>{{param.label}}{{#unless search}} guess{{/unless}}</label>
+            {{/if}}
+            {{#unless search}}
+                <div class="input-group">
+                    {{input value=param.value 
+                            type="number" 
+                            class="form-control"
+                            key-up="onOptionsParamsChange"}}
+                    <span class="input-group-addon">{{param.units}}</span>
+                </div>
+            {{/unless}}
+            <div class="input-group">
+                <span class="input-group-addon">Min</span>
+                {{input value=param.bounds.min 
+                        type="number" 
+                        class="form-control"
+                        key-up="onOptionsParamsChange"}}
+                <span class="input-group-addon">Max</span>
+                {{input value=param.bounds.max 
+                        type="number" 
+                        class="form-control"
+                        key-up="onOptionsParamsChange"}}
+            </div>
+        </div>
+    {{/each}}
+</div>
+<div class="form-group">
+    <div class="col-xs-12">
+        <label>Fit options</label>
+        <!-- Selectors -->
+        {{#if searchOptions.options._flavourList}}
+            <div class="input-group">
+                <span class="input-group-addon">Flavour</span>
+                {{select-picker content=searchOptions.options._flavourList
+                                selection=searchOptions.options._flavourSelection
+                                action=(action "onOptionsFlavourSelect")
+                                optionLabelPath="content.name"
+                                optionValuePath="content.key"}}
+            </div>
+        {{/if}}
+        {{#if searchOptions.options._methodList}}
+            <div class="input-group">
+                <span class="input-group-addon">Method</span>
+                {{select-picker content=searchOptions.options._methodList
+                                selection=searchOptions.options._methodSelection
+                                action=(action "onOptionsMethodSelect")
+                                optionLabelPath="content.name"
+                                optionValuePath="content.name"}}
+            </div>
+        {{/if}}
+
+        <br/>
+
+        <!-- Flags -->
+        <label>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    {{input checked=searchOptions.options.dilute type="checkbox"}}
+                </span>
+                <span class="input-group-addon" style="width: 100%">Dilution correction (if applicable)</span>
+            </div>
+        </label>
+        <label>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    {{input checked=searchOptions.options.normalise type="checkbox"}}
+                </span>
+                <span class="input-group-addon" style="width: 100%">Subtract initial values</span>
+            </div>
+        </label>
+    </div>
+</div>
