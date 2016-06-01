@@ -8,35 +8,36 @@ export default Ember.Object.extend({
 
     data_id: "",
 
-    params: function() {
+    params: Ember.computed('_paramsList', '_excludeParams', {
         // Computed property to return available unexcluded parameters
-        
-        var paramsList    = this.get("_paramsList");
-        var excludeParams = this.get("_excludeParams");
+        get: function() {
+            var paramsList    = this.get("_paramsList");
+            var excludeParams = this.get("_excludeParams");
 
-        var params = {};
+            var params = {};
 
-        console.log("searchOptions.params: called");
-        console.log("searchOptions.params: current _paramsList");
-        console.log(paramsList);
-        console.log("searchOptions.params: current _excludeParams");
-        console.log(excludeParams);
+            console.log("searchOptions.params: called");
+            console.log("searchOptions.params: current _paramsList");
+            console.log(paramsList);
+            console.log("searchOptions.params: current _excludeParams");
+            console.log(excludeParams);
 
-        // If paramsList is not null and there are parameters to exclude
-        if (paramsList && excludeParams) {
-            // For each parameter
-            for (var key in paramsList) {
-                // If param key is not excluded, append to params to return
-                if (excludeParams.indexOf(key) === -1) {
-                    params[key] = paramsList[key];
+            // If paramsList is not null and there are parameters to exclude
+            if (paramsList && excludeParams) {
+                // For each parameter
+                for (var key in paramsList) {
+                    // If param key is not excluded, append to params to return
+                    if (excludeParams.indexOf(key) === -1) {
+                        params[key] = paramsList[key];
+                    }
                 }
+            } else {
+                params = paramsList;
             }
-        } else {
-            params = paramsList;
-        }
 
-        return params;
-    }.property("_paramsList", "_excludeParams"),
+            return params;
+        }
+    }),
 
     options: Ember.Object.extend({
         // Internal
@@ -46,69 +47,75 @@ export default Ember.Object.extend({
         _methodList:       null, // List of available fitter methods
         _methodSelection:  null,
 
-        flavour: function(key, value) {
-            var _this = this;
+        flavour: Ember.computed('_flavourSelection', {
+            get: function() {
+                var selections = [];
 
-            // Setter
-            if (arguments.length > 1) {
+                this.get('_flavourSelection').forEach(function(flavour) {
+                    selections.push(flavour.key);
+                });
+
+                return selections;
+            },
+            set: function(key, value) {
+                // Expects value to be an array of selections 
+                var _this = this;
+
                 if (_this.get('_flavourList')) {
-                    // Set _flavourSelection to selected flavour's full 
-                    // selection object
-                    let selection = objectListFilter(_this.get('_flavourList'), 
-                                                     "key", 
-                                                     value);
-                    _this.set('_flavourSelection', selection);
+                    var selections = [];
+                    for (let i = 0; i < value.length; i++) {
+                        // Get each flavour's full selection object referenced
+                        // by name
+                        let flavourKey = value[i];
+                        selections.push(objectListFilter(_this.get('_flavourList'), 
+                                                         "key", 
+                                                         flavourKey));
+                    }
+
+                    _this.set('_flavourSelection', selections);
                 } else {
                     // No flavours listed, set to empty
                     _this.set('_flavourSelection', null);
                 }
 
-                console.log(_this.get('_flavourSelection'));
+                return value;
             }
+        }),
 
-            // Getter
-            var flavour = this.get('_flavourSelection.key');
+        method: Ember.computed('_methodSelection', {
+            get: function() {
+                var selections = [];
 
-            if (!flavour) {
-                // Default flavour value when none selected or no
-                // flavours available
-                flavour = "";
-            }
+                this.get('_methodSelection').forEach(function(method) {
+                    selections.push(method.name);
+                });
 
-            return flavour;
-        }.property('_flavourSelection'),
+                return selections;
+            },
+            set: function(key, value) {
+                // Expects value to be an array of selections 
+                var _this = this;
 
-        method: function(key, value) {
-            var _this = this;
-
-            // Setter
-            if (arguments.length > 1) {
                 if (_this.get('_methodList')) {
-                    // Set _methodSelection to selected method's full 
-                    // selection object
-                    let selection = objectListFilter(_this.get('_methodList'), 
-                                                     "name", 
-                                                     value);
-                    _this.set('_methodSelection', selection);
+                    var selections = [];
+                    for (let i = 0; i < value.length; i++) {
+                        // Get each method's full selection object referenced
+                        // by name
+                        let methodName = value[i];
+                        selections.push(objectListFilter(_this.get('_methodList'), 
+                                                         "name", 
+                                                         methodName));
+                    }
+
+                    _this.set('_methodSelection', selections);
                 } else {
                     // No methods listed, set to empty
                     _this.set('_methodSelection', null);
                 }
 
-                console.log(_this.get('_methodSelection'));
+                return value;
             }
-
-            // Getter
-            var method = this.get('_methodSelection.name');
-
-            if (!method) {
-                // Default method value when none selected or no
-                // methods available
-                method = "";
-            }
-
-            return method;
-        }.property('_methodSelection'),
+        }),
 
         normalise: null,
         dilute: null

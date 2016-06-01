@@ -48,34 +48,44 @@ export default Ember.Component.extend({
             console.log("actions.onOptionsFlavourSelect: flavour selected");
             console.log(selection);
             
-            this.set("searchOptions.options.flavour", selection.key);
+            // Construct list of flavour keys to be set
+            // And concatenate their associated parameter exclusions
+            var flavours = [];
+            var excludeParams = [];
+            selection.forEach(function(flavour) {
+                flavours.push(flavour.key);
+                if (flavour.hasOwnProperty('exclude_params')) {
+                    excludeParams = excludeParams.concat(flavour.exclude_params);
+                }
+            });
 
-            console.log("actions.onOptionsFlavourSelect: set selected flavour");
-            console.log(this.get("searchOptions.options._flavourSelection"));
+            // Set flavour selections
+            this.set("searchOptions.options.flavour", flavours);
+
+            console.log("actions.onOptionsFlavourSelect: set selected flavours");
+            console.log(flavours);
             console.log(this.get("searchOptions.options.flavour"));
 
-            // If this flavour has restricted parameters, set them to be
-            // excluded from displaying and sending in searchOptions
-            if (selection.hasOwnProperty("exclude_params")) {
-                this.set("searchOptions._excludeParams",   
-                         selection.exclude_params);
-                
-                console.log("actions.onOptionsFlavourSelect: set excluded params");
-                console.log(this.get("searchOptions._excludeParams"));
-            } else {
-                // Reset excluded params
-                this.set("searchOptions._excludeParams", null);
+            // Set parameter exclusions
+            this.set("searchOptions._excludeParams", excludeParams);
 
-                console.log("actions.onOptionsFlavourSelect: reset excluded params");
-                console.log(this.get("searchOptions._excludeParams"));
-            }
+            console.log("actions.onOptionsFlavourSelect: set excluded params");
+            console.log(excludeParams);
+            console.log(this.get("searchOptions._excludeParams"));
         }, // onOptionsFlavourSelect
 
         onOptionsMethodSelect: function(selection) {
-            // Set selected method key in options object to be sent
-            this.set("searchOptions.options.method", selection.name);
+            // Construct list of method keys to be set
+            var methods = [];
+            selection.forEach(function(method) {
+                methods.push(method.name);
+            });
+
+            // Set selected method keys in options object
+            this.set("searchOptions.options.method", methods);
 
             console.log("actions.onOptionsMethodSelect: set selected method");
+            console.log(methods);
             console.log(this.get("searchOptions.options.method"));
         }, // onOptionsMethodSelect
     },
