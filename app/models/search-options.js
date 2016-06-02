@@ -131,9 +131,9 @@ export default Ember.Object.extend({
                      "data_id", 
                      "params", 
                      {"options": ["flavour", 
-                                  "method", 
-                                  "normalise", 
-                                  "dilute"]}, 
+                                  "method"]}, 
+                                  //"normalise", 
+                                  //"dilute"]}, 
                      "labels"],
 
     _paramsList:    null, // Stores list of all available parameters

@@ -103,7 +103,7 @@ export default Ember.Controller.extend(Ember.Evented, {
                 };
             }
 
-            console.log("actions.doSimpleSearch: request to send");
+            console.log("actions.doSearch: request to send");
             console.log(request);
 
             var promise = new Ember.RSVP.Promise(function(resolve, reject) {
@@ -123,14 +123,14 @@ export default Ember.Controller.extend(Ember.Evented, {
 
             promise.then(
             function(data) {
-                console.log("actions.doSimpleSearch: $.ajax: search call success");
+                console.log("actions.doSearch: $.ajax: search call success");
                 console.log(data);
 
                 // Set fit model properties with returned JSON
                 controller.model.searchResult.setProperties(data);
             },
             function(error) {
-                console.log("actions.doSimpleSearch: $.ajax: search call failed");
+                console.log("actions.doSearch: $.ajax: search call failed");
                 console.log(error);
             });
         },
