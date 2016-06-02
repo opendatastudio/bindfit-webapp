@@ -185,8 +185,17 @@ export default Ember.Controller.extend(Ember.Evented, {
                         data_id = controller.model.fitOptions.data_id;
 
                         // Select default options
-                        hash.options.options.flavour = "";
-                        hash.options.options.method = 'Nelder-Mead';
+                        if (flavourList instanceof Array && flavourList.length > 0) {
+                            hash.options.options.flavour = flavourList[0].key;
+                        } else {
+                            hash.options.options.flavour = null;
+                        }
+
+                        if (methodList instanceof Array && methodList.length > 0) {
+                            hash.options.options.method =  methodList[0].name;
+                        } else {
+                            hash.options.options.method = null;
+                        }
                         delete hash.options.params; // Computed from paramsList
                     } else {
                         console.log("actions.onFitterSelect: FITRESULT GIVEN");

@@ -72,7 +72,7 @@ export default Ember.Object.extend({
             if (!flavour) {
                 // Default flavour value when none selected or no
                 // flavours available
-                flavour = "";
+                flavour = null;
             }
 
             return flavour;
@@ -104,7 +104,7 @@ export default Ember.Object.extend({
             if (!method) {
                 // Default method value when none selected or no
                 // methods available
-                method = "";
+                method = null;
             }
 
             return method;
