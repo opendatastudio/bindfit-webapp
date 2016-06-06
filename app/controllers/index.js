@@ -308,7 +308,6 @@ export default Ember.Controller.extend(Ember.Evented, {
 
             // Clear any previous fit results and exports
             // Retain options
-            controller.get('model.fitResult').reset();
             controller.get('model.fitExport').reset();
             controller.get('model.fitSave').reset();
 
@@ -335,6 +334,9 @@ export default Ember.Controller.extend(Ember.Evented, {
             function(data) {
                 console.log("actions.runFitter: $.ajax: bindfit call success");
                 console.log(data);
+
+                // Clear any previous fit results
+                controller.get('model.fitResult').reset();
 
                 // Set fit model properties with returned JSON
                 controller.model.fitResult.setProperties(data);
