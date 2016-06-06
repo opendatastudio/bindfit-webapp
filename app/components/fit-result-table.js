@@ -47,7 +47,6 @@ export default Ember.Component.extend({
         coeffs: {
           0: fitResult.fit.coeffs[0].slice(startIndex,endIndex), 
           1: fitResult.fit.coeffs[1].slice(startIndex,endIndex),
-          2: fitResult.fit.coeffs[2].slice(startIndex,endIndex),
         },
         n_y: fitResult.fit.n_y,
         n_params: fitResult.fit.n_params,
@@ -56,6 +55,11 @@ export default Ember.Component.extend({
       };
 
       //    2: fitResult.fit.coeffs[2].slice(startIndex,endIndex),
+
+    // Temp fix
+    if (fitResult.fit.coeffs[2]) {
+        paged.fit.coeffs[2] = fitResult.fit.coeffs[2].slice(startIndex, endIndex);
+    }
 
     this.debug(paged);
 
