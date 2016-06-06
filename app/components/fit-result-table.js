@@ -27,6 +27,7 @@ export default Ember.Component.extend({
     this.debug(fitResult.fit.coeffs);
 
     // TODO hate
+    // there is a whole heap of technical debt to fix here...
     var paged = {
       labels: {
         data: {
@@ -46,6 +47,7 @@ export default Ember.Component.extend({
         coeffs: {
           0: fitResult.fit.coeffs[0].slice(startIndex,endIndex), 
           1: fitResult.fit.coeffs[1].slice(startIndex,endIndex),
+          2: fitResult.fit.coeffs[2].slice(startIndex,endIndex),
         },
         n_y: fitResult.fit.n_y,
         n_params: fitResult.fit.n_params,
