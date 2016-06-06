@@ -2,6 +2,8 @@ import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
 export default Ember.Controller.extend(Ember.Evented, {
+    fitterSelection: null,
+
     advanced: false,
 
     // Default input values
@@ -26,6 +28,8 @@ export default Ember.Controller.extend(Ember.Evented, {
             // If a fitter is selected (not undefined)
             // Pre-populate searchOptions and fitLabels for this selection
             if (selection !== undefined) {
+                this.set('fitterSelection', selection);
+
                 var request = {"fitter": selection.key};
 
                 var promises = {

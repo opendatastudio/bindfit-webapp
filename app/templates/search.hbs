@@ -13,7 +13,7 @@
                                 {{input value=simpleSearchInput
                                         type="text" 
                                         class="form-control" 
-                                        id="simple-search-input" 
+                                        id="search-simple-input" 
                                         placeholder="Search published fits"}}
                                 <span class="input-group-btn">
                                     {{async-button action="doSearch" 
@@ -25,7 +25,7 @@
                                 </span>
                             </div>
 
-                            <p class="text-right">
+                            <p id="search-toggle" class="text-right">
                                 <a href="#" {{action "toggleAdvanced"}}>
                                     {{#if advanced}}
                                         Simple search
@@ -36,20 +36,29 @@
                             </p>
                         </form>
                         {{#if advanced}}
+                            <div id="search-fitter-select" class="col-xs-12">
+                                <label>Fit type</label>
+                                <div class="input-group">
+                                    {{select-picker content=model.fitList
+                                                    selection=fitterSelection
+                                                    action=(action "onFitterSelect")
+                                                    liveSearch=true
+                                                    optionGroupPath="group"
+                                                    optionLabelPath="content.name"
+                                                    optionValuePath="content.key"}}
+                                </div>
+                            </div>
+
                             <br />
-                            {{select-picker content=model.fitList
-                                          action=(action "onFitterSelect")
-                                          liveSearch=true
-                                          optionGroupPath="group"
-                                          optionLabelPath="content.name"
-                                          optionValuePath="content.key"}}
 
                             {{#if model.searchOptions._isPopulated}}
-                                {{#unless model.searchOptions._noFit}}
-                                    {{search-options-form 
-                                          searchOptions=model.searchOptions
-                                          fitLabels =model.fitLabels}}
-                                {{/unless}}
+                                <div id="search-options-form">
+                                    {{#unless model.searchOptions._noFit}}
+                                        {{search-options-form 
+                                              searchOptions=model.searchOptions
+                                              fitLabels =model.fitLabels}}
+                                    {{/unless}}
+                                </div>
                             {{/if}}
                         {{/if}}
                     </div>
