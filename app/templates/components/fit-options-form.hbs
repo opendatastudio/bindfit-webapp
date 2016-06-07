@@ -36,21 +36,25 @@
         {{#if fitOptions.options._flavourList}}
             <div class="input-group">
                 <span class="input-group-addon">Flavour</span>
-                {{select-picker content=fitOptions.options._flavourList
-                                selection=fitOptions.options._flavourSelection
-                                action=(action "onOptionsFlavourSelect")
-                                optionLabelPath="content.name"
-                                optionValuePath="content.key"}}
+                {{#power-select
+                    options=fitOptions.options._flavourList
+                    selected=fitOptions.options._flavourSelection
+                    onchange=(action "onOptionsFlavourSelect")
+                    as |flavour|}}
+                    {{flavour.name}}
+                {{/power-select}}
             </div>
         {{/if}}
         {{#if fitOptions.options._methodList}}
             <div class="input-group">
                 <span class="input-group-addon">Method</span>
-                {{select-picker content=fitOptions.options._methodList
-                                selection=fitOptions.options._methodSelection
-                                action=(action "onOptionsMethodSelect")
-                                optionLabelPath="content.name"
-                                optionValuePath="content.name"}}
+                {{#power-select
+                    options=fitOptions.options._methodList
+                    selected=fitOptions.options._methodSelection
+                    onchange=(action "onOptionsMethodSelect")
+                    as |method|}}
+                    {{method.name}}
+                {{/power-select}}
             </div>
         {{/if}}
 
