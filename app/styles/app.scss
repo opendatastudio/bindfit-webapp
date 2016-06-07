@@ -1,6 +1,9 @@
 @import "variables";
 @import "bootstrap";
 
+// ember-cli addons
+@import "ember-power-select";
+
 // components
 // TODO install sass globbing?
 @import "utils/visually_hidden";
@@ -9,6 +12,7 @@
 @import "components/fit_charts";
 @import "components/navbar";
 @import "components/fit_paginator";
+
 
 @import "index";
 @import "search";

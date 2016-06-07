@@ -39,13 +39,14 @@
                             <div id="search-fitter-select" class="col-xs-12">
                                 <label>Fit type</label>
                                 <div class="input-group">
-                                    {{select-picker content=model.fitList
-                                                    selection=fitterSelection
-                                                    action=(action "onFitterSelect")
-                                                    liveSearch=true
-                                                    optionGroupPath="group"
-                                                    optionLabelPath="content.name"
-                                                    optionValuePath="content.key"}}
+                                    {{#power-select
+                                        options=model.fitList
+                                        selected=fitterSelection
+                                        placeholder="Select fitter ..."
+                                        onchange=(action "onFitterSelect")
+                                        as |fitter|}}
+                                        {{fitter.name}}
+                                    {{/power-select}}
                                 </div>
                             </div>
 

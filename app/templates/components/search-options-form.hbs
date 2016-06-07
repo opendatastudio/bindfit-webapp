@@ -29,23 +29,27 @@
         {{#if searchOptions.options._flavourList}}
             <div class="input-group">
                 <span class="input-group-addon">Flavour</span>
-                {{select-picker content=searchOptions.options._flavourList
-                                selection=searchOptions.options._flavourSelection
-                                multiple=true
-                                action=(action "onOptionsFlavourSelect")
-                                optionLabelPath="content.name"
-                                optionValuePath="content.key"}}
+                {{#power-select-multiple
+                    options=searchOptions.options._flavourList
+                    selected=searchOptions.options._flavourSelection
+                    placeholder="Select flavours ..."
+                    onchange=(action "onOptionsFlavourSelect")
+                    as |flavour|}}
+                    {{flavour.name}}
+                {{/power-select-multiple}}
             </div>
         {{/if}}
         {{#if searchOptions.options._methodList}}
             <div class="input-group">
                 <span class="input-group-addon">Method</span>
-                {{select-picker content=searchOptions.options._methodList
-                                selection=searchOptions.options._methodSelection
-                                multiple=true
-                                action=(action "onOptionsMethodSelect")
-                                optionLabelPath="content.name"
-                                optionValuePath="content.name"}}
+                {{#power-select-multiple
+                    options=searchOptions.options._methodList
+                    selected=searchOptions.options._methodSelection
+                    placeholder="Select fit methods ..."
+                    onchange=(action "onOptionsMethodSelect")
+                    as |flavour|}}
+                    {{flavour.name}}
+                {{/power-select-multiple}}
             </div>
         {{/if}}
 

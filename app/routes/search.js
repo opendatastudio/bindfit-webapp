@@ -19,5 +19,29 @@ export default Ember.Route.extend({
         });
 
         return model;
+    },
+
+    setupController: function(controller, model) {
+        // Group fitList by group into format desired by power-select
+        var grouped = {};
+        model.fitList.forEach(function(item) {
+            if (grouped[item.group]) {
+                grouped[item.group].options.push(item)
+            } else {
+                grouped[item.group] = {
+                    "groupName": item.group,
+                    "options":   [item]
+                }
+            }
+        });
+
+        var fitListGrouped = [];
+        Object.keys(grouped).forEach(function(key) {
+            fitListGrouped.push(grouped[key]);
+        });
+
+        model.fitList = fitListGrouped;
+
+        controller.set('model', model);
     }
 });
