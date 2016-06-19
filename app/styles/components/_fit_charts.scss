@@ -10,7 +10,7 @@
 
   &.resultsDataResiduals {
     .chartDataFit {
-      height:calc(70vh); // 150px magic number is the height from top
+      height:calc(70vh - 80px); // 150px magic number is the height from top
     }
 
     .chartDataResiduals {
