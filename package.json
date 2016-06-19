@@ -38,6 +38,7 @@
     "ember-cli-release": "0.2.3",
     "ember-cli-sass": "^4.0.1",
     "ember-cli-select-picker": "2.3.2",
+    "ember-cli-toggle": "2.0.1",
     "ember-cli-uglify": "^1.0.1",
     "ember-cli-uploader": "^0.3.9",
     "ember-data": "1.13.5",
