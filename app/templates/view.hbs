@@ -2,6 +2,38 @@
 <div class="row">
 
     <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
+    
+    
+    <div class="panel panel-default data-browser">
+    <div class="panel-heading">
+      <h2>Data Browser</h2>
+      <span class="toggle-container">
+        {{x-toggle
+          value=usePicker
+          showLabels="true"
+          onToggle=(mut usePicker)
+          onLabel="Pager::true"
+          offLabel="Picker::false"
+        }}
+      </span>
+    </div>
+    <div class="panel-body">
+
+        {{#unless usePicker}}
+          {{bindfit-multi-select 
+                          fits=model.fitResult.labels.data.y.row_labels
+                          selectedFits=selectedFits
+                          selectedFitsDirty=selectedFitsDirty}}
+        {{else}}
+          {{fit-paginator currentPage=currentPage 
+                          countPages=countPages
+                          n=NUMBER_ROWS_PAGE
+                          }}
+
+        {{/unless}}
+  
+    </div>
+    </div>
 
     <ul class="nav nav-tabs">
         <li class="nav active"><a href="#tab-input" data-toggle="tab">Input</a></li>
@@ -110,7 +142,7 @@
             <div class="panel panel-default">
             <div class="panel-body">
 
-                {{fit-result-table fitResult=model.fitResult 
+                {{fit-details fitResult=model.fitResult 
                                    pagedFitResult=pagedFitResults
                                    fitLabels=model.fitLabels 
                                    currentPage=currentPage
@@ -237,36 +269,6 @@
 
     </div> <!-- .tab-content -->
 
-    <div class="panel panel-default data-browser">
-    <div class="panel-heading">
-      <h2>Data Browser</h2>
-      <span class="toggle-container">
-        {{x-toggle
-          value=usePicker
-          showLabels="true"
-          onToggle=(mut usePicker)
-          onLabel="Pager::true"
-          offLabel="Picker::false"
-        }}
-      </span>
-    </div>
-    <div class="panel-body">
-
-        {{#unless usePicker}}
-          {{bindfit-multi-select 
-                          fits=model.fitResult.labels.data.y.row_labels
-                          selectedFits=selectedFits
-                          selectedFitsDirty=selectedFitsDirty}}
-        {{else}}
-          {{fit-paginator currentPage=currentPage 
-                          countPages=countPages
-                          n=NUMBER_ROWS_PAGE
-                          }}
-
-        {{/unless}}
-  
-    </div>
-    </div>
     
     <div class="alert alert-info alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
