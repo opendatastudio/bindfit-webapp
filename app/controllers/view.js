@@ -5,8 +5,11 @@ export default Ember.Controller.extend({
     NUMBER_ROWS_PAGE: 5,
     currentPage: 1,
     countPages: 0, // set onUploadComplete
-    
-    usePicker: false,
+   
+    // picker: true
+    // pager: false
+    // because i'm an idiot
+    usePicker: true,
 
     selectedFits: [],
 

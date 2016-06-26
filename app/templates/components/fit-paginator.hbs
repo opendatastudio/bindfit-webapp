@@ -1,15 +1,7 @@
 <div class="fit-paginator">
 
-Fits per page: {{input value=n type="number" min="1" max="10" focus-out=(mut n)}}
 
-Jump to page: 
-{{!--{{#power-select --}}
-    {{!--options=--}}
-    {{!--selected=currentPage--}}
-    {{!--as |page| }}--}}
-
-{{!--{{/power-select}}--}}
-
+<div class="pager-component-container">
 {{#pagination-pager
       count=countPages
       current=currentPage
@@ -21,4 +13,23 @@ Jump to page:
       pagerLast='<span class="glyphicon glyphicon-step-forward"></span>'}}
     Page {{currentPage}} of {{countPages}}
 {{/pagination-pager}}
+</div>
+
+<div class="number-fits-widget">
+  Per page: {{input value=n type="number" min="1" max="10" focus-out=(mut n)}}
+</div>
+
+  <div class=page-jump-container>
+  Jump: 
+  <span class="page-jump-widget">
+  {{#power-select 
+      options=pagesList
+      selected=currentPage
+      onchange=(action (mut currentPage))
+      as |page| }}
+      {{page}}
+
+  {{/power-select}}
+  </span>
+  </div>
 </div>

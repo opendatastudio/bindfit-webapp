@@ -25,4 +25,22 @@
       border-radius: $border-radius-base;
     }
   }
+
+  .pager-component-container {
+    margin-bottom: 15px;
+  }
+
+  .number-fits-widget {
+    float: left;
+  }
+
+  .page-jump-container {
+    float: right;
+    .page-jump-widget {
+      @include clearfix;
+      display: inline-block;
+      width: 50px;
+      vertical-align: middle;
+    }
+  }
 }

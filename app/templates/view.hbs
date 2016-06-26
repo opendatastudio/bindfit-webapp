@@ -6,7 +6,7 @@
     <ul class="nav nav-tabs">
         <li class="nav active"><a href="#tab-input" data-toggle="tab">Input</a></li>
         {{#unless model.fitResult.no_fit}}
-            <li class="nav"><a href="#tab-results"  data-toggle="tab">Results</a></li>
+            <li class="nav"><a href="#tab-results"  data-toggle="tab">Fit</a></li>
         {{/unless}}
         <li class="nav"><a href="#tab-metadata" data-toggle="tab">Metadata</a></li>
         <li class="nav"><a href="#tab-edit"     data-toggle="tab">Edit</a></li>
@@ -125,25 +125,14 @@
         <div class="tab-pane fade" id="tab-metadata">
         <div class="panel panel-default">
         <div class="panel-body">
-
+            <h2>Experiment</h2>
             <table class="table">
-                <!-- Metadata -->
-                <tbody>
-                    <tr>
-                        <th scope="row">Fit ID</th>
-                        <td>{{model.fitID}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Searchable</th>
-                        <td>
-                            {{#if model.fitResult.meta.options.searchable}}
-                                Yes
-                            {{else}}
-                                No
-                            {{/if}}
-                        </td>
-                    </tr>
-                </tbody>
+                <thead>
+                        <tr class="active">
+                            <th scope="row">Name</th>
+                            <th>Value</th>
+                        </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <th scope="row">Author(s)</th>
@@ -197,6 +186,32 @@
                     </tr>
                 </tbody>
             </table>
+            <h2>Bindfit</h2>
+            <table class="table">
+                <!-- Metadata -->
+                <thead>
+                        <tr class="active">
+                            <th scope="row">Name</th>
+                            <th>Value</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Fit ID</th>
+                        <td>{{model.fitID}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Searchable</th>
+                        <td>
+                            {{#if model.fitResult.meta.options.searchable}}
+                                Yes
+                            {{else}}
+                                No
+                            {{/if}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
         </div> <!-- .panel-body -->
         </div> <!-- .panel -->
@@ -221,8 +236,19 @@
 
     </div> <!-- .tab-content -->
 
-    <div class="panel panel-default">
-    <div class="panel-heading"><h4>Browse data and fit</h4></div>
+    <div class="panel panel-default data-browser">
+    <div class="panel-heading">
+      <h2>Data Browser</h2>
+      <span class="toggle-container">
+        {{x-toggle
+          value=usePicker
+          showLabels="true"
+          onToggle=(mut usePicker)
+          onLabel="Pager::true"
+          offLabel="Picker::false"
+        }}
+      </span>
+    </div>
     <div class="panel-body">
 
         {{#unless usePicker}}
@@ -237,16 +263,6 @@
                           }}
 
         {{/unless}}
-       
-        <div class="toggle-data-selection-type">
-        {{x-toggle
-          value=usePicker
-          showLabels="true"
-          onToggle=(mut usePicker)
-          onLabel="Pager::true"
-          offLabel="Picker::false"
-        }}
-        </div>
   
     </div>
     </div>

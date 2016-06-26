@@ -1,0 +1,12 @@
+
+$sidebar: 450px;
+
+#bindfit-view {
+  #sidebar {
+    width: $sidebar !important;
+  }
+
+  #main {
+    width: calc(100vw - #{$sidebar} - 45px);
+  }
+}
