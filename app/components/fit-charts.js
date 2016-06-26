@@ -7,7 +7,7 @@ import {defaultChartTheme,
 export default Ember.Component.extend({
     // Limit number of fits to plot
     // TEMP TODO: move this to a constants file
-    PLOT_LIMIT: 5,
+    PLOT_LIMIT: 10,
 
     // Highcharts theme
     chartTheme: defaultChartTheme,
