@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
     // Pagination
-    NUMBER_ROWS_PAGE: 10,
+    NUMBER_ROWS_PAGE: 5,
     currentPage: 1,
     countPages: 0, // set onUploadComplete
     
@@ -106,5 +106,6 @@ export default Ember.Controller.extend({
         }
 
         return paged;
-    }.property("model.fitResult.fit.y", "currentPage", "countPages"),
+    }.property("model.fitResult.fit.y", "currentPage", "countPages",
+                "NUMBER_ROWS_PAGE"),
 });

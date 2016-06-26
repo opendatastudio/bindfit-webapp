@@ -26,23 +26,6 @@
     font-size: 10px;
 }
 
-// Sidebar tab styling
-#sidebar {
-  .nav-tabs {
-      .nav > a {
-      }
-
-      .nav.active > a {
-          background-color: $gray-lighter;
-      }
-  }
-  
-  .tab-content > .tab-pane {
-    .panel {
-        background-color: $gray-lighter;
-    }
-  }
-}
 
 .tab-content > .tab-pane {
     .panel {

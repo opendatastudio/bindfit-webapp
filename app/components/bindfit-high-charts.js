@@ -56,7 +56,7 @@ export default EmberHighChartsComponent.extend({
     },
 
     chartAxesDidChange: observer('chartOptions.xAxis', 'chartOptions.yAxis', function() {
-        Ember.run.debounce(this, this.debouncedChartAxisDidChange, 10);
+        Ember.run.debounce(this, this.debouncedChartAxisDidChange, 20);
     }),
 
     debouncedChartAxisDidChange: function() {
