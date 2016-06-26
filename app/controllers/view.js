@@ -27,17 +27,21 @@ export default Ember.Controller.extend({
     }.property("model.fitResult.fit.params", "model.fitLabels.fit.params"),
    
     
-    selectedFitsChanged: Ember.observer('selectedFits.[]' ,function() {
-        this.debug("hi world from controller!!!");
-        var fitResult = _this.get("model.fitResult");
+    /*selectedFitsChanged: Ember.observer('selectedFits.[]' ,function() {*/
+        //this.debug("hi world from controller!!!");
+        //var fitResult = _this.get("model.fitResult");
 
-        return fitResult;
-    }),
+        //return fitResult;
+    /*}),*/
     
     // TODO generalise for everything, really
     pagedFitResults: function() {
+
+        var usePicker = this.get("usePicker");
         // move elsewhere
         // hi, this is wrong!
+        
+        if (usePicker) {
         var numberFits = this.get("model.fitResult.data.y").length;
 
         var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
@@ -107,8 +111,9 @@ export default Ember.Controller.extend({
         if (fitResult.fit.coeffs[2]) {
             paged.fit.coeffs[2] = fitResult.fit.coeffs[2].slice(startIndex, endIndex);
         }
+        }
 
         return paged;
     }.property("model.fitResult.fit.y", "currentPage", "countPages",
-                "NUMBER_ROWS_PAGE"),
+                "NUMBER_ROWS_PAGE", "selectedFits.[]", "usePicker"),
 });

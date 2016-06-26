@@ -19,8 +19,6 @@ export default Ember.Component.extend({
     // values, I'm lazy
     // TODO: figure out how to access current controller values from top-level?
     chartDataFit: function() {
-        
-        this.debug("chartDataFit: hi world???");
 
         var plot_limit = this.get("PLOT_LIMIT");
 
