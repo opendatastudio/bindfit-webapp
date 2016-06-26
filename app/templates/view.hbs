@@ -145,9 +145,7 @@
                 {{fit-details fitResult=model.fitResult 
                                    pagedFitResult=pagedFitResults
                                    fitLabels=model.fitLabels 
-                                   currentPage=currentPage
-                                   countPages=countPages
-                                   n=NUMBER_ROWS_PAGE}}
+                                   }}
 
             </div> <!-- .panel-body -->
             </div> <!-- .panel -->
@@ -286,7 +284,9 @@
 
         <div class="row">
             <div class="col-xs-12">
-                {{fit-charts fitResult=pagedFitResults fitLabels=model.fitLabels}}
+                {{fit-charts fitResult=pagedFitResults 
+                    fitLabels=model.fitLabels 
+                    fullFitResult=model.fitResult}}
             </div> <!-- col -->
         </div> <!-- row -->
 
