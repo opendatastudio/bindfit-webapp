@@ -1,1 +1,9 @@
-{{yield}}
+{{#power-select-multiple
+      options=fits
+      selected=selectedFits
+      placeholder="Select fits to display"
+      onchange=(action (mut selectedFits))
+      as |selectedFits|
+    }}
+    {{selectedFits}}
+{{/power-select-multiple}}
