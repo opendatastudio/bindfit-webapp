@@ -11,6 +11,7 @@
 @import "components/fit_results";
 @import "components/fit_charts";
 @import "components/navbar";
+@import "components/sidebar";
 @import "components/fit_paginator";
 
 
@@ -27,21 +28,26 @@
 
 // Sidebar tab styling
 #sidebar {
-    .nav-tabs {
-        .nav > a {
-        }
+  .nav-tabs {
+      .nav > a {
+      }
 
-        .nav.active > a {
-            background-color: $gray-lighter;
-        }
+      .nav.active > a {
+          background-color: $gray-lighter;
+      }
+  }
+  
+  .tab-content > .tab-pane {
+    .panel {
+        background-color: $gray-lighter;
     }
+  }
+}
 
-    .tab-content > .tab-pane {
-        .panel {
-            background-color: $gray-lighter;
-            border-top: none;
-            border-radius: 0px 0px $border-radius-base $border-radius-base;
-        }
+.tab-content > .tab-pane {
+    .panel {
+        border-top: none;
+        border-radius: 0px 0px $border-radius-base $border-radius-base;
     }
 }
 

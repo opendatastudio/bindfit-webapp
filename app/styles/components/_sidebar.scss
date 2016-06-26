@@ -1,0 +1,22 @@
+
+// Sidebar tab styling
+#sidebar {
+  .nav-tabs {
+      .nav > a {
+      }
+
+      .nav.active > a {
+          background-color: $gray-lighter;
+      }
+  }
+  
+  .tab-content > .tab-pane {
+    .panel {
+        background-color: $gray-lighter;
+    }
+  }
+  
+  h2 {
+    font-size: 18px;
+  }
+}

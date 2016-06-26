@@ -12,25 +12,27 @@
         <li class="nav"><a href="#tab-edit"     data-toggle="tab">Edit</a></li>
     </ul>
 
+
     <div class="tab-content">
         <div class="tab-pane fade in active" id="tab-input">
         <div class="panel panel-default">
         <div class="panel-body">
+          <dl class="fitDetails">
+            <dt>Fitter</dt>
+            <dd>{{model.fitResult.fitter_name}}</dd>
+          </dl>
+            {{#unless model.fitResult.no_fit}}
+          <h2>Parameters</h2>
 
             <table class="table">
-                <tbody>
-                    <!-- Fitter -->
-                    <tr>
-                        <th scope="row">Fitter</th>
-                        <td>{{model.fitResult.fitter_name}}</td>
-                    </tr>
-
                     <!-- Parameters -->
-                    {{#unless model.fitResult.no_fit}}
+                        <thead>
                         <tr class="active">
-                            <th scope="row">Parameter</th>
-                            <th>Input guess</th>
+                            <th scope="row">Name</th>
+                            <th>Initial guess</th>
                         </tr>
+                        </thead>
+                <tbody>
                         {{#each paramsLabelled as |param|}}
                             <tr>
                                 {{#if (is-array param.label)}}
@@ -42,11 +44,18 @@
                                 <td>{{format-sci param.init 2}} {{param.units}}</td>
                             </tr>
                         {{/each}}
-
+                </tbody>
+            </table>
+          
+          <h2>Options</h2>
+            <table class="table">
+                <thead>
                         <tr class="active">
-                            <th scope="row">Options</th>
-                            <th></th>
+                            <th scope="row">Name</th>
+                            <th>Value</th>
                         </tr>
+                </thead>
+                <tbody>
                         <tr>
                             <th scope="row">Dilution correction</th>
                             <td>
@@ -87,9 +96,9 @@
                                 {{/if}}
                             </td>
                         </tr>
-                    {{/unless}}
                 </tbody>
             </table>
+            {{/unless}}
 
         </div> <!-- .panel-body -->
         </div> <!-- .panel -->

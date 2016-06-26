@@ -1,16 +1,18 @@
 
+$top_offset: 175px;
+
 #chart-fit {
   .highcharts-wrapper {
       height: 100%;
   }
 
   &.resultsData .chartDataFit {
-    height:calc(100vh - 150px); // 150px magic number is the height from top
+    height:calc(100vh - #{$top_offset}); 
   }
 
   &.resultsDataResiduals {
     .chartDataFit {
-      height:calc(70vh - 80px); // 150px magic number is the height from top
+      height:calc(70vh - #{$top_offset}); 
     }
 
     .chartDataResiduals {
@@ -22,7 +24,7 @@
 
 #tab-molefrac {
   #chart-molefrac {
-    height: calc(100vh - 100px);
+    height: calc(100vh - #{$top_offset});
   }
   .highcharts-wrapper {
       height: 100%;
