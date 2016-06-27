@@ -114,7 +114,8 @@ export default Ember.Component.extend({
 
         if (labels.data) {
             console.log("chartOptionsFit: updating ...");
-            return genChartOptions(labels.data.x.axis_label,
+            return genChartOptions("Fits",
+                                   labels.data.x.axis_label,
                                    labels.data.y.axis_label,
                                    labels.data.x.axis_units,
                                    labels.data.y.axis_units);
@@ -153,7 +154,8 @@ export default Ember.Component.extend({
     chartOptionsMolefrac: function() {
         var labels = this.get("fitLabels");
         if (labels.data) {
-            return genChartOptions(labels.data.x.axis_label,
+            return genChartOptions("Molefractions",
+                                   labels.data.x.axis_label,
                                    "Molefraction",
                                    labels.data.x.axis_units,
                                    "",

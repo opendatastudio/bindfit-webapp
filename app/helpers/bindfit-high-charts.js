@@ -112,10 +112,13 @@ export function genChartData(x, y, ynames, ynamessuffix, xlabel, ylabel, xunits,
     return series;
 }
 
-export function genChartOptions(xlabel, ylabel, xunits, yunits, ylimits) {
+export function genChartOptions(chartLabel, xlabel, ylabel, xunits, yunits, ylimits) {
     // Generate Highcharts chartOptions object formatted with custom labels
 
     var opts = {
+        title: {
+            text: chartLabel,
+        },
         xAxis: {
             title: {
                 text: xlabel
@@ -149,7 +152,7 @@ export function genChartOptions(xlabel, ylabel, xunits, yunits, ylimits) {
         chart: {
             marginTop: 10,
             marginBottom: 50,
-            marginRight: 120,
+            marginRight: 150,
         }
     };
 
