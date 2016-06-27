@@ -52,7 +52,7 @@ export function fitDataFilter(fitResult, indices) {
   };
 
   if (!indices.length) { 
-    return null;
+    //return null;
   }
   
   var paged = JSON.parse(JSON.stringify(fitResult)); 
