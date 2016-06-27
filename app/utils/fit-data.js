@@ -51,7 +51,9 @@ export function fitDataFilter(fitResult, indices) {
     return indices.indexOf(index) > -1;
   };
 
-  if (!indices.length) return null;
+  if (!indices.length) { 
+    return null;
+  }
   
   var paged = JSON.parse(JSON.stringify(fitResult)); 
 
