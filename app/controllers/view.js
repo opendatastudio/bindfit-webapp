@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-import { fitDataSlice } from '../utils/fit-data';
+import { fitDataSlice, fitDataFilter } from '../utils/fit-data';
 
 
 export default Ember.Controller.extend({

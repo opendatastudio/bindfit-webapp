@@ -46,6 +46,55 @@ export function fitDataSlice(fitResult, startIndex, endIndex) {
   return paged;
 }
 
-export function fitDataFilter(filter, indices) {
-  return true;
+export function fitDataFilter(fitResult, indices) {
+  var filterByIndices = function(element, index) {
+    return indices.indexOf(index) > -1;
+  };
+
+  if (!indices.length) return null;
+  
+  var paged = JSON.parse(JSON.stringify(fitResult)); 
+
+  paged["labels"]["data"]["y"]["row_labels"] = 
+      fitResult.labels.data.y.row_labels.filter(filterByIndices);
+
+  paged["data"]["y"] = 
+      fitResult.data.y.filter(filterByIndices);
+
+  paged["data"]["x"] = 
+      fitResult.data.x.filter(filterByIndices);
+
+  if (fitResult.qof.residuals) {
+      paged["qof"]["residuals"]= 
+        fitResult.qof.residuals.filter(filterByIndices);
+  }
+
+  if (fitResult.qof.cov) {
+      paged["qof"]["cov"]= 
+        fitResult.qof.cov.filter(filterByIndices);
+  }
+
+  if (fitResult.qof.rms) {
+      paged["qof"]["rms"]= 
+        fitResult.qof.rms.filter(filterByIndices);
+  }
+
+  if (fitResult.fit.y) {
+      paged["fit"]["y"] = 
+          fitResult.fit.y.filter(filterByIndices);
+  }
+
+  if (fitResult.fit.coeffs[0]) {
+      paged.fit.coeffs[0] = fitResult.fit.coeffs[0].filter(filterByIndices);
+  }
+
+  if (fitResult.fit.coeffs[1]) {
+      paged.fit.coeffs[1] = fitResult.fit.coeffs[1].filter(filterByIndices);
+  }
+
+  if (fitResult.fit.coeffs[2]) {
+      paged.fit.coeffs[2] = fitResult.fit.coeffs[2].filter(filterByIndices);
+  }
+
+  return paged;
 }
