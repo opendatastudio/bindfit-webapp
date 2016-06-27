@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-import { fitDataSlicing } from '../utils/fit-data-slicing';
+import { fitDataSlice } from '../utils/fit-data';
 
 
 export default Ember.Controller.extend({
@@ -35,84 +35,39 @@ export default Ember.Controller.extend({
         var fitResult = _this.get("model.fitResult");
         
         if (usePicker) {
-        var numberFits = this.get("model.fitResult.data.y").length;
+          var numberFits = this.get("model.fitResult.data.y").length;
 
-        var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
-        var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
+          var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
+          var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
 
-        // TODO hi this is extremely wrong
-        this.set("countPages", numberPages);
-        // end move elsewhere
-        //
-        var currentPage = _this.get("currentPage");
+          // TODO hi this is extremely wrong
+          this.set("countPages", numberPages);
+          // end move elsewhere
+          //
+          var currentPage = _this.get("currentPage");
 
-        var countPages = _this.get("countPages");
-        var n = _this.get("NUMBER_ROWS_PAGE");
+          var countPages = _this.get("countPages");
+          var n = _this.get("NUMBER_ROWS_PAGE");
 
-        var startIndex = (currentPage-1)*n; 
-        var endIndex = startIndex + n; // +1 ?? 
-      
-        
+          var startIndex = (currentPage-1)*n; 
+          var endIndex = startIndex + n; // +1 ?? 
 
-        if (!fitResult.labels.data.y) { 
-            return fitResult;
-        }
+          if (!fitResult.labels.data.y) { 
+              return fitResult;
+          }
 
-        var paged = JSON.parse(JSON.stringify(fitResult)); 
+          var paged = fitDataSlice(fitResult, startIndex, endIndex);
 
-        paged["labels"]["data"]["y"]["row_labels"] = 
-            fitResult.labels.data.y.row_labels.slice(startIndex,endIndex);
-       
-        paged["data"]["y"] = 
-            fitResult.data.y.slice(startIndex,endIndex);
-        
-        paged["data"]["x"] = 
-            fitResult.data.x.slice(startIndex,endIndex);
-       
-        if (fitResult.qof.residuals) {
-            paged["qof"]["residuals"]= 
-              fitResult.qof.residuals.slice(startIndex, endIndex);
-        }
-
-        if (fitResult.qof.cov) {
-            paged["qof"]["cov"]= 
-              fitResult.qof.cov.slice(startIndex, endIndex);
-        }
-        
-        if (fitResult.qof.rms) {
-            paged["qof"]["rms"]= 
-              fitResult.qof.rms.slice(startIndex, endIndex);
-        }
-
-        if (fitResult.fit.y) {
-            paged["fit"]["y"] = 
-                fitResult.fit.y.slice(startIndex,endIndex);
-        }
-        
-        if (fitResult.fit.coeffs[0]) {
-            paged.fit.coeffs[0] = fitResult.fit.coeffs[0].slice(startIndex, endIndex);
-        }
-        
-        if (fitResult.fit.coeffs[1]) {
-            paged.fit.coeffs[1] = fitResult.fit.coeffs[1].slice(startIndex, endIndex);
-        }
-
-        if (fitResult.fit.coeffs[2]) {
-            paged.fit.coeffs[2] = fitResult.fit.coeffs[2].slice(startIndex, endIndex);
-        }
         } else {
           var selectedFits = this.get("selectedFits");
           
-
           var rowLabels = fitResult.labels.data.y.row_labels; 
 
-          //console.log("shitter", rowLabels);
           var selectedFitsIndices = selectedFits.map(function(x) {
             return rowLabels.indexOf(x);  
           });
 
-
-          console.log("well this is shit: ", selectedFitsIndices);
+          var paged = fitDataFilter(fitResult, selectedFitsIndices);
         }
 
         return paged;
