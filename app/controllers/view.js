@@ -1,5 +1,8 @@
 import Ember from 'ember';
 
+import { fitDataSlicing } from '../utils/fit-data-slicing';
+
+
 export default Ember.Controller.extend({
     // Pagination
     NUMBER_ROWS_PAGE: 5,
@@ -13,11 +16,6 @@ export default Ember.Controller.extend({
 
     selectedFits: [],
 
-
-    test: Ember.observer("usePicker", function() {
-      this.debug("usePicker value: ", this.get("usePicker"));
-    }),
-
     paramsLabelled: function() {
         /***
          * Compute array of labelled parameters for display in template
@@ -27,19 +25,14 @@ export default Ember.Controller.extend({
     }.property("model.fitResult.fit.params", "model.fitLabels.fit.params"),
    
     
-    /*selectedFitsChanged: Ember.observer('selectedFits.[]' ,function() {*/
-        //this.debug("hi world from controller!!!");
-        //var fitResult = _this.get("model.fitResult");
-
-        //return fitResult;
-    /*}),*/
-    
     // TODO generalise for everything, really
     pagedFitResults: function() {
 
         var usePicker = this.get("usePicker");
         // move elsewhere
         // hi, this is wrong!
+        var _this = this; 
+        var fitResult = _this.get("model.fitResult");
         
         if (usePicker) {
         var numberFits = this.get("model.fitResult.data.y").length;
@@ -51,12 +44,8 @@ export default Ember.Controller.extend({
         this.set("countPages", numberPages);
         // end move elsewhere
         //
-        this.debug("pagedFitResults: helloWorld");
-        var _this = this; 
         var currentPage = _this.get("currentPage");
-        var fitResult = _this.get("model.fitResult");
 
-        this.debug("fitResult", fitResult);
         var countPages = _this.get("countPages");
         var n = _this.get("NUMBER_ROWS_PAGE");
 
@@ -111,6 +100,19 @@ export default Ember.Controller.extend({
         if (fitResult.fit.coeffs[2]) {
             paged.fit.coeffs[2] = fitResult.fit.coeffs[2].slice(startIndex, endIndex);
         }
+        } else {
+          var selectedFits = this.get("selectedFits");
+          
+
+          var rowLabels = fitResult.labels.data.y.row_labels; 
+
+          //console.log("shitter", rowLabels);
+          var selectedFitsIndices = selectedFits.map(function(x) {
+            return rowLabels.indexOf(x);  
+          });
+
+
+          console.log("well this is shit: ", selectedFitsIndices);
         }
 
         return paged;
