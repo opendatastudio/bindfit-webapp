@@ -141,6 +141,15 @@ export function genChartOptions(xlabel, ylabel, xunits, yunits, ylimits) {
                 '</tr>',
             footerFormat: '</table>',
             valueDecimals: 4
+        },
+        legend: {
+            align: "right",
+            layout: "vertical"
+        },
+        chart: {
+            marginTop: 10,
+            marginBottom: 50,
+            marginRight: 120,
         }
     };
 

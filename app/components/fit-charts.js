@@ -78,7 +78,6 @@ export default Ember.Component.extend({
         
         this.debug("residuals: ", residuals);
 
-        this.debug("chartDataResiduals: hi world???");
         if(residuals) {
             this.set("dataOption", "resultsDataResiduals");
         }
