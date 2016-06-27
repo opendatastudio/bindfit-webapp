@@ -3,7 +3,8 @@
 <section class="fit-results">
 <h1 class="visuallyhidden">Fit results</h1>
 
-        
+
+{{#if pagedFitResult.labels.data.y.row_labels}}
         <h2>Quality of fit</h2>
         <table class="table" id="fitResult">
         <thead>
@@ -71,5 +72,8 @@
         </tbody>
         </table>
         {{/if}} <!--pagedFitResult.fit.coeffs-->
+{{else}}
+No data to display.
+{{/if}}
 
 </section>

@@ -12,6 +12,6 @@ export default Ember.Component.extend({
       this.get("fitResult").paramsLabelled(labels);
 
     return results;
-  }.property("fitResult.params", "fitLabels.fit.params"),
+  }.property("fitResult.params", "fitLabels.fit.params")
 
 });
