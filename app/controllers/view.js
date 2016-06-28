@@ -5,7 +5,7 @@ import { fitDataSlice, fitDataFilter } from '../utils/fit-data';
 
 export default Ember.Controller.extend({
     // Pagination
-    NUMBER_ROWS_PAGE: 10,
+    NUMBER_ROWS_PAGE: 5,
     currentPage: 1,
     //countPages: 0, // set onUploadComplete
    
@@ -84,9 +84,9 @@ export default Ember.Controller.extend({
           }
 
           var startIndex = this.get("startIndex"); 
-          var endIndex = this.get("endIndex")
-          console.log("fucker start ", startIndex);
-          console.log("fucker end ", endIndex);
+          var endIndex = this.get("endIndex");
+
+          console.log("fuckers");
 
           var paged = fitDataSlice(fitResult, startIndex, endIndex);
 
