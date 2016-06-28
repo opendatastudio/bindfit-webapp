@@ -236,6 +236,9 @@ var defaultChartTheme = {
     plotOptions: {
         candlestick: {
             lineColor: '#404048'
+        },
+        line: {
+            animation: false 
         }
     }
 };

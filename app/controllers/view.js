@@ -25,9 +25,6 @@ export default Ember.Controller.extend({
         var labels = this.get("model.fitLabels.fit.params");
         return this.get("model.fitResult").paramsLabelled(labels);
     }.property("model.fitResult.fit.params", "model.fitLabels.fit.params"),
-  
-    selectedFitResults: function() {
-    },
 
     fitResults: function() {
       return this.get("model.fitResult");
@@ -103,5 +100,5 @@ export default Ember.Controller.extend({
         }
 
         return paged;
-    }.property("currentPage", "selectedFits.[]", "NUMBER_ROWS_PAGE"),
+    }.property("currentPage", "selectedFits.[]", "NUMBER_ROWS_PAGE", "usePicker"),
 });
