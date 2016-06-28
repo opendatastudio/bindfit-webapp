@@ -16,6 +16,9 @@ export function fitDataSlice(fitResult, startIndex, endIndex) {
         fitResult.qof.residuals.slice(startIndex, endIndex);
   }
 
+  // this is complete nonsense
+  // insert profanities here
+  if (fitResult.fit.coeffs) {
   if (fitResult.qof.cov) {
       paged["qof"]["cov"]= 
         fitResult.qof.cov.slice(startIndex, endIndex);
@@ -42,12 +45,16 @@ export function fitDataSlice(fitResult, startIndex, endIndex) {
   if (fitResult.fit.coeffs[2]) {
       paged.fit.coeffs[2] = fitResult.fit.coeffs[2].slice(startIndex, endIndex);
   }
+  }
+  
   
   return paged;
 }
 
 export function fitDataFilter(fitResult, indices) {
+  console.log("fitDataFilter: begin");
   var filterByIndices = function(element, index) {
+    console.log("indices", indices);
     return indices.indexOf(index) > -1;
   };
 
@@ -66,11 +73,12 @@ export function fitDataFilter(fitResult, indices) {
   paged["data"]["x"] = 
       fitResult.data.x.filter(filterByIndices);
 
+  if (fitResult.fit.coeffs) {
   if (fitResult.qof.residuals) {
       paged["qof"]["residuals"]= 
         fitResult.qof.residuals.filter(filterByIndices);
   }
-
+  
   if (fitResult.qof.cov) {
       paged["qof"]["cov"]= 
         fitResult.qof.cov.filter(filterByIndices);
@@ -97,6 +105,8 @@ export function fitDataFilter(fitResult, indices) {
   if (fitResult.fit.coeffs[2]) {
       paged.fit.coeffs[2] = fitResult.fit.coeffs[2].filter(filterByIndices);
   }
+  }
 
+  console.log("fitDataFilter: end");
   return paged;
 }
