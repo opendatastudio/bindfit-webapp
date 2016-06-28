@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import ENV from 'bindfit-client/config/environment';
 
+
+import { fitDataSlice, fitDataFilter } from '../utils/fit-data';
+
 export default Ember.Controller.extend(Ember.Evented, {
     // Error details
     errorFit: null, 
@@ -14,57 +17,70 @@ export default Ember.Controller.extend(Ember.Evented, {
 
     // Currently selected tab
     activeTab: 1,
+    
+    // picker: true
+    // pager: false
+    // because i'm an idiot
+    usePicker: true,
+
+    selectedFits: [],
 
     // Pagination
     NUMBER_ROWS_PAGE: 5,
     currentPage: 1,
     countPages: 0, // set onUploadComplete
     // so. where to begin?     
-
-    // TODO generalise for everything, really
+    
+    
     pagedFitResults: function() {
-        this.debug("pagedFitResults: helloWorld");
+
+        var usePicker = this.get("usePicker");
+        // move elsewhere
+        // hi, this is wrong!
         var _this = this; 
-        var currentPage = _this.get("currentPage");
         var fitResult = _this.get("model.fitResult");
-
-        this.debug("fitResult", fitResult);
-        var countPages = _this.get("countPages");
-        var n = _this.get("NUMBER_ROWS_PAGE");
-
-        var startIndex = (currentPage-1)*n; 
-        var endIndex = startIndex + n; // +1 ?? 
-      
         
-
         if (!fitResult.labels.data.y) { 
             return fitResult;
         }
-
-        var paged = JSON.parse(JSON.stringify(fitResult)); 
-
-        paged["labels"]["data"]["y"]["row_labels"] = 
-            fitResult.labels.data.y.row_labels.slice(startIndex,endIndex);
-       
-        paged["data"]["y"] = 
-            fitResult.data.y.slice(startIndex,endIndex);
         
-        paged["data"]["x"] = 
-            fitResult.data.x.slice(startIndex,endIndex);
-       
-        if (fitResult.qof.residuals) {
-            paged["qof"]["residuals"]= 
-              fitResult.qof.residuals.slice(startIndex, endIndex);
-        }
+        if (usePicker) {
+          // TODO this seem expensive and excessive
+          var numberFits = this.get("model.fitResult.data.y").length;
 
-        if (fitResult.fit.y) {
-            paged["fit"]["y"] = 
-                fitResult.fit.y.slice(startIndex,endIndex);
+          var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
+          var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
+
+          // TODO hi this is extremely wrong
+          this.set("countPages", numberPages);
+          // end move elsewhere
+          //
+          var currentPage = _this.get("currentPage");
+
+          var countPages = _this.get("countPages");
+          var n = _this.get("NUMBER_ROWS_PAGE");
+
+          var startIndex = (currentPage-1)*n; 
+          var endIndex = startIndex + n; // +1 ?? 
+
+
+          var paged = fitDataSlice(fitResult, startIndex, endIndex);
+
+        } else {
+          var selectedFits = this.get("selectedFits");
+          
+          var rowLabels = fitResult.labels.data.y.row_labels; 
+
+          var selectedFitsIndices = selectedFits.map(function(x) {
+            return rowLabels.indexOf(x);  
+          });
+
+          var paged = fitDataFilter(fitResult, selectedFitsIndices);
         }
 
         return paged;
-    }.property("model.fitResult.fit.y", "currentPage", "countPages"),
-
+    }.property("model.fitResult.fit.y", "currentPage", "countPages",
+                "NUMBER_ROWS_PAGE", "selectedFits.[]", "usePicker"),
 
     optionsParamsLabelled: function() {
         /***

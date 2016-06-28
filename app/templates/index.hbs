@@ -19,6 +19,43 @@
 <div class="row">
 
     <div id="sidebar" class="col-xs-12 col-md-5 col-lg-4">
+    
+   
+    <!--data browser pane-->
+
+    {{#if model.fitResult.data.y}}
+    <div class="panel panel-default data-browser">
+    <div class="panel-heading">
+      <h2>Data Browser</h2>
+      <span class="toggle-container">
+        {{x-toggle
+          value=usePicker
+          showLabels="true"
+          onToggle=(mut usePicker)
+          onLabel="Pager::true"
+          offLabel="Picker::false"
+        }}
+      </span>
+    </div>
+    <div class="panel-body">
+
+        {{#unless usePicker}}
+          {{bindfit-multi-select 
+                          fits=model.fitResult.labels.data.y.row_labels
+                          selectedFits=selectedFits
+                          selectedFitsDirty=selectedFitsDirty}}
+        {{else}}
+          {{fit-paginator currentPage=currentPage 
+                          countPages=countPages
+                          n=NUMBER_ROWS_PAGE
+                          }}
+
+        {{/unless}}
+  
+    </div>
+    </div>
+    {{/if}}
+    <!--end data browser pane -->
 
     <ul class="nav nav-tabs">
         <li class={{if (eq activeTab 1) "nav active" "nav"}}><a href="#tab-select"  {{action "selectTab" 1}}>
@@ -76,12 +113,10 @@
                 <form class="form-horizontal" {{action "runFitter" on="enter"}}>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            {{data-file-upload fitter=model.fitOptions.fitter onComplete="onUploadComplete" onRestart="onUploadRestart"}}
-                         
-                          {{fit-paginator currentPage=currentPage 
-                                            countPages=countPages
-                                            n=NUMBER_ROWS_PAGE
-                                            }}
+                            {{data-file-upload 
+                                    fitter=model.fitOptions.fitter 
+                                    onComplete="onUploadComplete" 
+                                    onRestart="onUploadRestart"}}
                         </div>
                     </div>
 
@@ -95,7 +130,11 @@
 
                 {{#unless model.fitOptions._noFit}}
                     <!-- Display fit button -->
-                    {{async-button action="runFitter" default="Fit" pending="Fitting..." fulfilled="Recalculate fit" rejected="Fit failed" id="fit-button"}}
+                    {{async-button action="runFitter" default="Fit" 
+                                   pending="Fitting..." 
+                                   fulfilled="Recalculate fit" 
+                                   rejected="Fit failed" 
+                                   id="fit-button"}}
                     {{#if errorFit}}
                         <div class="alert alert-default alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -153,17 +192,10 @@
 
                 <!-- Fit Result table -->
 
-                {{bindfit-select-multiple fits=model.fitLabels}}
-                {{fit-paginator currentPage=currentPage 
-                                  countPages=countPages
-                                  n=NUMBER_ROWS_PAGE
-                                  }}
-
-                {{fit-result-table fitResult=model.fitResult 
+                {{fit-details fitResult=model.fitResult 
+                                   pagedFitResult=pagedFitResults
                                    fitLabels=model.fitLabels 
-                                   currentPage=currentPage
-                                   countPages=countPages
-                                   n=NUMBER_ROWS_PAGE}}
+                                   }}
                 <br/>
 
                 <div class="row">
@@ -227,11 +259,10 @@
     <div id="main" class="col-xs-12 col-md-7 col-lg-8">
         <div class="row">
             <div class="col-xs-12">
-                {{fit-charts fitResult=pagedFitResults
-                             fitLabels=model.fitLabels 
-                             currentPage=currentPage
-                             countPages=countPages
-                             }}
+                {{fit-charts fitResult=pagedFitResults 
+                    fitLabels=model.fitLabels 
+                    fullFitResult=model.fitResult
+                    PLOT_LIMIT=NUMBER_ROWS_PER_PAGE}}
             </div> <!-- col -->
         </div> <!-- row -->
 

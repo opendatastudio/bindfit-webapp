@@ -25,7 +25,6 @@ export default Ember.Controller.extend({
     }.property("model.fitResult.fit.params", "model.fitLabels.fit.params"),
    
     
-    // TODO generalise for everything, really
     pagedFitResults: function() {
 
         var usePicker = this.get("usePicker");
