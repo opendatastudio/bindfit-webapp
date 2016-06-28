@@ -10,8 +10,6 @@ export default Ember.Component.extend({
     for (var i = 1; i <= countPages; i++) {
       pages.push(i);
     }
-    
-    console.log("hi world pages", pages);
 
     return pages; 
   }.property("n"),

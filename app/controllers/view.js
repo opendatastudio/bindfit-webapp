@@ -5,7 +5,7 @@ import { fitDataSlice, fitDataFilter } from '../utils/fit-data';
 
 export default Ember.Controller.extend({
     // Pagination
-    NUMBER_ROWS_PAGE: 5,
+    NUMBER_ROWS_PAGE: 10,
     currentPage: 1,
     //countPages: 0, // set onUploadComplete
    
@@ -34,14 +34,30 @@ export default Ember.Controller.extend({
     }.property("model.fitResult.data.y"),
 
     numberFits: function() {
-      var fitResult = this.get("fitResult");
+      var fitResult = this.get("fitResults");
 
       if (fitResult) {
-        return fitResult.data.y.length();
+        return fitResult.data.y.length;
       } else {
-        return null;
+        return 0;
       }
     }.property("fitResults"),
+
+    startIndex: function() {
+      var currentPage = this.get("currentPage");
+      var n = this.get("NUMBER_ROWS_PAGE");
+
+      return (currentPage-1)*n; 
+    }.property("currentPage", "countPages"),
+    
+    endIndex: function() {
+      // not sure why this is necessary ...
+      // silly js
+      var startIndex = parseInt(this.get("startIndex"), 10);
+      var n = parseInt(this.get("NUMBER_ROWS_PAGE"), 10);
+
+      return (startIndex + n); // +1 ?? 
+    }.property("currentPage", "countPages", "startIndex", "NUMBER_ROWS_PAGE"),
    
     countPages: function() {
       this.set("currentPage", 1);
@@ -49,7 +65,7 @@ export default Ember.Controller.extend({
 
       var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
       var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
-      
+
       return numberPages; 
     }.property("numberFits", "NUMBER_ROWS_PAGE"),
 
@@ -58,29 +74,19 @@ export default Ember.Controller.extend({
         // move elsewhere
         // hi, this is wrong!
         var _this = this; 
-        var fitResult = _this.get("model.fitResult");
+        var fitResult = this.get("fitResults");
         
         if (usePicker) {
-          var numberFits = this.get("model.fitResult.data.y").length;
-
-          var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
-          var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
-
-          // TODO hi this is extremely wrong
-          this.set("countPages", numberPages);
-          // end move elsewhere
-          //
-          var currentPage = _this.get("currentPage");
-
-          var countPages = _this.get("countPages");
-          var n = _this.get("NUMBER_ROWS_PAGE");
-
-          var startIndex = (currentPage-1)*n; 
-          var endIndex = startIndex + n; // +1 ?? 
-
+          // TODO put somethought into how to manage
+          // circumstance of no data ...
           if (!fitResult.labels.data.y) { 
               return fitResult;
           }
+
+          var startIndex = this.get("startIndex"); 
+          var endIndex = this.get("endIndex")
+          console.log("fucker start ", startIndex);
+          console.log("fucker end ", endIndex);
 
           var paged = fitDataSlice(fitResult, startIndex, endIndex);
 
@@ -97,5 +103,5 @@ export default Ember.Controller.extend({
         }
 
         return paged;
-    }.property("currentPage", "selectedFits.[]"),
+    }.property("currentPage", "selectedFits.[]", "NUMBER_ROWS_PAGE"),
 });
