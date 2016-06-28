@@ -7,14 +7,16 @@ export default Ember.Controller.extend({
     // Pagination
     NUMBER_ROWS_PAGE: 5,
     currentPage: 1,
-    countPages: 0, // set onUploadComplete
+    //countPages: 0, // set onUploadComplete
    
-    // picker: true
-    // pager: false
+    // picker: false
+    // pager: true
     // because i'm an idiot
     usePicker: true,
 
+
     selectedFits: [],
+    selectedResults: [],
 
     paramsLabelled: function() {
         /***
@@ -23,10 +25,35 @@ export default Ember.Controller.extend({
         var labels = this.get("model.fitLabels.fit.params");
         return this.get("model.fitResult").paramsLabelled(labels);
     }.property("model.fitResult.fit.params", "model.fitLabels.fit.params"),
-   
-    
-    pagedFitResults: function() {
+  
+    selectedFitResults: function() {
+    },
 
+    fitResults: function() {
+      return this.get("model.fitResult");
+    }.property("model.fitResult.data.y"),
+
+    numberFits: function() {
+      var fitResult = this.get("fitResult");
+
+      if (fitResult) {
+        return fitResult.data.y.length();
+      } else {
+        return null;
+      }
+    }.property("fitResults"),
+   
+    countPages: function() {
+      this.set("currentPage", 1);
+      var numberFits = this.get("numberFits");
+
+      var NUMBER_ROWS_PAGE = this.get("NUMBER_ROWS_PAGE");
+      var numberPages = parseInt(numberFits / NUMBER_ROWS_PAGE, 10);
+      
+      return numberPages; 
+    }.property("numberFits", "NUMBER_ROWS_PAGE"),
+
+    pagedFitResults: function() {
         var usePicker = this.get("usePicker");
         // move elsewhere
         // hi, this is wrong!
@@ -70,6 +97,5 @@ export default Ember.Controller.extend({
         }
 
         return paged;
-    }.property("model.fitResult.fit.y", "currentPage", "countPages",
-                "NUMBER_ROWS_PAGE", "selectedFits.[]", "usePicker"),
+    }.property("currentPage", "selectedFits.[]"),
 });
