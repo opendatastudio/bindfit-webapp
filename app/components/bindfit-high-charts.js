@@ -15,7 +15,6 @@ export default EmberHighChartsComponent.extend({
 
     contentDidChange: observer('content.@each.isLoaded', function() {
         var content = this.get("content");
-        this.debug("content", content);
         Ember.run.debounce(this, this.debouncedContentDidChange, 20);
     }),
 
