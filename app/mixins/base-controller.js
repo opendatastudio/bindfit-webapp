@@ -32,10 +32,14 @@ export default Ember.Mixin.create({
   numberFits: function() {
     var fitResult = this.get("fitResults");
 
-    if (fitResult) {
-      return fitResult.data.y.length;
-    } else {
+    if (!fitResult) {
       return 0;
+    }
+    
+    if (!fitResult.labels.data.y) {
+      return 0;
+    } else {
+      return fitResult.labels.data.y.row_labels.length;
     }
   }.property("fitResults"),
 
@@ -47,8 +51,6 @@ export default Ember.Mixin.create({
   }.property("currentPage", "countPages"),
   
   endIndex: function() {
-    // not sure why this is necessary ...
-    // silly js
     var startIndex = parseInt(this.get("startIndex"), 10);
     var n = parseInt(this.get("NUMBER_ROWS_PAGE"), 10);
 
@@ -68,14 +70,14 @@ export default Ember.Mixin.create({
   pagedFitResults: function() {
       var usePicker = this.get("usePicker");
       var fitResult = this.get("fitResults");
-      
-      if (usePicker) {
-        // TODO put somethought into how to manage
-        // circumstance of no data ...
-        if (!fitResult.labels.data.y) { 
-            return fitResult;
-        }
+      var numberFits = this.get("numberFits");
+     
+      // early bail out!
+      if (!numberFits) {
+          return fitResult;
+      }
 
+      if (usePicker) {
         var startIndex = this.get("startIndex"); 
         var endIndex = this.get("endIndex");
 
@@ -94,5 +96,6 @@ export default Ember.Mixin.create({
       }
 
       return paged;
-  }.property("currentPage", "selectedFits.[]", "NUMBER_ROWS_PAGE", "usePicker"),
+  }.property("currentPage", "selectedFits.[]", "NUMBER_ROWS_PAGE", "usePicker",
+            "numberFits"),
 });
