@@ -54,7 +54,6 @@ export function fitDataSlice(fitResult, startIndex, endIndex) {
 export function fitDataFilter(fitResult, indices) {
   console.log("fitDataFilter: begin");
   var filterByIndices = function(element, index) {
-    console.log("indices", indices);
     return indices.indexOf(index) > -1;
   };
 
