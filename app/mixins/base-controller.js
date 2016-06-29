@@ -29,6 +29,16 @@ export default Ember.Mixin.create({
     return this.get("model.fitResult");
   }.property("model.fitResult.data.y"),
 
+  dataBrowserVisible: function() {
+    var numberFits = this.get("numberFits");
+
+    if (numberFits <= 5) {
+      return false;
+    } else {
+      return true;
+    }
+  }.property("numberFits"),
+
   numberFits: function() {
     var fitResult = this.get("fitResults");
 
