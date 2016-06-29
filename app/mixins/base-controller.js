@@ -67,9 +67,6 @@ export default Ember.Mixin.create({
 
   pagedFitResults: function() {
       var usePicker = this.get("usePicker");
-      // move elsewhere
-      // hi, this is wrong!
-      var _this = this; 
       var fitResult = this.get("fitResults");
       
       if (usePicker) {
