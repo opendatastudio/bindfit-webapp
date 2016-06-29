@@ -101,4 +101,6 @@ export default Ember.Controller.extend({
 
         return paged;
     }.property("currentPage", "selectedFits.[]", "NUMBER_ROWS_PAGE", "usePicker"),
+
+
 });

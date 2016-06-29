@@ -118,6 +118,9 @@ export default EmberHighChartsComponent.extend({
             });
         });
     }),
+    
+    willRender: Ember.on("willRender", function() {
+    }),
 });
 
 // vim: set ts=4:
