@@ -66,7 +66,8 @@ export default Ember.Component.extend({
                                                   // Observes only one prop in
                                                   // labels, assuming all props
                                                   // are updated simultaneously
-    }.property("fitResult.data.x_plot", "fitResult.data.y", "fitResult.fit.y"),
+    }.property("fitResult.data.x_plot", "fitResult.data.y", "fitResult.fit.y", 
+                "chartDataResiduals"),
 
     chartDataResiduals: function() {
         console.log("COMPONENT fit-charts chartDataResiduals: called");
@@ -75,13 +76,10 @@ export default Ember.Component.extend({
         // plotlimit = this.get("PLOT_LIMIT"));
         var geq = this.get("fitResult.data.x_plot");
         var residuals = this.get("fitResult.qof.residuals");
-        
-        this.debug("residuals: ", residuals);
 
         if(residuals) {
             this.set("dataOption", "resultsDataResiduals");
         }
-
 
         var labels = this.get("fitLabels");
         var user_labels = this.get("fitResult.labels");

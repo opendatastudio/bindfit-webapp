@@ -42,6 +42,7 @@ export default EmberHighChartsComponent.extend({
         }
         
         // holy shitballs this is expensive!!! 
+        chart.reflow();
         chart.redraw();
         // End hack
 
@@ -106,6 +107,7 @@ export default EmberHighChartsComponent.extend({
                     chart.xAxis[0].drawCrosshair(e, point); // Show the crosshair
                 }
             }
+
         });
 
         // Highcharts reflow/resize within Bootstrap tab fix
@@ -120,6 +122,10 @@ export default EmberHighChartsComponent.extend({
     }),
     
     willRender: Ember.on("willRender", function() {
+        console.log("hi world from willRender!");
+    }),
+    afterRender: Ember.on("afterRenderEvent", function() {
+        console.log("hi world from afterRender!");
     }),
 });
 
