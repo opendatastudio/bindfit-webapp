@@ -121,12 +121,6 @@ export default EmberHighChartsComponent.extend({
         });
     }),
     
-    willRender: Ember.on("willRender", function() {
-        console.log("hi world from willRender!");
-    }),
-    afterRender: Ember.on("afterRenderEvent", function() {
-        console.log("hi world from afterRender!");
-    }),
 });
 
 // vim: set ts=4:
