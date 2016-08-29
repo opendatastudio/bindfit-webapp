@@ -117,6 +117,9 @@
                                     fitter=model.fitOptions.fitter 
                                     onComplete="onUploadComplete" 
                                     onRestart="onUploadRestart"}}
+                            {{bindfit-tooltip 
+                                fitter=model.fitOptions.fitter
+                                    section="control-upload"}}
                         </div>
                     </div>
 
@@ -141,6 +144,11 @@
                             {{errorFit.detail}}
                         </div>
                     {{/if}}
+
+                    {{bindfit-tooltip 
+                        fitter=model.fitOptions.fitter
+                        section="control-fit"}}
+
                 {{/unless}}
 
                 <!-- Back button (always displayed) -->
