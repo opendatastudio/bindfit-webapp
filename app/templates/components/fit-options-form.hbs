@@ -1,16 +1,21 @@
+<div class="component" id="fit-options-form">
+
 <div class="form-group">
     {{#each optionsParamsLabelled as |param|}}
         <div class="col-xs-12">
             <!-- If more than one sub-param, guess/fit only the first one -->
+            <!-- Semantically this isn't a label: should be a heading -->
             <label>
                 {{#if (is-array param.label)}}
                         {{param.label.[0]}} guess
                 {{else}}
                         {{param.label}} guess
                 {{/if}}
+                <span class="bindfit-tooltip">
                 {{bindfit-tooltip 
                     fitter=fitOptions.fitter
                     section="control-params"}}
+                </span>
             </label>
             <div class="input-group">
                 {{input value=param.value 
@@ -53,8 +58,14 @@
             </div>
         {{/if}}
         {{#if fitOptions.options._methodList}}
-            <div class="input-group">
-                <span class="input-group-addon">Method</span>
+            <div class="input-group method-group">
+                <span class="input-group-addon">Method
+                  <span class="bindfit-tooltip">
+                  {{bindfit-tooltip 
+                      fitter=fitOptions.fitter
+                      section="control-options-method"}}
+                  </span>
+                </span>
                 {{#power-select
                     options=fitOptions.options._methodList
                     selected=fitOptions.options._methodSelection
@@ -63,9 +74,6 @@
                     {{method.name}}
                 {{/power-select}}
 
-                {{bindfit-tooltip 
-                    fitter=fitOptions.fitter
-                    section="control-options-method"}}
             </div>
         {{/if}}
 
@@ -77,10 +85,14 @@
                 <span class="input-group-addon">
                     {{input checked=fitOptions.options.dilute type="checkbox"}}
                 </span>
-                <span class="input-group-addon" style="width: 100%">Dilution correction (if applicable)</span>
-                {{bindfit-tooltip 
-                    fitter=fitOptions.fitter
-                    section="control-options-dilution"}}
+                <span class="input-group-addon" style="width: 100%">
+                  Dilution correction (if applicable)
+                  <span class="bindfit-tooltip">
+                    {{bindfit-tooltip 
+                        fitter=fitOptions.fitter
+                        section="control-options-dilution"}}
+                  </span>
+                </span>
             </div>
         </label>
         <label>
@@ -88,11 +100,17 @@
                 <span class="input-group-addon">
                     {{input checked=fitOptions.options.normalise type="checkbox"}}
                 </span>
-                <span class="input-group-addon" style="width: 100%">Subtract initial values</span>
-                {{bindfit-tooltip 
-                    fitter=fitOptions.fitter
-                    section="control-options-sub"}}
+                <span class="input-group-addon" style="width: 100%">
+                  Subtract initial values
+                  <span class="bindfit-tooltip">
+                    {{bindfit-tooltip 
+                        fitter=fitOptions.fitter
+                        section="control-options-sub"}}
+                  </span>
+                </span>
             </div>
         </label>
     </div>
+</div>
+
 </div>

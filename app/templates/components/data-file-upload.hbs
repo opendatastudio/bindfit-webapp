@@ -1,7 +1,12 @@
 <span {{bind-attr class=":btn :btn-file :btn-block uploadComplete:btn-success:btn-default"}}>
-    Upload input file
+    Browse
     {{#if uploadPercentage}}
         ({{uploadPercentage}}%)
     {{/if}} 
-    {{file-upload url=uploadURL params=uploadParams name=uploadName onComplete="onUploadComplete" onProgress="onUploadProgress"}}
+    {{file-upload 
+            url=uploadURL 
+            params=uploadParams 
+            name=uploadName 
+            onComplete="onUploadComplete" 
+            onProgress="onUploadProgress"}}
 </span>

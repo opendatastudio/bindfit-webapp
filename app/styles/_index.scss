@@ -8,4 +8,27 @@
     
     #main {
     } // main
+  .bindfit-tooltip {
+    color: black;
+    display: inline-block;
+    > .ember-view {
+      display: inline-block;
+    }
+  }
+
+  .input-file-container {
+    h4 {
+      display: inline-block;
+    }
+  }
+
+  
+  .bindfit-fit-btn {
+    .button-container {
+      display: inline-block;
+      width: 60%;
+    }
+    button#fit-button {
+    }
+  }
 }

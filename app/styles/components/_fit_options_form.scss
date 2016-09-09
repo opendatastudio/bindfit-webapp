@@ -1,0 +1,9 @@
+.component#fit-options-form {
+  .bindfit-tooltip {
+    color: black;
+    display: inline-block;
+    > .ember-view {
+      display: inline-block;
+    }
+  }
+}
