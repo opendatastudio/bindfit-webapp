@@ -1,5 +1,7 @@
 # Bindfit web application
 
+See also: [Bindfit API](https://github.com/opendatastudio/supramolecular-backend)
+
 ## Dependencies 
 
 * [Git](http://git-scm.com/)
